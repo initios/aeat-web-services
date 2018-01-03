@@ -3,6 +3,15 @@ python:
   - "3.4"
   - "3.5"
   - "3.6"
+addons:
+  apt:
+    packages:
+    - libssl-dev
+    - libxmlsec1
+    - libxmlsec1-dev
+    - libxmlsec1-openssl
+    - libxslt1-dev
+- pkg-config
 install:
   - pip install -e .
   - pip install coveralls
