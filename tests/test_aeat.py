@@ -7,6 +7,11 @@ from tests import factories
 from aeat import Config, Controller, wsdl
 
 
+def test_config_as_str():
+    config = Config('ens_presentation', test_mode=True)
+    assert  'Servicio de Presentación ENS V4.0' in config.__str__()
+
+
 @patch('aeat.Client')
 def test_controller_is_built_from_config_obj(client):
     assert isinstance(Controller.build_from_config(Mock(), Mock(), Mock()), Controller)
