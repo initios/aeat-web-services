@@ -1,7 +1,8 @@
 import pytest
 
-from aeat import xml_signing
 from lxml import etree
+
+from aeat import xml_signing
 
 
 def test_sign_without_root_id(certificate_example):

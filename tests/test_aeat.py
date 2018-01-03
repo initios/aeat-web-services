@@ -2,8 +2,9 @@ from unittest.mock import Mock, PropertyMock, patch
 
 import pytest
 
-from aeat import Config, Controller, wsdl
 from tests import factories
+
+from aeat import Config, Controller, wsdl
 
 
 @patch('aeat.Client')
