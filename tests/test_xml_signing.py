@@ -1,6 +1,6 @@
 import pytest
 
-from aduanet import xml_signing
+from aeat import xml_signing
 from lxml import etree
 
 

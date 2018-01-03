@@ -1,7 +1,7 @@
 import logging
 
-from aduanet import zeep_plugins
-from aduanet.wsdl import ADUANET_SERVICES
+from . import zeep_plugins
+from .wsdl import ADUANET_SERVICES
 from requests import Session
 from zeep import exceptions as zeep_exceptions
 from zeep import Client, Transport, helpers, xsd
@@ -52,7 +52,7 @@ class Controller:
         '''
         Builds AEAT Controller with Plugins
 
-        :param config: Preconfigured aeat.Config object
+        :param config: Preconfigured Config object
         :param pub_cert: Public certificate file path
         :param priv_cert: Private certificate file path
 

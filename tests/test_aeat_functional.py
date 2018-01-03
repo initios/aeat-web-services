@@ -1,6 +1,6 @@
 import pytest
 
-from aduanet import aeat
+from aeat import Config, Controller
 
 
 '''
@@ -17,8 +17,8 @@ Be aware that they are run against the AEAT (in test mode)  with your REAL certi
 @pytest.fixture
 def make_aeat_test_controller(certificate_real):
     def make_controller_for_service(service_name):
-        config = aeat.Config(service_name, test_mode=True)
-        return aeat.Controller.build_from_config(config, *certificate_real)
+        config = Config(service_name, test_mode=True)
+        return Controller.build_from_config(config, *certificate_real)
 
     return make_controller_for_service
 
