@@ -1,0 +1,11 @@
+language: python
+install:
+    - pip install pipenv
+    - pip install coveralls
+    - pipenv install --dev
+script:
+    - pipenv run pytest
+    - pipenv run flake8 .
+    - pipenv run isort --check-onl
+after_success:
+    - coveralls

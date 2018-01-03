@@ -1,0 +1,14 @@
+<Response [200]>
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Body>
+        <soapenv:Fault
+            xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+            <faultcode>soapenv:Client </faultcode>
+            <faultstring>UserException.Mensaje NO REENVIABLE Codigo[Transmisión-duplicada-Misma-clave-distinto-contenido]FAULT EN SOAP. Error: Transmisión-duplicada-Misma-clave-distinto-contenido</faultstring>
+        </soapenv:Fault>
+    </soapenv:Body>
+</soapenv:Envelope>

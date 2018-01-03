@@ -1,0 +1,21 @@
+[[source]]
+
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+
+[packages]
+
+lxml = "*"
+xmlsec = "*"
+zeep = "*"
+
+
+[dev-packages]
+
+flake8 = "*"
+isort = "*"
+factory_boy = "*"
+pytest = "*"
+pytest-cov = "*"

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3.wsdl"
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:apachesoap="http://xml.apache.org/xml-soap"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ConsENSV3="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3.wsdl"
+    xmlns:ConsENSV3Ent="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3Ent.xsd"
+    xmlns:ConsENSV3Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3Sal.xsd">
+    <wsdl:documentation>Servicio que proporciona información (MRN, etc) de una ENtry Sumary (ENS) a un operador.</wsdl:documentation>
+    <wsdl:types>
+        <schema elementFormDefault="qualified" targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3.wsdl"
+            xmlns:ConsENSV3Ent="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3Ent.xsd"
+            xmlns:ConsENSV3Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3Sal.xsd"
+            xmlns="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3Ent.xsd" schemaLocation="ConsENSV3Ent.xsd"/>
+            <xsd:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3Sal.xsd" schemaLocation="ConsENSV3Sal.xsd"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="Entrada">
+        <wsdl:part name="ConsENSV3Ent" element="ConsENSV3Ent:ConsENSV3Ent" />
+    </wsdl:message>
+    <wsdl:message name="Salida">
+        <wsdl:part name="ConsENSV3Sal" element="ConsENSV3Sal:ConsENSV3Sal" />
+    </wsdl:message>
+    <wsdl:portType name="ConsENSV3">
+        <wsdl:operation name="ConsENSV3">
+            <wsdl:input message="ConsENSV3:Entrada" name="Entrada"/>
+            <wsdl:output message="ConsENSV3:Salida" name="Salida"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ConsENSV3SoapBinding" type="ConsENSV3:ConsENSV3">
+        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="ConsENSV3">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="Entrada">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="Salida">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ConsENSV3Service">
+        <wsdl:port binding="ConsENSV3:ConsENSV3SoapBinding" name="ConsENSV3">
+            <wsdlsoap:address location="https://www1.agenciatributaria.gob.es/L/inwinvoc/es.aeat.dit.adu.aden.sWeb.ConsENSV3SOAP"/>
+        </wsdl:port>
+        <wsdl:port binding="ConsENSV3:ConsENSV3SoapBinding" name="ConsENSV3Pruebas">
+            <wsdlsoap:address location="https://www1.agenciatributaria.gob.es/L/inwinvoc/es.aeat.dit.adu.aden.sWeb.ConsENSP3SOAP"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

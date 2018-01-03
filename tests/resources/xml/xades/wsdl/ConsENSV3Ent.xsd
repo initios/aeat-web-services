@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3Ent.xsd" elementFormDefault="qualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3Ent.xsd"
+    xmlns:td="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV2Dat.xsd">
+    <xs:annotation>
+        <xs:documentation>Esquema para mensaje de entrada consulta ENS</xs:documentation>
+    </xs:annotation>
+    <xs:import schemaLocation="ConsENSV2Dat.xsd" namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV2Dat.xsd"/>
+    <xs:element name="ConsENSV3Ent" type="ConsENSV3Ent"/>
+    <xs:complexType name="ConsENSV3Ent">
+        <xs:sequence>
+            <xs:element name="TraModAtBorHEA76" type="td:TraModAtBorHEA76Tipo"/>
+            <xs:element name="ExpDatOfArr" type="td:ExpDatOfArrTipo"/>
+            <xs:element name="ConRefNum" type="td:ConRefNumTipo" />
+            <xs:element name="DocRefDC1" type="td:DocRefDC1Tipo" minOccurs="0"/>
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
