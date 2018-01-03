@@ -1,0 +1,10 @@
+language: python
+install:
+    - pip install -e .
+    - pip install coveralls
+script:
+    - pytest
+    - flake8 .
+    - isort --check-onl
+after_success:
+    - coveralls
