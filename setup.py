@@ -34,13 +34,21 @@ setuptools.setup(
     author=about['__author__'],
     author_email=about['__email__'],
 
+    python_requires='~=3.6',
+
     install_requires=[
         'lxml>=4.1.1,<4.2.0',
         'xmlsec>=1.3.3,<1.4.0',
         'zeep>=2.4.0,<2.5.0',
-    ]
+    ],
 
-    python_requires='~=3.6',
+    tests_require=[
+        'flake8',
+        'isort',
+        'factory_boy',
+        'pytest',
+        'pytest-cov',
+    ],
 
     classifiers=[
         'Programming Language :: Python',
