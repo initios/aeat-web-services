@@ -31,7 +31,7 @@ Develop
 
 .. code:: console
 
-    $ pip install -e .
+    $ python setup.py install test
 
 
 Testing
