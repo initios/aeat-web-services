@@ -34,7 +34,7 @@ setuptools.setup(
     author=about['__author__'],
     author_email=about['__email__'],
 
-    python_requires='>=3.4,<=3.7',
+    python_requires='>=3.4,<3.7',
 
     install_requires=[
         'lxml>=4.1.1,<4.2.0',
