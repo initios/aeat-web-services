@@ -1,10 +1,14 @@
 language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
 install:
-    - pip install -e .
-    - pip install coveralls
+  - pip install -e .
+  - pip install coveralls
 script:
-    - pytest
-    - flake8 .
-    - isort --check-onl
+  - pytest
+  - flake8 .
+  - isort --check-onl
 after_success:
-    - coveralls
+  - coveralls
