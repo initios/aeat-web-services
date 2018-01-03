@@ -1,6 +1,5 @@
+import datetime as dt
 import logging
-
-from django.utils import timezone as tz
 
 import xmlsec
 from lxml import etree
@@ -9,7 +8,8 @@ logger = logging.getLogger(__name__)
 
 
 def aeat_object_with_qualifying_properties():
-    now_iso_format = tz.now().isoformat()
+    now_iso_format = dt.datetime.now().isoformat()
+
     return etree.fromstring(f'''
         <Object xmlns="http://www.w3.org/2000/09/xmldsig#">
             <etsi:QualifyingProperties
