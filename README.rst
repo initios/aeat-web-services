@@ -13,7 +13,9 @@ AEAT-WEB-SERVICES
 
 Spanish Tax Agency Electronic Office (AEAT) Integration
 
-*Integración con la Agencia Estatal de Administración Tributaria*
+-----
+
+*Integración con la Agencia Estatal de Administración Tributaria Española*
 
 
 Purpose
@@ -21,6 +23,8 @@ Purpose
 
 Make requests `AEAT Web Services <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
 and sign your connection and xml using your certificate. See usage below.
+
+-----
 
 *Realiza peticiones a los `Servicios Web de AEAT <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
 y firma tu conexión y mensajes XML utilizando tu certificado.*
@@ -53,11 +57,7 @@ If you need more control just build the controller by hand, see build_from_confi
 
     import aeat
 
-    # Make a Config object based on a AEAT SOAP endpoint to configure the controller
-    # Set test_mode=True to send the request to the AEAT "test service" instead of production
     config = aeat.Config('ens_query', test_mode=True)
-
-    # Pass your cert and key to sign the XML and the HTTP Conection
     ctrl = aeat.Controller.build_from_config(config, 'key.pem', 'cert.pem')
     payload = {'TraModAtBorHEA76': '1', 'ExpDatOfArr': '20110809',  'ConRefNum': '9294408'}
     result = ctrl.request(**payload)
