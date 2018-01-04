@@ -38,7 +38,7 @@ If you need more control just build the controller by hand, see build_from_confi
     config = aeat.Config('ens_query', test_mode=True)
     ctrl = aeat.Controller.build_from_config(config, 'key.pem', 'cert.pem')
     payload = {'TraModAtBorHEA76': '1', 'ExpDatOfArr': '20110809',  'ConRefNum': '9294408'}
-    result = ctrl.request(**payload)
+    result = ctrl.request(payload)
 
     assert result.valid, f'Error requesting aeat: {result.data}'
     assert result.data is not None
@@ -67,7 +67,7 @@ Usage (Spanish)
     config = aeat.Config('ens_query', test_mode=True)
     ctrl = aeat.Controller.build_from_config(config, 'key.pem', 'cert.pem')
     payload = {'TraModAtBorHEA76': '1', 'ExpDatOfArr': '20110809',  'ConRefNum': '9294408'}
-    result = ctrl.request(**payload)
+    result = ctrl.request(payload)
 
     assert result.valid, f'Error requesting aeat: {result.data}'
     assert result.data is not None
