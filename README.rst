@@ -37,7 +37,7 @@ See list of `preconfigured aduanet services <src/aeat/wsdl.py>`_.
     payload = {'TraModAtBorHEA76': '1', 'ExpDatOfArr': '20110809',  'ConRefNum': '9294408'}
     result = ctrl.request(**payload)
 
-    assert result.valid, 'Error requesting aeat: %s', result.data
+    assert result.valid, f'Error requesting aeat: {result.data}'
     assert result.data is not None
 
 
