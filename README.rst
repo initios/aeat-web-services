@@ -11,15 +11,20 @@ AEAT-WEB-SERVICES
             :target: https://coveralls.io/github/initios/aeat-web-services?branch=master
 
 
-Spanish Tax Agency Electronic Office (AEAT) Integration
+Spanish Tax Agency Electronic Office (AEAT) Integration.
+
+Make requests `AEAT Web Services <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
+and sign your connection and xml using your certificate.
+
+-----
 
 *Integración con la Agencia Estatal de Administración Tributaria Española*
 
+*Realiza peticiones a los* `Servicios Web de AEAT <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
+*y firma tu conexión y mensajes XML utilizando tu certificado.*
+
 Usage (English)
 ===============
-
-Make requests `AEAT Web Services <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
-and sign your connection and xml using your certificate. See usage below.
 
 **Example for requesting a list of ENS's.**
 
@@ -46,9 +51,6 @@ If you need more control just build the controller by hand, see build_from_confi
 
 Usage (Spanish)
 ===============
-
-*Realiza peticiones a los* `Servicios Web de AEAT <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
-*y firma tu conexión y mensajes XML utilizando tu certificado.*
 
 **Ejemplo de consulta de ENSs.**
 
