@@ -66,7 +66,7 @@ class Controller:
 
         if config.signed:
             sign_plugin = zeep_plugins.SignMessage(pub_cert, priv_cert)
-            plugins.insert(0, sign_plugin),
+            plugins.insert(0, sign_plugin)
 
         client = Client(config.wsdl, service_name=config.service, port_name=config.port,
                         transport=transport, strict=False, plugins=plugins)

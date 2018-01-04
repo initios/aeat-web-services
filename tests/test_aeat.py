@@ -2,6 +2,8 @@ from unittest.mock import Mock, PropertyMock, patch
 
 import pytest
 
+from zeep import xsd
+
 from aeat import Config, Controller, wsdl
 
 from . import factories
@@ -9,12 +11,15 @@ from . import factories
 
 def test_config_as_str():
     config = Config('ens_presentation', test_mode=True)
-    assert  'Servicio de Presentación ENS V4.0' in config.__str__()
+    assert 'Servicio de Presentación ENS V4.0' in config.__str__()
 
 
 @patch('aeat.Client')
 def test_controller_is_built_from_config_obj(client):
-    assert isinstance(Controller.build_from_config(Mock(), Mock(), Mock()), Controller)
+    config = Mock(signed=True)
+    ctrl = Controller.build_from_config(config, Mock(), Mock())
+    assert isinstance(ctrl, Controller)
+    assert ctrl.config.signed
 
 
 @pytest.mark.parametrize('test_mode,expected_port', [
@@ -41,6 +46,15 @@ def test_controller_with_valid_response(operation_patch, zeep_response):
 
     assert result.valid
     assert 2 == len(result.data['IMPOPE'])
+
+
+@patch('aeat.Controller.operation')
+def test_controller_marks_signature_as_skip_if_config_is_signed(operation_patch):
+    config = Mock(signed=True)
+    ctrl = Controller(Mock(), config)
+    ctrl.request({'arg': 'x'})
+
+    operation_patch.assert_called_with(arg='x', Signature=xsd.SkipValue)
 
 
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
