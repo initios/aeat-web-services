@@ -31,7 +31,7 @@ Develop
 
 .. code:: console
 
-    $ python setup.py install test
+    $ pip install -r requirements_local.txt
 
 
 Testing
@@ -39,6 +39,4 @@ Testing
 
 .. code:: console
 
-    $ pytest
-    $ flake8 .
-    $ isort
+    $ tox

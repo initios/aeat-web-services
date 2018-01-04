@@ -1,0 +1,5 @@
+flake8
+isort
+factory_boy
+pytest
+pytest-cov

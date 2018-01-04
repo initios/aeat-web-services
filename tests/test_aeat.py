@@ -2,9 +2,9 @@ from unittest.mock import Mock, PropertyMock, patch
 
 import pytest
 
-from tests import factories
-
 from aeat import Config, Controller, wsdl
+
+from . import factories
 
 
 def test_config_as_str():

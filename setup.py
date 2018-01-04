@@ -11,11 +11,12 @@ base_dir = os.path.dirname(__file__)
 
 about = {}
 
-with open(os.path.join(base_dir, 'aeat', '__about__.py')) as f:
+with open(os.path.join(base_dir, 'src', 'aeat', '__about__.py')) as f:
     exec(f.read(), about)
 
-with open(os.path.join(base_dir, 'README.rst')) as readme:
-    long_description = readme.read()
+with open(os.path.join(base_dir, 'README.rst')) as f:
+    long_description = f.read()
+
 
 # allow setup.py to be run from any path
 os.chdir(os.path.normpath(os.path.join(os.path.abspath(__file__), os.pardir)))
@@ -42,14 +43,6 @@ setuptools.setup(
         'zeep>=2.4.0,<2.5.0',
     ],
 
-    tests_require=[
-        'flake8',
-        'isort',
-        'factory_boy',
-        'pytest',
-        'pytest-cov',
-    ],
-
     classifiers=[
         'Programming Language :: Python',
         'Programming Language :: Python :: 3.6',
@@ -58,4 +51,5 @@ setuptools.setup(
     ],
 
     packages=['aeat'],
+    package_dir={'': 'src'},
 )
