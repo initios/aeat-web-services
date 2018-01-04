@@ -25,9 +25,7 @@ Check https://github.com/mehcode/python-xmlsec
 Usage
 =====
 
-See list of `preconfigured aduanet services`_.
-
-.. _relative link: src/aeat/wsdl.py
+See list of `preconfigured aduanet services <src/aeat/wsdl.py>`_.
 
 .. code:: python
 
