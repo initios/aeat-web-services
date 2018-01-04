@@ -87,6 +87,10 @@ class Controller:
         except zeep_exceptions.Fault as e:
             logger.info('AEAT request failed.', exc_info=True)
             return Result(None, e.message)
+        except zeep_exceptions.XMLSyntaxError as e:
+            logger.error(f'AEAT returned an invalid XML response: {e.content}',
+                         exc_info=True)
+            return Result(None, 'Unknown AEAT error')
         else:
             data_dict = helpers.serialize_object(data)
             return Result(data_dict, None)
