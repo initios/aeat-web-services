@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV2Dat.xsd" elementFormDefault="qualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV2Dat.xsd">
+    <xs:simpleType name="TraModAtBorHEA76Tipo">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="2" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ExpDatOfArrTipo">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="8" />
+            <xs:maxLength value="8" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ConRefNumTipo">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="35" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DocRefDC1Tipo">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="35" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DocRefDC2Tipo">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="35" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ErrTypER11Tipo">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="2" />
+            <xs:maxLength value="2" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ErrReasonTipo">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="100" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MRNTipo">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="21" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DecRegDatTimTipo">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="12" />
+            <xs:maxLength value="12" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IteNumGIIMPTipo">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="5" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IndNoCargaTipo">
+        <xs:annotation>
+            <xs:documentation></xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1" />
+            <xs:maxLength value="1" />
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="AlphaNumType">
+        <xs:annotation>
+            <xs:documentation>Base class for all anN and an..N types</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:token"/>
+    </xs:simpleType>
+    <xs:simpleType name="Alphanumeric_Max4">
+        <xs:restriction base="AlphaNumType">
+            <xs:maxLength value="4"/>
+            <xs:pattern value=".{1,4}"/>
+        </xs:restriction>
+    </xs:simpleType>
+</xs:schema>

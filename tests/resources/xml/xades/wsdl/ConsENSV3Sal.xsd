@@ -1,0 +1,41 @@
+<xs:schema targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3Sal.xsd" elementFormDefault="qualified"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV3Sal.xsd"
+    xmlns:td="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV2Dat.xsd">
+    <xs:annotation>
+        <xs:documentation>Esquema para mensaje de salida consulta ENS</xs:documentation>
+    </xs:annotation>
+    <xs:import schemaLocation="ConsENSV2Dat.xsd" namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/ensws/ConsENSV2Dat.xsd" />
+    <xs:element name="ConsENSV3Sal" type="ConsENSV3Sal" />
+    <xs:complexType name="ConsENSV3Sal">
+        <xs:sequence>
+            <xs:element name="TraModAtBorHEA76" type="td:TraModAtBorHEA76Tipo" />
+            <xs:element name="ExpDatOfArr" type="td:ExpDatOfArrTipo" />
+            <xs:element name="ConRefNum" type="td:ConRefNumTipo" />
+            <xs:element name="ErrTypER11" type="td:ErrTypER11Tipo" minOccurs="0" />
+            <xs:element name="ErrReason" type="td:ErrReasonTipo" minOccurs="0" />
+            <xs:element name="IMPOPE" type="IMPOPETipo" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="IMPOPETipo">
+        <xs:sequence>
+            <xs:element name="MRN" type="td:MRNTipo" />
+            <xs:element name="DecRegDatTim" type="td:DecRegDatTimTipo" />
+            <xs:element name="GOOITEIMP" type="GOOITEIMPTipo" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="GOOITEIMPTipo">
+        <xs:sequence>
+            <xs:element name="IteNumGIIMP" type="td:IteNumGIIMPTipo" />
+            <xs:element name="DocRefDC1" type="td:DocRefDC1Tipo" />
+            <xs:element name="IndNoCarga" type="td:IndNoCargaTipo" minOccurs="0" />
+            <xs:element name="PRODOCD" type="PRODOCDTipo" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="PRODOCDTipo">
+        <xs:sequence>
+            <xs:element name="DocTypDC" type="td:Alphanumeric_Max4" />
+            <xs:element name="DocRefDC" type="td:DocRefDC2Tipo" />
+        </xs:sequence>
+    </xs:complexType>
+</xs:schema>
