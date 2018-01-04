@@ -21,7 +21,8 @@ Usage (English)
 Make requests `AEAT Web Services <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
 and sign your connection and xml using your certificate. See usage below.
 
-Example for requesting a list of ENS's.
+**Example for requesting a list of ENS's.**
+
 Initialize a Config object with the desired preconfigured service and if you want to request AEAT test or production endpoints (test_mode).
 Finally initialize controller with the config and the desired certificate and make the request with your payload.
 
@@ -46,10 +47,11 @@ If you need more control just build the controller by hand, see build_from_confi
 Usage (Spanish)
 ===============
 
-*Realiza peticiones a los `Servicios Web de AEAT <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
+Realiza peticiones a los `Servicios Web de AEAT <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
 y firma tu conexión y mensajes XML utilizando tu certificado.*
 
-*Ejemplo de consulta de ENSs.*
+**Ejemplo de consulta de ENSs.**
+
 *Inicializa el objecto Config con el servicio preconfigurado y si quieres usar los endpoints de AEAT de test o de producción (test_mode).*
 *Por último inicializa el controlador con la config y el certificado que gustes y realiza la petición pasándole los datos que necesites.*
 
