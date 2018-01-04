@@ -42,9 +42,9 @@ If you need more control just build the controller by hand, see build_from_confi
 
 *Ejemplo de consulta de ENSs.*
 *Inicializa el objecto Config con el servicio preconfigurado y si quieres usar los endpoints de AEAT de test o de producción (test_mode).*
-*Por último inicializa el controlador con la config y el certificado que gustes y realiza la petición pasándole los datos que necesites.
+*Por último inicializa el controlador con la config y el certificado que gustes y realiza la petición pasándole los datos que necesites.*
 
-Si necesitas un mayor control simplemente construye el controlador a mano, puedes inspirarte en el método build_from_config.
+*Si necesitas un mayor control simplemente construye el controlador a mano, puedes inspirarte en el método build_from_config.*
 
 * `Lista de Servicios Preconfigurados <src/aeat/wsdl.py>`_.
 * `Servicios Web oficial de AEAT <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
