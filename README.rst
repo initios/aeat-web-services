@@ -47,8 +47,8 @@ If you need more control just build the controller by hand, see build_from_confi
 Usage (Spanish)
 ===============
 
-*Realiza peticiones a los `Servicios Web de AEAT <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
-y firma tu conexión y mensajes XML utilizando tu certificado.*
+*Realiza peticiones a los* `Servicios Web de AEAT <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
+*y firma tu conexión y mensajes XML utilizando tu certificado.*
 
 **Ejemplo de consulta de ENSs.**
 
