@@ -45,7 +45,7 @@ If you need more control just build the controller by hand, see build_from_confi
     payload = {'TraModAtBorHEA76': '1', 'ExpDatOfArr': '20110809',  'ConRefNum': '9294408'}
     result = ctrl.request(payload)
 
-    assert result.valid, f'Error requesting aeat: {result.data}'
+    assert result.valid, f'Error requesting aeat: {result.error}'
     assert result.data is not None
 
 
@@ -71,7 +71,7 @@ Usage (Spanish)
     payload = {'TraModAtBorHEA76': '1', 'ExpDatOfArr': '20110809',  'ConRefNum': '9294408'}
     result = ctrl.request(payload)
 
-    assert result.valid, f'Error requesting aeat: {result.data}'
+    assert result.valid, f'Error requesting aeat: {result.error}'
     assert result.data is not None
 
 
