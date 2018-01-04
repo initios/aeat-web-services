@@ -72,6 +72,21 @@ def test_controller_with_99999_error(operation_patch, zeep_response):
     assert result.data is None
 
 
+@patch('aeat.Controller.operation', new_callable=PropertyMock)
+def test_controller_with_html_error(operation_patch, zeep_response):
+    def response():
+        return zeep_response('wsdl_ens_query_ConsENSV3.wsdl', 'unknown_certificate.html',
+                             'ConsENSV3')
+
+    operation_patch.return_value = lambda **kwargs: response()
+    ctrl = Controller(Mock(), Mock())
+    result = ctrl.request(factories.ENSQuery())
+
+    assert not result.valid
+    assert 'Unknown AEAT error' == result.error
+    assert result.data is None
+
+
 def test_controller_operation():
     service = Mock()
     service.myoperation = Mock()

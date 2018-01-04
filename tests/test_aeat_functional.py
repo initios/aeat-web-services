@@ -1,8 +1,8 @@
 import pytest
 
-import aeat
-
 from tests import factories
+
+import aeat
 
 
 '''
