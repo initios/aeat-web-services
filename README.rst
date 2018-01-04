@@ -42,3 +42,13 @@ Testing
 
     $ pip install tox
     $ tox
+
+
+Changelog
+=========
+
+.. list-table::
+
+    * - 2018-04-01 Release 1.0.0-pre.1
+      - Versión inicial
+
