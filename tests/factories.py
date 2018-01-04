@@ -184,7 +184,7 @@ class ENSPresentation(factory.Factory):
         model = dict
 
     Id = factory.Sequence(lambda n: 'Id000%d' % n)
-    DatOfPreMES9 = factory.Faker('date_this_month')
+    DatOfPreMES9 = factory.Faker('date')
     TimOfPreMES10 = factory.Faker('time')
     MesIdeMES19 = factory.Sequence(lambda n: 'Id000%d' % n)
     HEAHEA = factory.SubFactory(ENSPresentationHeader)
