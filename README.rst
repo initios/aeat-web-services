@@ -31,6 +31,7 @@ Develop
 
 .. code:: console
 
+    $ pip install -e .
     $ pip install -r requirements_local.txt
 
 
@@ -39,4 +40,5 @@ Testing
 
 .. code:: console
 
+    $ pip install tox
     $ tox
