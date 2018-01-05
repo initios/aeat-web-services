@@ -27,7 +27,7 @@ def make_aeat_test_controller(certificate_real):
 @pytest.mark.functional
 def test_ens_presentation(make_aeat_test_controller):
     ctrl = make_aeat_test_controller('ens_presentation')
-    result = ctrl.request(factories.ENSPresentation())
+    result = ctrl.request(factories.ENSPresentationFactory())
     assert result.valid, result.error
     assert 'OK' == result.data  # WIP. Not sure what the response is yet
 
@@ -36,7 +36,7 @@ def test_ens_presentation(make_aeat_test_controller):
 def test_ens_query(make_aeat_test_controller):
     ctrl = make_aeat_test_controller('ens_query')
 
-    result = ctrl.request(factories.ENSQuery())
+    result = ctrl.request(factories.ENSQueryFactory())
 
     assert result.valid
     assert result.data['TraModAtBorHEA76'] == '1'

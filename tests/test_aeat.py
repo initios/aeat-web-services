@@ -41,7 +41,7 @@ def test_controller_with_valid_response(operation_patch, zeep_response):
 
     operation_patch.return_value = lambda **kwargs: response
     ctrl = Controller(Mock(), Mock())
-    result = ctrl.request(factories.ENSQuery())
+    result = ctrl.request(factories.ENSQueryFactory())
 
     assert result.valid
     assert 2 == len(result.data['IMPOPE'])
@@ -64,7 +64,7 @@ def test_controller_with_99999_error(operation_patch, zeep_response):
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock())
-    result = ctrl.request(factories.ENSQuery())
+    result = ctrl.request(factories.ENSQueryFactory())
 
     assert not result.valid
     assert 'Mensaje REENVIABLE. Codigo[99999].' == result.error
@@ -79,7 +79,7 @@ def test_controller_with_html_error(operation_patch, zeep_response):
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock())
-    result = ctrl.request(factories.ENSQuery())
+    result = ctrl.request(factories.ENSQueryFactory())
 
     assert not result.valid
     assert 'Unknown AEAT error' == result.error

@@ -179,7 +179,7 @@ class TraderEntryCarrier(factory.Factory):
     TINTRACARENT602 = 'ESA08005688'
 
 
-class ENSPresentation(factory.Factory):
+class ENSPresentationFactory(factory.Factory):
     class Meta:
         model = dict
 
@@ -219,7 +219,7 @@ class ENSPresentation(factory.Factory):
             self['CUSOFFSENT740'] = [CustomsOfficeSubsequentEntry()]
 
 
-class ENSQuery(factory.Factory):
+class ENSQueryFactory(factory.Factory):
     class Meta:
         model = dict
 
