@@ -1,5 +1,3 @@
-import pytest
-
 from lxml import etree
 
 from aeat import xml_signing
@@ -8,10 +6,12 @@ from aeat import xml_signing
 def test_sign_without_root_id(certificate_example):
     root = etree.Element('Envelope')
     body = etree.SubElement(root, 'Body')
-    etree.SubElement(body, 'Data')
+    data = etree.SubElement(body, 'Data')
 
-    with pytest.raises(ValueError):
-        xml_signing.sign(root, *certificate_example)
+    xml_signing.sign(root, *certificate_example)
+
+    assert xml_signing.verify(root, *certificate_example)
+    assert 'MessageRoot' == data.attrib['Id']
 
 
 def test_verify_simple_signature(certificate_example):

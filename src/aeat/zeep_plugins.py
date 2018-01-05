@@ -24,11 +24,17 @@ class Logging(Plugin):
         return utils.etree_to_string(envelope).decode()
 
     def ingress(self, envelope, http_headers, operation):
+        '''
+        Server SOAP response just before is parsed by zeep
+        '''
         logger.info('Ingress: envelope %s | headers %s | operation %s',
                     self.envelope_to_str(envelope), http_headers, operation)
         return envelope, http_headers
 
     def egress(self, envelope, http_headers, operation, binding_options):
+        '''
+        The SOAP request just before sending it's sent to SOAP Server
+        '''
         logger.info('Egress: envelope %s | headers %s | operation %s | binding_opts %s',
                     self.envelope_to_str(envelope), http_headers, operation, binding_options)
 

@@ -95,7 +95,7 @@ Develop
 
 .. code:: console
 
-    $ pip install -e .
+    $ python setup.py develop
     $ pip install -r requirements_test.txt
 
 

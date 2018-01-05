@@ -1,3 +1,4 @@
+import collections
 import logging
 
 from . import zeep_plugins
@@ -87,6 +88,23 @@ class Controller:
         except zeep_exceptions.Fault as e:
             logger.info('AEAT request failed.', exc_info=True)
             return Result(None, e.message)
+        except zeep_exceptions.XMLSyntaxError as e:
+            logger.error('AEAT returned an invalid XML response', exc_info=True)
+            return Result(None, 'Unknown AEAT error')
+        except zeep_exceptions.ValidationError as e:
+            logger.error('Validation error', exc_info=True)
+            return Result(None, 'Validation error')
+        except Exception as e:
+            logger.critical('Unexpected exception', exc_info=True)
+            return Result(None, 'Unknown error')
         else:
             data_dict = helpers.serialize_object(data)
+
+            # TODO Improve validation error handling
+            if isinstance(data_dict, collections.deque):
+                err = data_dict.pop()
+                attrib = err[4].text
+                detail = err[3].text
+                return Result(None, f'Validation error. {attrib}: {detail}')
+
             return Result(data_dict, None)

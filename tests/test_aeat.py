@@ -2,11 +2,11 @@ from unittest.mock import Mock, PropertyMock, patch
 
 import pytest
 
+from tests import factories
+from zeep import exceptions as zeep_exceptions
 from zeep import xsd
 
 from aeat import Config, Controller, wsdl
-
-from . import factories
 
 
 def test_config_as_str():
@@ -42,7 +42,7 @@ def test_controller_with_valid_response(operation_patch, zeep_response):
 
     operation_patch.return_value = lambda **kwargs: response
     ctrl = Controller(Mock(), Mock())
-    result = ctrl.request(factories.ENSQuery())
+    result = ctrl.request(factories.ENSQueryFactory())
 
     assert result.valid
     assert 2 == len(result.data['IMPOPE'])
@@ -65,10 +65,25 @@ def test_controller_with_99999_error(operation_patch, zeep_response):
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock())
-    result = ctrl.request(factories.ENSQuery())
+    result = ctrl.request(factories.ENSQueryFactory())
 
     assert not result.valid
     assert 'Mensaje REENVIABLE. Codigo[99999].' == result.error
+    assert result.data is None
+
+
+@patch('aeat.Controller.operation', new_callable=PropertyMock)
+def test_controller_with_html_error(operation_patch, zeep_response):
+    def response():
+        return zeep_response('wsdl_ens_query_ConsENSV3.wsdl', 'unknown_certificate.html',
+                             'ConsENSV3')
+
+    operation_patch.return_value = lambda **kwargs: response()
+    ctrl = Controller(Mock(), Mock())
+    result = ctrl.request(factories.ENSQueryFactory())
+
+    assert not result.valid
+    assert 'Unknown AEAT error' == result.error
     assert result.data is None
 
 
@@ -92,3 +107,41 @@ def test_aduanet_services_configuration(service_name):
     assert config.service is not None
     assert config.signed is not None
     assert config.port.endswith('Pruebas')
+
+
+@patch('aeat.Controller.operation', new_callable=PropertyMock)
+def test_controller_with_xmlerr805(operation_patch, zeep_response):
+    def response():
+        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
+                             'ens_presentation_XMLERR805.xml', 'IE313V4')
+
+    operation_patch.return_value = lambda **kwargs: response()
+    ctrl = Controller(Mock(), Mock())
+    result = ctrl.request(factories.ENSPresentationFactory())
+
+    assert not result.valid
+    assert result.data is None
+
+    msg = 'Validation error. CC315A,DatOfPreMES9: Element too long (length constraint)'
+    assert msg == result.error
+
+
+@pytest.mark.parametrize('detail,exception_cls', [
+    ('Unknown AEAT error', zeep_exceptions.XMLSyntaxError),
+    ('Validation error', zeep_exceptions.ValidationError),
+    ('Unknown error', Exception),
+])
+@patch('aeat.Controller.operation', new_callable=PropertyMock)
+def test_controller_operation_request_exception_handling(operation_patch, detail, exception_cls):
+    def operation(arg, Signature):
+        raise exception_cls
+
+    operation_patch.return_value = operation
+
+    config = Mock(signed=True)
+    ctrl = Controller(Mock(), config)
+
+    result = ctrl.request({'arg': 'x'})
+
+    assert not result.valid
+    assert detail == result.error
