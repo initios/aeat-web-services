@@ -4,7 +4,7 @@ import pytest
 
 from tests import factories
 from zeep import xsd
-
+from zeep import exceptions as zeep_exceptions
 from aeat import Config, Controller, wsdl
 
 
@@ -123,3 +123,24 @@ def test_controller_with_xmlerr805(operation_patch, zeep_response):
 
     msg = 'Validation error. CC315A,DatOfPreMES9: Element too long (length constraint)'
     assert msg == result.error
+
+
+@pytest.mark.parametrize('detail,exception_cls', [
+    ('Unknown AEAT error', zeep_exceptions.XMLSyntaxError),
+    ('Validation error', zeep_exceptions.ValidationError),
+    ('Unknown error', Exception),
+])
+@patch('aeat.Controller.operation', new_callable=PropertyMock)
+def test_controller_operation_request_exception_handling(operation_patch, detail, exception_cls):
+    def operation(arg, Signature):
+        raise exception_cls
+
+    operation_patch.return_value = operation
+
+    config = Mock(signed=True)
+    ctrl = Controller(Mock(), config)
+
+    result = ctrl.request({'arg': 'x'})
+
+    assert not result.valid
+    assert detail == result.error
