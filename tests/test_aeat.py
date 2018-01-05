@@ -109,23 +109,6 @@ def test_aduanet_services_configuration(service_name):
     assert config.port.endswith('Pruebas')
 
 
-@patch('aeat.Controller.operation', new_callable=PropertyMock)
-def test_controller_with_xmlerr805(operation_patch, zeep_response):
-    def response():
-        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
-                             'ens_presentation_error_IE917V4Sal.xml', 'IE313V4')
-
-    operation_patch.return_value = lambda **kwargs: response()
-    ctrl = Controller(Mock(), Mock())
-    result = ctrl.request(factories.ENSPresentationFactory())
-
-    assert not result.valid
-    assert result.data is None
-
-    msg = 'Validation error. CC315A,DatOfPreMES9: Element too long (length constraint)'
-    assert msg == result.error
-
-
 @pytest.mark.parametrize('detail,exception_cls', [
     ('Wrong AEAT response', zeep_exceptions.XMLSyntaxError),
     ('Wrong AEAT response', zeep_exceptions.ValidationError),
@@ -159,3 +142,21 @@ def test_controller_with_success_message_returns_the_mrn_number(operation_patch,
 
     assert result.valid
     assert '17ES004311Z0000010' == result.data
+
+
+@pytest.mark.parametrize('response_xml', [
+    'ens_presentation_error_IE316V4Sal.xml',
+    'ens_presentation_error_IE917V4Sal.xml',
+])
+@patch('aeat.Controller.operation', new_callable=PropertyMock)
+def test_controller_with_incorrect_responses(operation_patch, zeep_response, response_xml):
+    def response():
+        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl', response_xml, 'IE313V4')
+
+    operation_patch.return_value = lambda **kwargs: response()
+    ctrl = Controller(Mock(), Mock())
+    result = ctrl.request(factories.ENSPresentationFactory())
+
+    assert not result.valid
+    assert result.data is None
+    assert 'AEAT response error' == result.error

@@ -94,8 +94,9 @@ class Controller:
         else:
             for item in data:
                 mrn_el = item.find('DocNumHEA5')
+                mrn = mrn_el.text if mrn_el is not None else None
 
-                if mrn_el is not None:
-                    return Result(mrn_el.text, None)
+                if mrn:
+                    return Result(mrn, None)
 
-            return Result('AEAT response error', None)
+            return Result(None, 'AEAT response error')
