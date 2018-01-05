@@ -35,7 +35,7 @@ def test_config_is_built_from_service_name(test_mode, expected_port):
 
 
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
-def test_controller_with_valid_response(operation_patch, zeep_response):
+def test_controller_ens_query_with_valid_response(operation_patch, zeep_response):
     response = zeep_response(
         'wsdl_ens_query_ConsENSV3.wsdl', 'ens_query_valid.xml', 'ConsENSV3'
     )
@@ -131,7 +131,7 @@ def test_controller_operation_request_exception_handling(operation_patch, detail
 
 
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
-def test_controller_with_success_message_returns_the_mrn_number(operation_patch, zeep_response):
+def test_controller_with_ens_presentation_success_message(operation_patch, zeep_response):
     def response():
         return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
                              'ens_presentation_success_IE328V5Sal.xml', 'IE313V4')
