@@ -1,4 +1,7 @@
 from django.conf import settings
+
+from django.core.exceptions import ImproperlyConfigured
+
 from rest_framework import serializers as rf
 from rest_framework.serializers import ValidationError
 
@@ -11,6 +14,15 @@ def make_aeat_request(service_name, data):
 
     :rtype: aduanet.aeat.Result
     '''
+    if not hasattr(settings, 'AEAT_CERT_PATH'):
+        raise ImproperlyConfigured('AEAT_CERT_PATH setting must be set')
+
+    if not hasattr(settings, 'AEAT_KEY_PATH'):
+        raise ImproperlyConfigured('AEAT_KEY_PATH setting must be set')
+
+    if not hasattr(settings, 'AEAT_TEST_MODE'):
+        raise ImproperlyConfigured('AEAT_TEST_MODE setting must be set')
+
     cert_path = settings.AEAT_CERT_PATH
     key_path = settings.AEAT_KEY_PATH
     test_mode = settings.AEAT_TEST_MODE
