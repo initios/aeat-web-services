@@ -1,5 +1,7 @@
 import factory
 
+import datetime as dt
+
 
 class ENSPresentationHeader(factory.Factory):
     class Meta:
@@ -22,7 +24,7 @@ class ENSPresentationHeader(factory.Factory):
     PlaLoaGOOITE334LNG = 'ES'
     PlaUnlGOOITE334 = 'ESSegovia'
     CodPlUnHEA357LNG = 'ES'
-    DecDatTimHEA114 = '2017-01-01T11:11:11.019077+01:00'
+    DecDatTimHEA114 = factory.LazyAttribute(lambda x: dt.datetime.now().strftime('%Y%m%d%H%M'))
 
 
 class TraderConsignor(factory.Factory):
@@ -156,7 +158,7 @@ class CustomsOfficeFirstEntry(factory.Factory):
         model = dict
 
     RefNumCUSOFFFENT731 = 'ES009999'
-    ExpDatOfArrFIRENT733 = '2008-10-23T04:55:00.019077+01:00'
+    ExpDatOfArrFIRENT733 = factory.LazyAttribute(lambda x: dt.datetime.now().strftime('%Y%m%d%H%M'))
 
 
 class CustomsOfficeSubsequentEntry(factory.Factory):
@@ -185,8 +187,8 @@ class ENSPresentationFactory(factory.Factory):
 
     MesSenMES3 = factory.Sequence(lambda n: 'VAT00000%d' % n)
     MesRecMES6 = 'NICA.ES'
-    DatOfPreMES9 = factory.Faker('date')
-    TimOfPreMES10 = factory.Faker('time')
+    DatOfPreMES9 = factory.LazyAttribute(lambda x: dt.datetime.now().strftime('%y%m%d'))
+    TimOfPreMES10 = factory.LazyAttribute(lambda x: dt.datetime.now().strftime('%H%M'))
     MesIdeMES19 = factory.Sequence(lambda n: 'Id000%d' % n)
     MesTypMES20 = 'CC315A'
 

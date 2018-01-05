@@ -2,10 +2,10 @@ from unittest.mock import Mock, PropertyMock, patch
 
 import pytest
 
+from tests import factories
 from zeep import xsd
 
 from aeat import Config, Controller, wsdl
-from aeat.utils import factories
 
 
 def test_config_as_str():

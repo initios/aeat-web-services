@@ -35,7 +35,6 @@ class Logging(Plugin):
         '''
         The SOAP request just before sending it's sent to SOAP Server
         '''
-        print(self.envelope_to_str(envelope))
         logger.info('Egress: envelope %s | headers %s | operation %s | binding_opts %s',
                     self.envelope_to_str(envelope), http_headers, operation, binding_options)
 

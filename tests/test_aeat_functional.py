@@ -2,8 +2,9 @@ import os
 
 import pytest
 
+from tests import factories
+
 import aeat
-from aeat.utils import factories
 
 
 '''
