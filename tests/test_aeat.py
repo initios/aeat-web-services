@@ -106,3 +106,20 @@ def test_aduanet_services_configuration(service_name):
     assert config.service is not None
     assert config.signed is not None
     assert config.port.endswith('Pruebas')
+
+
+@patch('aeat.Controller.operation', new_callable=PropertyMock)
+def test_controller_with_xmlerr805(operation_patch, zeep_response):
+    def response():
+        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
+                             'ens_presentation_XMLERR805.xml', 'IE313V4')
+
+    operation_patch.return_value = lambda **kwargs: response()
+    ctrl = Controller(Mock(), Mock())
+    result = ctrl.request(factories.ENSPresentationFactory())
+
+    assert not result.valid
+    assert result.data is None
+
+    msg = 'Validation error. CC315A,DatOfPreMES9: Element too long (length constraint)'
+    assert msg == result.error
