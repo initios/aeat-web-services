@@ -127,8 +127,8 @@ def test_controller_with_xmlerr805(operation_patch, zeep_response):
 
 
 @pytest.mark.parametrize('detail,exception_cls', [
-    ('Unknown AEAT error', zeep_exceptions.XMLSyntaxError),
-    ('Validation error', zeep_exceptions.ValidationError),
+    ('Wrong AEAT response', zeep_exceptions.XMLSyntaxError),
+    ('Wrong AEAT response', zeep_exceptions.ValidationError),
     ('Unknown error', Exception),
 ])
 @patch('aeat.Controller.operation', new_callable=PropertyMock)

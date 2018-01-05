@@ -87,7 +87,7 @@ class Controller:
             data = self.operation(**payload)
         except zeep_exceptions.Error as e:
             logger.info('AEAT request failed.', exc_info=True)
-            return Result(None, e.message)
+            return Result(None, 'Wrong AEAT response')
         except Exception as e:
             logger.critical('Unexpected exception', exc_info=True)
             return Result(None, 'Unknown error')
