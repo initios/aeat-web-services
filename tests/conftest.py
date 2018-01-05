@@ -8,6 +8,20 @@ from zeep import Client
 
 
 @pytest.fixture
+def admin_request(admin_user):
+    def func(method, url=None, payload=None):
+        from rest_framework.test import APIRequestFactory, force_authenticate
+
+        factory = APIRequestFactory()
+        method_func = getattr(factory, method)
+        request = method_func(url, payload, format='json')
+        force_authenticate(request, user=admin_user)
+        return request
+
+    return func
+
+
+@pytest.fixture
 def certificate_example(resource_path):
     cert_path = resource_path(['certificate', 'cert.pem'])
     key_path = resource_path(['certificate', 'key.pem'])
