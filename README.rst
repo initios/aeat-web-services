@@ -108,13 +108,10 @@ Test
     $ tox
 
 
-Changelog
+Releases
 =========
 
-.. list-table::
-
-    * - 2018-04-01 Release 1.0.0-pre.1
-      - Versión inicial
+https://github.com/initios/aeat-web-services/releases
 
 
 Usefull Links
