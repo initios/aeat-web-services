@@ -23,14 +23,14 @@ def test_controller_is_built_from_config_obj(client):
 
 
 @pytest.mark.parametrize('test_mode,expected_port', [
-    (True, 'IE315V4Pruebas'),
-    (False, 'IE315V4'),
+    (True, 'IE313V4Pruebas'),
+    (False, 'IE313V4'),
 ])
 def test_config_is_built_from_service_name(test_mode, expected_port):
     config = Config('ens_presentation', test_mode=test_mode)
-    assert config.wsdl.endswith('IE315V4.wsdl')
-    assert 'IE315V4' == config.operation
-    assert 'IE315V4Service' == config.service
+    assert config.wsdl.endswith('IE313V4.wsdl')
+    assert 'IE313V4' == config.operation
+    assert 'IE313V4Service' == config.service
     assert expected_port == config.port
 
 
@@ -60,8 +60,8 @@ def test_controller_marks_signature_as_skip_if_config_is_signed(operation_patch)
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
 def test_controller_with_99999_error(operation_patch, zeep_response):
     def response():
-        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
-                             'ens_presentation_error_99999.xml', 'IE315V4')
+        return zeep_response('wsdl_ens_presentation_IE313V4.wsdl',
+                             'ens_presentation_error_99999.xml', 'IE313V4')
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock())
@@ -133,7 +133,7 @@ def test_controller_operation_request_exception_handling(operation_patch, detail
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
 def test_controller_with_ens_presentation_success_message(operation_patch, zeep_response):
     def response():
-        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
+        return zeep_response('wsdl_ens_presentation_IE313V4.wsdl',
                              'ens_presentation_success_IE328V5Sal.xml', 'IE313V4')
 
     operation_patch.return_value = lambda **kwargs: response()
@@ -151,10 +151,10 @@ def test_controller_with_ens_presentation_success_message(operation_patch, zeep_
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
 def test_controller_with_incorrect_responses(operation_patch, zeep_response, response_xml):
     def response():
-        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl', response_xml, 'IE315V4')
+        return zeep_response('wsdl_ens_presentation_IE313V4.wsdl', response_xml, 'IE313V4')
 
     operation_patch.return_value = lambda **kwargs: response()
-    ctrl = Controller(Mock(), Mock())
+    ctrl = Controller(Mock(), Mock(operation='IE313V4'))
     result = ctrl.request(factories.ENSPresentationFactory())
 
     assert not result.valid
