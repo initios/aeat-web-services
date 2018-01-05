@@ -113,7 +113,7 @@ def test_aduanet_services_configuration(service_name):
 def test_controller_with_xmlerr805(operation_patch, zeep_response):
     def response():
         return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
-                             'ens_presentation_XMLERR805.xml', 'IE313V4')
+                             'ens_presentation_error_IE917V4Sal.xml', 'IE313V4')
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock())
