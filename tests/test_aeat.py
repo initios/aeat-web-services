@@ -5,8 +5,7 @@ import pytest
 from zeep import xsd
 
 from aeat import Config, Controller, wsdl
-
-from . import factories
+from aeat.utils import factories
 
 
 def test_config_as_str():
