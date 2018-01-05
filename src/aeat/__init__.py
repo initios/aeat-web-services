@@ -93,6 +93,9 @@ class Controller:
         except zeep_exceptions.ValidationError as e:
             logger.error('Validation error', exc_info=True)
             return Result(None, 'Validation error')
+        except Exception as e:
+            logger.critical('Unexpected exception', exc_info=True)
+            return Result(None, 'Unknown error')
         else:
             data_dict = helpers.serialize_object(data)
             return Result(data_dict, None)

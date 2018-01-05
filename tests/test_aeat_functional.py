@@ -33,7 +33,9 @@ def test_ens_presentation(make_aeat_test_controller):
         MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678')
     ))
     assert result.valid, result.error
+
     assert 'OK' == result.data  # WIP. Not sure what the response is yet
+
 
 
 @pytest.mark.functional

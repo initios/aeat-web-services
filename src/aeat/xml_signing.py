@@ -44,7 +44,8 @@ def sign(root, cert, key):
     root_id = root_el.get('Id')
 
     if not root_id:
-        raise ValueError('Message to sign requires an Id attribute')
+        root_el.attrib['Id'] = 'MessageRoot'
+        root_id = root_el.get('Id')
 
     elem_uri = "#%s" % root_id
 
