@@ -32,10 +32,9 @@ class Config:
 
 
 class Result:
-    def __init__(self, data, error, xml=None):
+    def __init__(self, data, error):
         self.data = data
         self.error = error
-        self.xml = xml
 
     @property
     def valid(self):
