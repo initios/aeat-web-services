@@ -1,11 +1,10 @@
-import collections
 import logging
 
 from . import zeep_plugins
 from .wsdl import ADUANET_SERVICES
 from requests import Session
 from zeep import exceptions as zeep_exceptions
-from zeep import Client, Transport, helpers, xsd
+from zeep import Client, Transport, xsd
 
 logger = logging.getLogger(__name__)
 
@@ -40,6 +39,28 @@ class Result:
     @property
     def valid(self):
         return self.error is None
+
+
+def raw_response_parser(data):
+    return Result(data, None)
+
+
+def ens_presentation_response_parser(data):
+    for item in data:
+        mrn_el = item.find('DocNumHEA5')
+        mrn = mrn_el.text if mrn_el is not None else None
+
+        if mrn:
+            return Result(mrn, None)
+
+    return Result(None, 'AEAT response error')
+
+
+DEFAULT_RESPONSE_PARSER = raw_response_parser
+
+RESPONSE_PARSERS = {
+    'IE313V4': ens_presentation_response_parser
+}
 
 
 class Controller:
@@ -78,6 +99,9 @@ class Controller:
     def operation(self):
         return getattr(self.client.service, self.config.operation)
 
+    def get_response_parser(self):
+        return RESPONSE_PARSERS.get(self.config.operation, DEFAULT_RESPONSE_PARSER)
+
     def request(self, payload):
         if self.config.signed:
             # Skip WSDL validation. Is added later by zeep_plugins.SignMessage
@@ -88,23 +112,12 @@ class Controller:
         except zeep_exceptions.Fault as e:
             logger.info('AEAT request failed.', exc_info=True)
             return Result(None, e.message)
-        except zeep_exceptions.XMLSyntaxError as e:
-            logger.error('AEAT returned an invalid XML response', exc_info=True)
-            return Result(None, 'Unknown AEAT error')
-        except zeep_exceptions.ValidationError as e:
-            logger.error('Validation error', exc_info=True)
-            return Result(None, 'Validation error')
+        except zeep_exceptions.Error as e:
+            logger.info('AEAT request failed.', exc_info=True)
+            return Result(None, 'Wrong AEAT response')
         except Exception as e:
             logger.critical('Unexpected exception', exc_info=True)
             return Result(None, 'Unknown error')
         else:
-            data_dict = helpers.serialize_object(data)
-
-            # TODO Improve validation error handling
-            if isinstance(data_dict, collections.deque):
-                err = data_dict.pop()
-                attrib = err[4].text
-                detail = err[3].text
-                return Result(None, f'Validation error. {attrib}: {detail}')
-
-            return Result(data_dict, None)
+            parser = self.get_response_parser()
+            return parser(data)
