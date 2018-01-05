@@ -1,3 +1,5 @@
+import os
+
 import pytest
 
 import aeat
@@ -27,7 +29,9 @@ def make_aeat_test_controller(certificate_real):
 @pytest.mark.functional
 def test_ens_presentation(make_aeat_test_controller):
     ctrl = make_aeat_test_controller('ens_presentation')
-    result = ctrl.request(factories.ENSPresentationFactory())
+    result = ctrl.request(factories.ENSPresentationFactory(
+        MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678')
+    ))
     assert result.valid, result.error
     assert 'OK' == result.data  # WIP. Not sure what the response is yet
 

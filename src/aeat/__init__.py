@@ -90,6 +90,9 @@ class Controller:
         except zeep_exceptions.XMLSyntaxError as e:
             logger.error('AEAT returned an invalid XML response', exc_info=True)
             return Result(None, 'Unknown AEAT error')
+        except zeep_exceptions.ValidationError as e:
+            logger.error('Validation error', exc_info=True)
+            return Result(None, 'Validation error')
         else:
             data_dict = helpers.serialize_object(data)
             return Result(data_dict, None)

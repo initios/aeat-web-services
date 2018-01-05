@@ -183,10 +183,13 @@ class ENSPresentationFactory(factory.Factory):
     class Meta:
         model = dict
 
-    Id = factory.Sequence(lambda n: 'Id000%d' % n)
+    MesSenMES3 = factory.Sequence(lambda n: 'VAT00000%d' % n)
+    MesRecMES6 = 'NICA.ES'
     DatOfPreMES9 = factory.Faker('date')
     TimOfPreMES10 = factory.Faker('time')
     MesIdeMES19 = factory.Sequence(lambda n: 'Id000%d' % n)
+    MesTypMES20 = 'CC315A'
+
     HEAHEA = factory.SubFactory(ENSPresentationHeader)
     TRACONCO1 = factory.SubFactory(TraderConsignor)
     TRACONCE1 = factory.SubFactory(TraderConsignee)
