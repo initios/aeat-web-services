@@ -3,8 +3,9 @@ from unittest.mock import Mock, PropertyMock, patch
 import pytest
 
 from tests import factories
-from zeep import xsd
 from zeep import exceptions as zeep_exceptions
+from zeep import xsd
+
 from aeat import Config, Controller, wsdl
 
 

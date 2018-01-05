@@ -158,7 +158,8 @@ class CustomsOfficeFirstEntry(factory.Factory):
         model = dict
 
     RefNumCUSOFFFENT731 = 'ES009999'
-    ExpDatOfArrFIRENT733 = factory.LazyAttribute(lambda x: dt.datetime.now().strftime('%Y%m%d%H%M'))
+    ExpDatOfArrFIRENT733 = factory.LazyAttribute(lambda x:
+                                                 dt.datetime.now().strftime('%Y%m%d%H%M'))
 
 
 class CustomsOfficeSubsequentEntry(factory.Factory):
