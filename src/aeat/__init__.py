@@ -57,7 +57,7 @@ def ens_presentation_response_parser(data):
 
 
 RESPONSE_PARSERS = {
-    'IE615V2': ens_presentation_response_parser
+    'IE313V4': ens_presentation_response_parser
 }
 
 
@@ -107,6 +107,9 @@ class Controller:
 
         try:
             data = self.operation(**payload)
+        except zeep_exceptions.Fault as e:
+            logger.info('AEAT request failed.', exc_info=True)
+            return Result(None, e.message)
         except zeep_exceptions.Error as e:
             logger.info('AEAT request failed.', exc_info=True)
             return Result(None, 'Wrong AEAT response')

@@ -61,7 +61,7 @@ def test_controller_marks_signature_as_skip_if_config_is_signed(operation_patch)
 def test_controller_with_99999_error(operation_patch, zeep_response):
     def response():
         return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
-                             'ens_presentation_error_99999.xml', 'IE313V4')
+                             'ens_presentation_error_99999.xml', 'IE315V4')
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock())
@@ -83,7 +83,7 @@ def test_controller_with_html_error(operation_patch, zeep_response):
     result = ctrl.request(factories.ENSQueryFactory())
 
     assert not result.valid
-    assert 'Unknown AEAT error' == result.error
+    assert 'Wrong AEAT response' == result.error
     assert result.data is None
 
 
@@ -137,7 +137,7 @@ def test_controller_with_ens_presentation_success_message(operation_patch, zeep_
                              'ens_presentation_success_IE328V5Sal.xml', 'IE313V4')
 
     operation_patch.return_value = lambda **kwargs: response()
-    ctrl = Controller(Mock(), Mock())
+    ctrl = Controller(Mock(), Mock(operation='IE313V4'))
     result = ctrl.request(factories.ENSPresentationFactory())
 
     assert result.valid
@@ -151,7 +151,7 @@ def test_controller_with_ens_presentation_success_message(operation_patch, zeep_
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
 def test_controller_with_incorrect_responses(operation_patch, zeep_response, response_xml):
     def response():
-        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl', response_xml, 'IE313V4')
+        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl', response_xml, 'IE315V4')
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock())
