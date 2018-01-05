@@ -1,3 +1,4 @@
+import collections
 import logging
 
 from . import zeep_plugins
@@ -99,17 +100,11 @@ class Controller:
         else:
             data_dict = helpers.serialize_object(data)
 
-            # Contains errors?
             # TODO Improve validation error handling
-            import collections
-
             if isinstance(data_dict, collections.deque):
                 err = data_dict.pop()
                 attrib = err[4].text
                 detail = err[3].text
                 return Result(None, f'Validation error. {attrib}: {detail}')
-
-            # if data_dict.XMLERR805:
-            #     return Result(None, 'Validation error')
 
             return Result(data_dict, None)
