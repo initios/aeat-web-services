@@ -38,7 +38,6 @@ def test_ens_presentation(make_aeat_test_controller):
     assert 'OK' == result.data  # WIP. Not sure what the response is yet
 
 
-
 @pytest.mark.functional
 def test_ens_query(make_aeat_test_controller):
     ctrl = make_aeat_test_controller('ens_query')
