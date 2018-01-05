@@ -41,6 +41,26 @@ class Result:
         return self.error is None
 
 
+def default_response_parser(data):
+    return Result(data, None)
+
+
+def ens_presentation_response_parser(data):
+    for item in data:
+        mrn_el = item.find('DocNumHEA5')
+        mrn = mrn_el.text if mrn_el is not None else None
+
+        if mrn:
+            return Result(mrn, None)
+
+    return Result(None, 'AEAT response error')
+
+
+RESPONSE_PARSERS = {
+    'IE615V2': ens_presentation_response_parser
+}
+
+
 class Controller:
     def __init__(self, client, config):
         self.client = client
@@ -77,6 +97,9 @@ class Controller:
     def operation(self):
         return getattr(self.client.service, self.config.operation)
 
+    def get_response_parser(self):
+        return RESPONSE_PARSERS.get(self.config.operation, default_response_parser)
+
     def request(self, payload):
         if self.config.signed:
             # Skip WSDL validation. Is added later by zeep_plugins.SignMessage
@@ -91,11 +114,5 @@ class Controller:
             logger.critical('Unexpected exception', exc_info=True)
             return Result(None, 'Unknown error')
         else:
-            for item in data:
-                mrn_el = item.find('DocNumHEA5')
-                mrn = mrn_el.text if mrn_el is not None else None
-
-                if mrn:
-                    return Result(mrn, None)
-
-            return Result(None, 'AEAT response error')
+            parser = self.get_response_parser()
+            return parser(data)
