@@ -21,11 +21,11 @@ ADUANET_SERVICES = {
     },
     'ens_presentation': {
         'verbose_name': 'Servicio de Presentación ENS V4.0',
-        'wsdl': f'{BASE_ENS}enswsv4/IE313V4.wsdl',
-        'operation': 'IE313V4',
-        'port_production': 'IE313V4',
-        'port_test': 'IE313V4Pruebas',
-        'service': 'IE313V4Service',
+        'wsdl': f'{BASE_ENS}enswsv4/IE315V4.wsdl',
+        'operation': 'IE315V4',
+        'port_production': 'IE315V4',
+        'port_test': 'IE315V4Pruebas',
+        'service': 'IE315V4Service',
         'signed': True,
     },
     'ens_query': {
