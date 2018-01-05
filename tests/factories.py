@@ -1,6 +1,6 @@
-import factory
-
 import datetime as dt
+
+import factory
 
 
 class ENSPresentationHeader(factory.Factory):
