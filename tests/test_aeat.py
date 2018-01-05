@@ -134,7 +134,7 @@ def test_controller_operation_request_exception_handling(operation_patch, detail
 def test_controller_with_ens_presentation_success_message(operation_patch, zeep_response):
     def response():
         return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
-                             'ens_presentation_success_IE328V5Sal.xml', 'IE315V4')
+                             'ens_presentation_success_IE328V4Sal.xml', 'IE315V4')
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock(operation='IE315V4'))
