@@ -145,3 +145,17 @@ def test_controller_operation_request_exception_handling(operation_patch, detail
 
     assert not result.valid
     assert detail == result.error
+
+
+@patch('aeat.Controller.operation', new_callable=PropertyMock)
+def test_controller_with_success_message_returns_the_mrn_number(operation_patch, zeep_response):
+    def response():
+        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
+                             'ens_presentation_success_IE328V5Sal.xml', 'IE313V4')
+
+    operation_patch.return_value = lambda **kwargs: response()
+    ctrl = Controller(Mock(), Mock())
+    result = ctrl.request(factories.ENSPresentationFactory())
+
+    assert result.valid
+    assert '17ES004311Z0000010' == result.data

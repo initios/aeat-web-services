@@ -1,11 +1,10 @@
-import collections
 import logging
 
 from . import zeep_plugins
 from .wsdl import ADUANET_SERVICES
 from requests import Session
 from zeep import exceptions as zeep_exceptions
-from zeep import Client, Transport, helpers, xsd
+from zeep import Client, Transport, xsd
 
 logger = logging.getLogger(__name__)
 
@@ -33,9 +32,10 @@ class Config:
 
 
 class Result:
-    def __init__(self, data, error):
+    def __init__(self, data, error, xml=None):
         self.data = data
         self.error = error
+        self.xml = xml
 
     @property
     def valid(self):
@@ -85,26 +85,17 @@ class Controller:
 
         try:
             data = self.operation(**payload)
-        except zeep_exceptions.Fault as e:
+        except zeep_exceptions.Error as e:
             logger.info('AEAT request failed.', exc_info=True)
             return Result(None, e.message)
-        except zeep_exceptions.XMLSyntaxError as e:
-            logger.error('AEAT returned an invalid XML response', exc_info=True)
-            return Result(None, 'Unknown AEAT error')
-        except zeep_exceptions.ValidationError as e:
-            logger.error('Validation error', exc_info=True)
-            return Result(None, 'Validation error')
         except Exception as e:
             logger.critical('Unexpected exception', exc_info=True)
             return Result(None, 'Unknown error')
         else:
-            data_dict = helpers.serialize_object(data)
+            for item in data:
+                mrn_el = item.find('DocNumHEA5')
 
-            # TODO Improve validation error handling
-            if isinstance(data_dict, collections.deque):
-                err = data_dict.pop()
-                attrib = err[4].text
-                detail = err[3].text
-                return Result(None, f'Validation error. {attrib}: {detail}')
+                if mrn_el is not None:
+                    return Result(mrn_el.text, None)
 
-            return Result(data_dict, None)
+            return Result('AEAT response error', None)
