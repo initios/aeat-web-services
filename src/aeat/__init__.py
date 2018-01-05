@@ -41,7 +41,7 @@ class Result:
         return self.error is None
 
 
-def default_response_parser(data):
+def raw_response_parser(data):
     return Result(data, None)
 
 
@@ -55,6 +55,8 @@ def ens_presentation_response_parser(data):
 
     return Result(None, 'AEAT response error')
 
+
+DEFAULT_RESPONSE_PARSER = raw_response_parser
 
 RESPONSE_PARSERS = {
     'IE313V4': ens_presentation_response_parser
@@ -98,7 +100,7 @@ class Controller:
         return getattr(self.client.service, self.config.operation)
 
     def get_response_parser(self):
-        return RESPONSE_PARSERS.get(self.config.operation, default_response_parser)
+        return RESPONSE_PARSERS.get(self.config.operation, DEFAULT_RESPONSE_PARSER)
 
     def request(self, payload):
         if self.config.signed:
