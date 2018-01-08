@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header/>
+    <soapenv:Body Id="Body">
+        <ie:CC328A
+                xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE328V4Sal.xsd">
+            <MesSenMES3>NICA.ES</MesSenMES3>
+            <MesRecMES6>B88888888</MesRecMES6>
+            <DatOfPreMES9>171221</DatOfPreMES9>
+            <TimOfPreMES10>1815</TimOfPreMES10>
+            <MesIdeMES19>00000000012345</MesIdeMES19>
+            <MesTypMES20>CC328A</MesTypMES20>
+            <CorIdeMES25>PREFIX00000001</CorIdeMES25>
+            <HEAHEA>
+                <RefNumHEA4>LRN0000000000000009999</RefNumHEA4>
+                <DocNumHEA5>17ES004311Z0000010</DocNumHEA5>
+                <TraModAtBorHEA76>1</TraModAtBorHEA76>
+                <IdeOfMeaOfTraCroHEA85>9594432</IdeOfMeaOfTraCroHEA85>
+                <DecRegDatTimHEA115>201712212103</DecRegDatTimHEA115>
+            </HEAHEA>
+            <GOOITEGDS>
+                <IteNumGDS7>1</IteNumGDS7>
+                <PRODOCDC2>
+                    <DocTypDC21>N730</DocTypDC21>
+                    <DocRefDC23>SN</DocRefDC23>
+                </PRODOCDC2>
+            </GOOITEGDS>
+            <PERLODSUMDEC>
+                <PERLODSUMDECLNG>ES</PERLODSUMDECLNG>
+                <TINPLD1>ESB27712345</TINPLD1>
+            </PERLODSUMDEC>
+            <CUSOFFFENT730>
+                <RefNumCUSOFFFENT731>ES004311</RefNumCUSOFFFENT731>
+                <ExpDatOfArrFIRENT733>201712080000</ExpDatOfArrFIRENT733>
+            </CUSOFFFENT730>
+        </ie:CC328A>
+    </soapenv:Body>
+</soapenv:Envelope>

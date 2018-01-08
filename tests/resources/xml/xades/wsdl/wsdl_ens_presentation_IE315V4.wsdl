@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+        xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+        xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+        xmlns:apachesoap="http://xml.apache.org/xml-soap"
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+
+        xmlns:IE315V4="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE315V4.wsdl"
+
+        xmlns:IE315V4Ent="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE315V4Ent.xsd"
+        xmlns:IE316V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE316V4Sal.xsd"
+        xmlns:IE328V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE328V4Sal.xsd"
+        xmlns:IE351V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE351V4Sal.xsd"
+        xmlns:IE917V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE917V4Sal.xsd"
+
+        targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE315V4.wsdl">
+
+    <wsdl:documentation>Servicio que define el envio de una ENtry Sumary (ENS)
+        para su alta en el sistema de informacion de aduanas.
+    </wsdl:documentation>
+    <wsdl:types>
+        <schema elementFormDefault="qualified"
+                targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE315V4.wsdl"
+
+                xmlns="http://www.w3.org/2001/XMLSchema">
+
+            <xsd:import
+                    namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE315V4Ent.xsd"
+                    schemaLocation="IE315V4Ent.xsd"/>
+            <xsd:import
+                    namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE316V4Sal.xsd"
+                    schemaLocation="IE316V4Sal.xsd"/>
+            <xsd:import
+                    namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE328V4Sal.xsd"
+                    schemaLocation="IE328V4Sal.xsd"/>
+            <xsd:import
+                    namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE351V4Sal.xsd"
+                    schemaLocation="IE351V4Sal.xsd"/>
+            <xsd:import
+                    namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE917V4Sal.xsd"
+                    schemaLocation="IE917V4Sal.xsd"/>
+
+            <xsd:complexType name="IE315V4SalType">
+                <xsd:choice>
+                    <xsd:element ref="IE316V4Sal:CC316A"/>
+                    <xsd:element ref="IE328V4Sal:CC328A"/>
+                    <xsd:element ref="IE351V4Sal:CC351A"/>
+                    <xsd:element ref="IE917V4Sal:CD917B"/>
+                </xsd:choice>
+            </xsd:complexType>
+            <xsd:element name="Salida" type="IE315V4:IE315V4SalType"/>
+        </schema>
+    </wsdl:types>
+
+    <wsdl:message name="Entrada">
+        <wsdl:part name="IE315V4Ent" element="IE315V4Ent:CC315A"/>
+    </wsdl:message>
+
+    <wsdl:message name="Salida">
+        <wsdl:part name="IE315V4Sal" element="IE315V4:Salida"/>
+    </wsdl:message>
+
+    <wsdl:portType name="IE315V4">
+        <wsdl:operation name="IE315V4">
+            <wsdl:input name="Entrada" message="IE315V4:Entrada"/>
+            <wsdl:output name="Salida" message="IE315V4:Salida"/>
+        </wsdl:operation>
+    </wsdl:portType>
+
+    <wsdl:binding name="IE315V4SoapBinding" type="IE315V4:IE315V4">
+        <wsdlsoap:binding style="document"
+                          transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="IE315V4">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="Entrada">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="Salida">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+
+    <wsdl:service name="IE315V4Service">
+        <wsdl:port name="IE315V4" binding="IE315V4:IE315V4SoapBinding">
+            <wsdlsoap:address
+                    location="https://www1.agenciatributaria.gob.es/L/inwinvoc/es.aeat.dit.adu.aden.enswsv4.IE315V4SOAP"/>
+        </wsdl:port>
+
+        <wsdl:port binding="IE315V4:IE315V4SoapBinding" name="IE315V4Pruebas">
+            <wsdlsoap:address
+                    location="https://www1.agenciatributaria.gob.es/L/inwinvoc/es.aeat.dit.adu.aden.enswsv4.IE315P4SOAP"/>
+        </wsdl:port>
+    </wsdl:service>
+
+</wsdl:definitions>

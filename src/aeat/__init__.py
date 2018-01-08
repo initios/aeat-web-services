@@ -59,7 +59,7 @@ def ens_presentation_response_parser(data):
 DEFAULT_RESPONSE_PARSER = raw_response_parser
 
 RESPONSE_PARSERS = {
-    'IE313V4': ens_presentation_response_parser
+    'IE315V4': ens_presentation_response_parser
 }
 
 
