@@ -14,12 +14,13 @@ def test_config_as_str():
     assert 'Servicio de Presentación ENS V4.0' in config.__str__()
 
 
+@pytest.mark.parametrize('signed', [True, False])
 @patch('aeat.Client')
-def test_controller_is_built_from_config_obj(client):
-    config = Mock(signed=True)
+def test_controller_is_built_from_config_obj(client, signed):
+    config = Mock(signed=signed)
     ctrl = Controller.build_from_config(config, Mock(), Mock())
     assert isinstance(ctrl, Controller)
-    assert ctrl.config.signed
+    assert signed is ctrl.config.signed
 
 
 @pytest.mark.parametrize('test_mode,expected_port', [
