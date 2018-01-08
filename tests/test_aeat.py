@@ -160,3 +160,18 @@ def test_controller_with_incorrect_responses(operation_patch, zeep_response, res
     assert not result.valid
     assert result.data is None
     assert 'AEAT response error' == result.error
+
+
+@patch('aeat.Controller.operation', new_callable=PropertyMock)
+def test_controller_result_includes_raw_request_and_response(operation_patch, zeep_response):
+    def response():
+        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
+                             'ens_presentation_success_IE328V4Sal.xml', 'IE315V4')
+
+    operation_patch.return_value = lambda **kwargs: response()
+    history_plugin = Mock(last_sent='xyz', last_received='zyx')
+    ctrl = Controller(Mock(), Mock(operation='IE315V4'), history_plugin)
+    result = ctrl.request(factories.ENSPresentationFactory())
+
+    assert 'xyz' == result.raw_request
+    assert 'zyx' == result.raw_response
