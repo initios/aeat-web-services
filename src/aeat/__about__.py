@@ -1,7 +1,7 @@
 
 __title__ = 'aeat-web-services'
 __summary__ = 'Spanish Tax Agency Electronic Office (AEAT) Integration'
-__version__ = '1.0.0-pre.3'
+__version__ = '1.0.0-pre.4'
 __license__ = 'MIT'
 __uri__ = 'https://github.com/initios/aeat-web-services'
 __author__ = 'Initios Desarrollos'
