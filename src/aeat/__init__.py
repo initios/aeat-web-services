@@ -5,6 +5,8 @@ from .wsdl import ADUANET_SERVICES
 from requests import Session
 from zeep import exceptions as zeep_exceptions
 from zeep import Client, Transport, xsd
+from zeep.plugins import HistoryPlugin
+
 
 logger = logging.getLogger(__name__)
 
@@ -32,9 +34,11 @@ class Config:
 
 
 class Result:
-    def __init__(self, data, error):
+    def __init__(self, data, error, raw_request=None, raw_response=None):
         self.data = data
         self.error = error
+        self.raw_request = raw_request
+        self.raw_response = raw_response
 
     @property
     def valid(self):
@@ -64,9 +68,10 @@ RESPONSE_PARSERS = {
 
 
 class Controller:
-    def __init__(self, client, config):
+    def __init__(self, client, config, history_plugin=None):
         self.client = client
         self.config = config
+        self.history_plugin = history_plugin
         logger.info('Controller initialized with config %s', config)
 
     @classmethod
@@ -84,16 +89,18 @@ class Controller:
         session.cert = (pub_cert, priv_cert)
         transport = Transport(session=session, operation_timeout=60)
 
-        plugins = [zeep_plugins.Logging()]
+        history_plugin = HistoryPlugin()
 
         if config.signed:
             sign_plugin = zeep_plugins.SignMessage(pub_cert, priv_cert)
-            plugins.insert(0, sign_plugin)
+            plugins = [sign_plugin, history_plugin]
+        else:
+            plugins = [history_plugin]
 
         client = Client(config.wsdl, service_name=config.service, port_name=config.port,
                         transport=transport, strict=False, plugins=plugins)
 
-        return cls(client, config)
+        return cls(client, config, history_plugin=history_plugin)
 
     @property
     def operation(self):
@@ -120,4 +127,11 @@ class Controller:
             return Result(None, 'Unknown error')
         else:
             parser = self.get_response_parser()
-            return parser(data)
+            history = self.history_plugin
+            result = parser(data)
+
+            if history:
+                result.raw_request = history.last_sent
+                result.raw_response = history.last_received
+
+            return result
