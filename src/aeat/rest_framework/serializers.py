@@ -6,42 +6,6 @@ from rest_framework.serializers import ValidationError
 import aeat
 
 
-def make_aeat_request(service_name, data):
-    '''
-    Helper to make AEAT requests
-
-    :rtype: aduanet.aeat.Result
-    '''
-    if not hasattr(settings, 'AEAT_CERT_PATH'):
-        raise ImproperlyConfigured('AEAT_CERT_PATH setting must be set')
-
-    if not hasattr(settings, 'AEAT_KEY_PATH'):
-        raise ImproperlyConfigured('AEAT_KEY_PATH setting must be set')
-
-    if not hasattr(settings, 'AEAT_TEST_MODE'):
-        raise ImproperlyConfigured('AEAT_TEST_MODE setting must be set')
-
-    cert_path = settings.AEAT_CERT_PATH
-    key_path = settings.AEAT_KEY_PATH
-    test_mode = settings.AEAT_TEST_MODE
-
-    config = aeat.Config(service_name, test_mode=test_mode)
-    ctrl = aeat.Controller.build_from_config(config, cert_path, key_path)
-    return ctrl.request(data)
-
-
-class AEATRequest(rf.Serializer):
-    service_name = None
-
-    def save(self):
-        result = make_aeat_request(self.service_name, self.data)
-
-        if not result.valid:
-            raise ValidationError(result.error)
-
-        return result.data
-
-
 class AEATDateField(rf.DateField):
     def __init__(self, *args, **kwargs):
         return super().__init__(*args, **kwargs, format='%y%m%d')
@@ -65,6 +29,33 @@ class RequiredStr(rf.CharField):
 class NotRequiredStr(rf.CharField):
     def __init__(self, *args, **kwargs):
         return super().__init__(*args, **kwargs, required=False)
+
+
+def make_aeat_request(service_name, data):
+    '''
+    Helper to make AEAT requests
+
+    :rtype: aduanet.aeat.Result
+    '''
+
+    cert_path = settings.AEAT_CERT_PATH
+    key_path = settings.AEAT_KEY_PATH
+
+    config = aeat.Config(service_name, test_mode=settings.AEAT_TEST_MODE)
+    ctrl = aeat.Controller.build_from_config(config, cert_path, key_path)
+    return ctrl.request(data)
+
+
+class AEATRequest(rf.Serializer):
+    service_name = None
+
+    def save(self):
+        result = make_aeat_request(self.service_name, self.data)
+
+        if not result.valid:
+            raise ValidationError(result.error)
+
+        return {'data': result.data, 'raw_response': result.raw_response}
 
 
 class ENSQuery(AEATRequest):
@@ -93,7 +84,7 @@ class ENSPresentationHeader(rf.Serializer):
     TotGroMasHEA307 = NotRequiredStr(help_text='Total gross mass. EG 10')
     DecPlaHEA394 = RequiredStr(help_text='Declaration place. EG Madrid')
     DecPlaHEA394LNG = RequiredStr(help_text='Declaration place LNG. EG ES')
-    SpeCirIndHEA1 = RequiredStr(help_text='Specific Circumstance Indicator. EG A')
+    SpeCirIndHEA1 = NotRequiredStr(help_text='Specific Circumstance Indicator. EG A')
     TraChaMetOfPayHEA1 = NotRequiredStr(help_text='Transport charges / Method of Payment. EG C')
     ComRefNumHEA = NotRequiredStr(max_length=70, help_text='Commercial Reference Numer. EG a828rt')
     ConRefNumHEA = NotRequiredStr(max_length=35, help_text='Conveyance reference number. EG 7777b')
@@ -249,13 +240,13 @@ class ENSMixin(rf.Serializer):
     GOOITEGDS = GoodsItem(required=True, many=True)
     ITI = Itinerary(required=False, many=True)
     PERLODSUMDEC = PersonLodgingSummaryDeclaration(required=False)
-    SEAID529 = SealsIdentity(required=True, many=True)
+    SEAID529 = SealsIdentity(required=False, many=True)
     CUSOFFFENT730 = CustomsOfficeFirstEntry(required=True)
     CUSOFFSENT740 = CustomsOfficeSubsequentEntry(many=True)
     TRACARENT601 = TraderEntryCarrier(required=False)
 
 
-class ENSPresentation(TestIndicatorMixin, ENSMixin, AEATRequest):
+class ENSPresentationSerializer(TestIndicatorMixin, ENSMixin, AEATRequest):
     service_name = 'ens_presentation'
 
 
@@ -279,12 +270,12 @@ class TraderRepresentative(rf.Serializer):
     TINTRE1 = NotRequiredStr(help_text='Trader indentification number')
 
 
-class ENSModification(TestIndicatorMixin, ENSMixin, AEATRequest):
+class ENSModificationSerializer(TestIndicatorMixin, ENSMixin, AEATRequest):
     service_name = 'ens_modification'
 
     NOTPAR670 = NotifyParty()
     TRAREP = TraderRepresentative()
 
 
-class EXSPresentation(AEATRequest):
+class EXSPresentationSerializer(AEATRequest):
     service_name = 'exs_presentation'

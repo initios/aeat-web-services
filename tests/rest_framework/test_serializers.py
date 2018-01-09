@@ -35,10 +35,11 @@ def test_aeat_request_serializer_raises_validation_error_if_request_fails():
         serializer.save()
 
 
-@patch('aeat.rest_framework.serializers.make_aeat_request', lambda x, y: Result(data={'data': 'xyz'}, error=None))
+@patch('aeat.rest_framework.serializers.make_aeat_request',
+       lambda x, y: Result(data='xyz', error=None, raw_response='xml...'))
 def test_aeat_request_serializer_returns_aeat_response_if_request_succeed():
     serializer = serializers.AEATRequest()
-    assert {'data': 'xyz'} == serializer.save()
+    assert {'data': 'xyz', 'raw_response': 'xml...'} == serializer.save()
 
 
 def test_adds_test_indicator_when_test_mode_is_enabled():
