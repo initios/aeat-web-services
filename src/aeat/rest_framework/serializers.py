@@ -64,7 +64,7 @@ class AEATRequest(rf.Serializer):
         return {'data': result.data, 'raw_response': result.raw_response}
 
 
-class ENSQuery(AEATRequest):
+class ENSQuerySerializer(AEATRequest):
     service_name = 'ens_query'
 
     TraModAtBorHEA76 = RequiredStr(help_text='Transport mode at border. EG 1')
