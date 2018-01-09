@@ -4,7 +4,8 @@ from rest_framework import serializers as rf
 from rest_framework.serializers import ValidationError
 
 import aeat
-from . import fields, complex_types
+
+from . import complex_types, fields
 
 
 def make_aeat_request(service_name, data):

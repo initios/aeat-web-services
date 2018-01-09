@@ -1,6 +1,6 @@
 from rest_framework import serializers as rf
 
-from .fields import RequiredStr, NotRequiredStr, AEATDateTimeField
+from .fields import AEATDateTimeField, NotRequiredStr, RequiredStr
 
 
 class ENSHeader(rf.Serializer):
