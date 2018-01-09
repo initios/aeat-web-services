@@ -50,6 +50,6 @@ setuptools.setup(
         'License :: OSI Approved :: MIT License',
     ],
 
-    packages=['aeat'],
+    packages=['aeat', 'aeat.rest_framework'],
     package_dir={'': 'src'},
 )

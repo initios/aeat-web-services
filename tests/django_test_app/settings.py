@@ -2,7 +2,7 @@ import os
 
 '''Django test settings'''
 
-INSTALLED_APPS = ['tests.django_test_app']
+INSTALLED_APPS = ['django_test_app']
 
 SECRET_KEY = 'testing.'
 

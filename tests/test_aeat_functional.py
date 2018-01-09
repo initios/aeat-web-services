@@ -2,7 +2,7 @@ import os
 
 import pytest
 
-from tests import factories
+import factories
 
 import aeat
 

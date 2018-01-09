@@ -2,7 +2,7 @@ from unittest.mock import Mock, PropertyMock, patch
 
 import pytest
 
-from tests import factories
+import factories
 from zeep import exceptions as zeep_exceptions
 from zeep import xsd
 
