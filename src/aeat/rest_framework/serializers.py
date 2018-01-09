@@ -104,7 +104,7 @@ class ENSModificationSerializer(MessageMixin, AEATRequest):
     HEAHEA = complex_types.ENSModificationHeader(required=True)
 
 
-class EXSPresentationSerializer(MessageMixin, AEATRequest):
+class EXSSerializer(MessageMixin, AEATRequest):
     service_name = 'exs_presentation'
 
     Id = fields.RequiredStr(max_length=14, source='MesIdeMES19',
