@@ -40,6 +40,14 @@ class AEATRequest(rf.Serializer):
 
         return {'data': result.data, 'raw_response': result.raw_response}
 
+    def to_representation(self, instance):
+        instance = super().to_representation(instance)
+
+        if settings.AEAT_TEST_MODE:
+            instance['TesIndMES18'] = '0'
+
+        return instance
+
 
 class ENSQuerySerializer(AEATRequest):
     service_name = 'ens_query'
@@ -51,16 +59,6 @@ class ENSQuerySerializer(AEATRequest):
 
 class ENSForkSerializer(AEATRequest):
     service_name = 'ens_fork'
-
-
-class TestIndicatorMixin(rf.Serializer):
-    def to_representation(self, instance):
-        instance = super().to_representation(instance)
-
-        if settings.AEAT_TEST_MODE:
-            instance['TesIndMES18'] = '0'
-
-        return instance
 
 
 class ENSMixin(rf.Serializer):
@@ -75,8 +73,6 @@ class ENSMixin(rf.Serializer):
                                          help_text='Time of preparation. EG 1010 (HHMM)')
     MesIdeMES19 = fields.RequiredStr(max_length=14, help_text='Message identification. '
                                                               'EG 09ES112222110 (like Id)')
-    MesTypMES20 = fields.NotRequiredStr(default='CC315A', read_only=True,
-                                        help_text='Message type. EG CC315A')
 
     # Nested fields
     HEAHEA = complex_types.ENSHeader(required=True)
@@ -85,6 +81,7 @@ class ENSMixin(rf.Serializer):
     NOTPAR670 = complex_types.NotifyParty()
     GOOITEGDS = complex_types.GoodsItem(required=True, many=True)
     ITI = complex_types.Itinerary(required=False, many=True)
+    TRAREP = complex_types.TraderRepresentative(required=False)
     PERLODSUMDEC = complex_types.PersonLodgingSummaryDeclaration(required=False)
     SEAID529 = complex_types.SealsIdentity(required=False, many=True)
     CUSOFFFENT730 = complex_types.CustomsOfficeFirstEntry(required=True)
@@ -92,14 +89,18 @@ class ENSMixin(rf.Serializer):
     TRACARENT601 = complex_types.TraderEntryCarrier(required=False)
 
 
-class ENSPresentationSerializer(TestIndicatorMixin, ENSMixin, AEATRequest):
+class ENSPresentationSerializer(ENSMixin, AEATRequest):
     service_name = 'ens_presentation'
 
+    MesTypMES20 = fields.NotRequiredStr(default='CC315A', read_only=True,
+                                        help_text='Message type. EG CC315A')
 
-class ENSModificationSerializer(TestIndicatorMixin, ENSMixin, AEATRequest):
+
+class ENSModificationSerializer(ENSMixin, AEATRequest):
     service_name = 'ens_modification'
 
-    TRAREP = complex_types.TraderRepresentative()
+    MesTypMES20 = fields.NotRequiredStr(default='CC313A', read_only=True,
+                                        help_text='Message type. EG CC313A')
 
 
 class EXSPresentationSerializer(AEATRequest):
