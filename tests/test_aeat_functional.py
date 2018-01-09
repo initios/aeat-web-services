@@ -39,6 +39,17 @@ def test_ens_presentation(make_aeat_test_controller):
 
 
 @pytest.mark.functional
+def test_ens_modification(make_aeat_test_controller):
+    ctrl = make_aeat_test_controller('ens_modification')
+    result = ctrl.request(factories.ENSPresentationFactory(
+        MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678')
+    ))
+    assert result.valid, result.error
+
+    assert 'OK' == result.data  # WIP. Not sure what the response is yet
+
+
+@pytest.mark.functional
 def test_ens_query(make_aeat_test_controller):
     ctrl = make_aeat_test_controller('ens_query')
 
