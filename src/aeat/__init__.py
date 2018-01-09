@@ -5,7 +5,6 @@ from .wsdl import ADUANET_SERVICES
 from requests import Session
 from zeep import exceptions as zeep_exceptions
 from zeep import Client, Transport, xsd
-from zeep.plugins import HistoryPlugin
 
 
 logger = logging.getLogger(__name__)
@@ -68,10 +67,10 @@ RESPONSE_PARSERS = {
 
 
 class Controller:
-    def __init__(self, client, config, history_plugin=None):
+    def __init__(self, client, config, raw_xml_plugin=None):
         self.client = client
         self.config = config
-        self.history_plugin = history_plugin
+        self.raw_xml_plugin = raw_xml_plugin
         logger.info('Controller initialized with config %s', config)
 
     @classmethod
@@ -89,18 +88,18 @@ class Controller:
         session.cert = (pub_cert, priv_cert)
         transport = Transport(session=session, operation_timeout=60)
 
-        history_plugin = HistoryPlugin()
+        raw_xml_plugin = zeep_plugins.RawXMLPlugin()
 
         if config.signed:
             sign_plugin = zeep_plugins.SignMessage(pub_cert, priv_cert)
-            plugins = [sign_plugin, history_plugin]
+            plugins = [sign_plugin, raw_xml_plugin]
         else:
-            plugins = [history_plugin]
+            plugins = [raw_xml_plugin]
 
         client = Client(config.wsdl, service_name=config.service, port_name=config.port,
                         transport=transport, strict=False, plugins=plugins)
 
-        return cls(client, config, history_plugin=history_plugin)
+        return cls(client, config, raw_xml_plugin=raw_xml_plugin)
 
     @property
     def operation(self):
@@ -118,20 +117,19 @@ class Controller:
             data = self.operation(**payload)
         except zeep_exceptions.Fault as e:
             logger.info('AEAT request failed.', exc_info=True)
-            return Result(None, e.message)
+            result = Result(None, e.message)
         except zeep_exceptions.Error as e:
             logger.info('AEAT request failed.', exc_info=True)
-            return Result(None, 'Wrong AEAT response')
+            result = Result(None, 'Wrong AEAT response')
         except Exception as e:
             logger.critical('Unexpected exception', exc_info=True)
-            return Result(None, 'Unknown error')
+            result = Result(None, 'Unknown error')
         else:
             parser = self.get_response_parser()
-            history = self.history_plugin
             result = parser(data)
 
-            if history:
-                result.raw_request = history.last_sent
-                result.raw_response = history.last_received
+        if self.raw_xml_plugin:
+            result.raw_request = self.raw_xml_plugin.last_sent
+            result.raw_response = self.raw_xml_plugin.last_received
 
-            return result
+        return result
