@@ -78,11 +78,13 @@ Usage (Spanish)
 Django Rest Framework
 =====================
 
+Several AEAT Serializers are provided.
+
 .. code:: python
 
     from aeat.rest_framework import serializers as aeat_serializers
 
-    serializrer = aeat_serializers.ENSPresentationSerializer(data=payload)
+    serializer = aeat_serializers.ENSPresentationSerializer(data=payload)
     serializer.is_valid(raise_exception=True)
     result = serializer.save()
 
