@@ -10,12 +10,12 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tests.django_test_app.settings'
 django.setup()
 
 
-from django.test.utils import override_settings
+from django.test.utils import override_settings  # isort:skip
 
-from rest_framework import serializers as rf
+from rest_framework import serializers as rf  # isort:skip
 
-from aeat import Result
-from aeat.rest_framework import serializers
+from aeat import Result  # isort:skip
+from aeat.rest_framework import serializers  # isort:skip
 
 
 @patch('aeat.rest_framework.serializers.aeat.Config', Mock())

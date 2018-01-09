@@ -1,7 +1,5 @@
 from django.conf import settings
-
 from django.core.exceptions import ImproperlyConfigured
-
 from rest_framework import serializers as rf
 from rest_framework.serializers import ValidationError
 
