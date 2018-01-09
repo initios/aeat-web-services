@@ -61,7 +61,7 @@ def test_aeat_request_serializer_returns_aeat_response_if_request_succeed():
 
 
 def test_adds_test_indicator_when_test_mode_is_enabled():
-    class TestSerializer(serializers.TestIndicatorMixin, rf.Serializer):
+    class TestSerializer(serializers.AEATRequest, rf.Serializer):
         pass
 
     serializer = TestSerializer(data={})
@@ -72,7 +72,7 @@ def test_adds_test_indicator_when_test_mode_is_enabled():
 
 @override_settings(AEAT_TEST_MODE=False)
 def test_does_not_adds_test_indicator_in_production():
-    class TestSerializer(serializers.TestIndicatorMixin, rf.Serializer):
+    class TestSerializer(serializers.AEATRequest, rf.Serializer):
         pass
 
     serializer = TestSerializer(data={})
