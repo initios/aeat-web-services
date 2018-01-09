@@ -107,3 +107,12 @@ class ENSModificationSerializer(ENSMixin, AEATRequest):
 
 class EXSPresentationSerializer(AEATRequest):
     service_name = 'exs_presentation'
+
+    Id = fields.RequiredStr(max_length=14, source='MesIdeMES19',
+                            help_text='Message identification. (like Id)')
+    NifDeclarante = fields.RequiredStr(max_length=14, read_only=True,
+                                       default=settings.AEAT_VAT_NUMBER)
+    NombreDeclarante = fields.RequiredStr(max_length=14, read_only=True,
+                                          default=settings.AEAT_LEGAL_NAME)
+    MesTypMES20 = fields.NotRequiredStr(default='CC615A', read_only=True,
+                                        help_text='Message type')
