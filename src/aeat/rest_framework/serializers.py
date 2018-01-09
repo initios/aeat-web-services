@@ -62,17 +62,6 @@ class TestIndicatorMixin(rf.Serializer):
         return instance
 
 
-class NotifyParty(rf.Serializer):
-    '''NOTPAR670Type'''
-    NamNOTPAR672 = fields.NotRequiredStr(help_text='Name')
-    StrNumNOTPAR673 = fields.NotRequiredStr(help_text='Street and number')
-    PosCodNOTPAR676 = fields.NotRequiredStr(help_text='Postal code')
-    CitNOTPAR674 = fields.NotRequiredStr(help_text='City')
-    CouCodNOTPAR675 = fields.NotRequiredStr(help_text='Country code')
-    NOTPAR670LNG = fields.NotRequiredStr(help_text='NAD LNG')
-    TINNOTPAR671 = fields.NotRequiredStr(help_text='Trader indentification number')
-
-
 class ENSMixin(rf.Serializer):
     MesSenMES3 = fields.NotRequiredStr(max_length=35, read_only=True,
                                        default=settings.AEAT_VAT_NUMBER,
@@ -106,21 +95,11 @@ class ENSPresentationSerializer(TestIndicatorMixin, ENSMixin, AEATRequest):
     service_name = 'ens_presentation'
 
 
-class TraderRepresentative(rf.Serializer):
-    NamTRE1 = fields.NotRequiredStr(help_text='Name')
-    StrAndNumTRE1 = fields.NotRequiredStr(help_text='Street and number')
-    PosCodTRE1 = fields.NotRequiredStr(help_text='Postal code')
-    CitTRE1 = fields.NotRequiredStr(help_text='City')
-    CouCodTRE1 = fields.NotRequiredStr(help_text='Country code')
-    TRAREPLNG = fields.NotRequiredStr(help_text='NAD LNG')
-    TINTRE1 = fields.NotRequiredStr(help_text='Trader indentification number')
-
-
 class ENSModificationSerializer(TestIndicatorMixin, ENSMixin, AEATRequest):
     service_name = 'ens_modification'
 
-    NOTPAR670 = NotifyParty()
-    TRAREP = TraderRepresentative()
+    NOTPAR670 = complex_types.NotifyParty()
+    TRAREP = complex_types.TraderRepresentative()
 
 
 class EXSPresentationSerializer(AEATRequest):

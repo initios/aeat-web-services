@@ -1,6 +1,6 @@
 from rest_framework import serializers as rf
 
-from . import RequiredStr, NotRequiredStr, AEATDateTimeField
+from .fields import RequiredStr, NotRequiredStr, AEATDateTimeField
 
 
 class ENSHeader(rf.Serializer):
@@ -142,3 +142,24 @@ class TraderEntryCarrier(rf.Serializer):
     CouCodTRACARENT605 = NotRequiredStr(help_text='Country code')
     TRACARENT601LNG = NotRequiredStr(help_text='Language code')
     TINTRACARENT602 = NotRequiredStr(help_text='Trader identification number')
+
+
+class TraderRepresentative(rf.Serializer):
+    NamTRE1 = NotRequiredStr(help_text='Name')
+    StrAndNumTRE1 = NotRequiredStr(help_text='Street and number')
+    PosCodTRE1 = NotRequiredStr(help_text='Postal code')
+    CitTRE1 = NotRequiredStr(help_text='City')
+    CouCodTRE1 = NotRequiredStr(help_text='Country code')
+    TRAREPLNG = NotRequiredStr(help_text='NAD LNG')
+    TINTRE1 = NotRequiredStr(help_text='Trader indentification number')
+
+
+class NotifyParty(rf.Serializer):
+    '''NOTPAR670Type'''
+    NamNOTPAR672 = NotRequiredStr(help_text='Name')
+    StrNumNOTPAR673 = NotRequiredStr(help_text='Street and number')
+    PosCodNOTPAR676 = NotRequiredStr(help_text='Postal code')
+    CitNOTPAR674 = NotRequiredStr(help_text='City')
+    CouCodNOTPAR675 = NotRequiredStr(help_text='Country code')
+    NOTPAR670LNG = NotRequiredStr(help_text='NAD LNG')
+    TINNOTPAR671 = NotRequiredStr(help_text='Trader indentification number')
