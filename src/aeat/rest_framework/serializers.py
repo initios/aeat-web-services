@@ -62,6 +62,8 @@ class ENSForkSerializer(AEATRequest):
 
 
 class ENSMixin(rf.Serializer):
+    '''Shared fields between ENS Presentation/Modification'''
+
     MesSenMES3 = fields.NotRequiredStr(max_length=35, read_only=True,
                                        default=settings.AEAT_VAT_NUMBER,
                                        help_text='Message Sender (VAT Number). EG. 89890001K')
@@ -74,8 +76,6 @@ class ENSMixin(rf.Serializer):
     MesIdeMES19 = fields.RequiredStr(max_length=14, help_text='Message identification. '
                                                               'EG 09ES112222110 (like Id)')
 
-    # Nested fields
-    HEAHEA = complex_types.ENSHeader(required=True)
     TRACONCO1 = complex_types.TraderConsignor(required=True)
     TRACONCE1 = complex_types.TraderConsignee(required=True)
     NOTPAR670 = complex_types.NotifyParty()
@@ -94,6 +94,7 @@ class ENSPresentationSerializer(ENSMixin, AEATRequest):
 
     MesTypMES20 = fields.NotRequiredStr(default='CC315A', read_only=True,
                                         help_text='Message type. EG CC315A')
+    HEAHEA = complex_types.ENSPresentationHeader(required=True)
 
 
 class ENSModificationSerializer(ENSMixin, AEATRequest):
@@ -101,6 +102,7 @@ class ENSModificationSerializer(ENSMixin, AEATRequest):
 
     MesTypMES20 = fields.NotRequiredStr(default='CC313A', read_only=True,
                                         help_text='Message type. EG CC313A')
+    HEAHEA = complex_types.ENSModificationHeader(required=True)
 
 
 class EXSPresentationSerializer(AEATRequest):

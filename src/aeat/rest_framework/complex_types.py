@@ -3,7 +3,7 @@ from rest_framework import serializers as rf
 from .fields import AEATDateTimeField, NotRequiredStr, RequiredStr
 
 
-class ENSHeader(rf.Serializer):
+class ENSPresentationHeader(rf.Serializer):
     '''HEAHEAType'''
     RefNumHEA4 = RequiredStr(max_length=22, help_text='Reference Number. EG LRN000000041')
     TraModAtBorHEA76 = RequiredStr(max_length=2, help_text='Transport mode at border. EG 5.')
@@ -28,6 +28,11 @@ class ENSHeader(rf.Serializer):
     CodPlUnHEA357LNG = NotRequiredStr(help_text='Place of unloading LNG. EG ES')
     DecDatTimHEA114 = AEATDateTimeField(
         required=True, help_text='Declaration date and time. EG 201207041455')
+
+
+class ENSModificationHeader(ENSPresentationHeader):
+    '''HEAHEAType with mandatory MRNType'''
+    DocNumHEA5 = RequiredStr(help_text='Document/reference number')
 
 
 class TraderConsignor(rf.Serializer):
