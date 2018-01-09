@@ -72,7 +72,7 @@ class ENSQuery(AEATRequest):
     ConRefNum = RequiredStr(help_text='Transport identifier. EG 9294408')
 
 
-class ENSFork(AEATRequest):
+class ENSForkSerializer(AEATRequest):
     service_name = 'ens_fork'
 
 
