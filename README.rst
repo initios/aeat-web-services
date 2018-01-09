@@ -91,7 +91,7 @@ Several AEAT Serializers are provided.
     # aeat.Result object is returned
     assert result.valid
     assert result.data is not None
-    asssert result.error is None
+    assert result.error is None
     assert result.raw_request is not None
     assert result.raw_response is not None
 
