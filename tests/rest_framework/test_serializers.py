@@ -10,12 +10,13 @@ os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'tests.django_test_app.settings'
 django.setup()
 
 
-from django.test.utils import override_settings  # isort:skip
+from django.core.exceptions import ImproperlyConfigured  # isort:skip # NOQA
+from django.test.utils import override_settings  # isort:skip # NOQA
 
-from rest_framework import serializers as rf  # isort:skip
+from rest_framework import serializers as rf  # isort:skip # NOQA
 
-from aeat import Result  # isort:skip
-from aeat.rest_framework import serializers  # isort:skip
+from aeat import Result  # isort:skip # NOQA
+from aeat.rest_framework import serializers  # isort:skip # NOQA
 
 
 @patch('aeat.rest_framework.serializers.aeat.Config', Mock())
@@ -27,7 +28,24 @@ def test_make_aeat_request(ctrl_builder):
     assert ctrl_mock.request.called_with({'count': '2'})
 
 
-@patch('aeat.rest_framework.serializers.make_aeat_request', lambda x, y: Result(data=None, error='NO REENVIABLE'))
+@override_settings(AEAT_CERT_PATH=None)
+@patch('aeat.rest_framework.serializers.aeat.Config', Mock())
+@patch('aeat.rest_framework.serializers.aeat.Controller')
+def test_make_aeat_request_without_cert_path_env_var_fails(ctrl_builder):
+    with pytest.raises(ImproperlyConfigured):
+        serializers.make_aeat_request('test_service', data={})
+
+
+@override_settings(AEAT_KEY_PATH=None)
+@patch('aeat.rest_framework.serializers.aeat.Config', Mock())
+@patch('aeat.rest_framework.serializers.aeat.Controller')
+def test_make_aeat_request_without_key_path_env_var_fails(ctrl_builder):
+    with pytest.raises(ImproperlyConfigured):
+        serializers.make_aeat_request('test_service', data={})
+
+
+@patch('aeat.rest_framework.serializers.make_aeat_request',
+       lambda x, y: Result(data=None, error='NO REENVIABLE'))
 def test_aeat_request_serializer_raises_validation_error_if_request_fails():
     serializer = serializers.AEATRequest()
 

@@ -41,6 +41,12 @@ def make_aeat_request(service_name, data):
     cert_path = settings.AEAT_CERT_PATH
     key_path = settings.AEAT_KEY_PATH
 
+    if not cert_path:
+        raise ImproperlyConfigured('AEAT_CERT_PATH required')
+
+    if not key_path:
+        raise ImproperlyConfigured('AEAT_KEY_PATH required')
+
     config = aeat.Config(service_name, test_mode=settings.AEAT_TEST_MODE)
     ctrl = aeat.Controller.build_from_config(config, cert_path, key_path)
     return ctrl.request(data)
