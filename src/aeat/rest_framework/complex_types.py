@@ -53,25 +53,30 @@ class TraderConsignee(rf.Serializer):
 
 
 class ProducedDocumentsCertificates(rf.Serializer):
+    '''PRODOCDC2Type'''
     DocTypDC21 = RequiredStr(max_length=4, help_text='Document type. EG Y022')
     DocRefDC23 = RequiredStr(max_length=35, help_text='Document reference. EG ESAEOC1')
     DocRefDCLNG = NotRequiredStr(help_text='Document reference LNG')
 
 
 class SpecialMentions(rf.Serializer):
+    '''SPEMENMT2Type'''
     AddInfCodMT23 = RequiredStr(max_length=5, help_text='Additional information coded')
 
 
 class CommodityCode(rf.Serializer):
+    '''COMCODGODITMType'''
     ComNomCMD1 = RequiredStr(min_length=4, max_length=8,
                              help_text='Combined Nomenclature. EG 123456')
 
 
 class Container(rf.Serializer):
+    '''CONNR2Type'''
     ConNumNR21 = RequiredStr(max_length=17, help_text='Container number')
 
 
 class Package(rf.Serializer):
+    '''PACGS2Type'''
     KinOfPacGS23 = RequiredStr(max_length=2, help_text='Kind of packages')
     NumOfPacGS24 = NotRequiredStr(max_length=5, help_text='Number of packages')
     NumOfPieGS25 = NotRequiredStr(max_length=5, help_text='Number of pieces')
@@ -81,6 +86,7 @@ class Package(rf.Serializer):
 
 
 class GoodsItem(rf.Serializer):
+    '''GOOITEGDSType'''
     IteNumGDS7 = rf.IntegerField(required=True, help_text='Item Number. EG 1')
     GooDesGDS23 = NotRequiredStr(help_text='Goods description. EG DESCRIPCION  PARTIDA1')
     GooDesGDS23LNG = NotRequiredStr(help_text='Goods description LNG. EG ES')
@@ -105,10 +111,12 @@ class GoodsItem(rf.Serializer):
 
 
 class Itinerary(rf.Serializer):
+    '''ITIType'''
     CouOfRouCodITI1 = RequiredStr(help_text='Country of routing code')
 
 
 class PersonLodgingSummaryDeclaration(rf.Serializer):
+    '''PERLODSUMDECType'''
     NamPLD1 = NotRequiredStr(help_text='Name')
     StrAndNumPLD1 = NotRequiredStr(help_text='Street and number')
     PosCodPLD1 = NotRequiredStr(help_text='Postal code')
@@ -120,21 +128,25 @@ class PersonLodgingSummaryDeclaration(rf.Serializer):
 
 
 class SealsIdentity(rf.Serializer):
+    '''SEAID529Type'''
     SeaIdSEAID530 = RequiredStr(max_length=20, help_text='Seals identity')
     SeaIdSEAID530LNG = NotRequiredStr(help_text='Seals identity LNG')
 
 
 class CustomsOfficeFirstEntry(rf.Serializer):
+    '''CUSOFFFENT730Type'''
     RefNumCUSOFFFENT731 = RequiredStr(max_length=8, help_text='Reference number')
     ExpDatOfArrFIRENT733 = AEATDateTimeField(
         required=True, help_text='Expected date and time of arrival')
 
 
 class CustomsOfficeSubsequentEntry(rf.Serializer):
+    '''CUSOFFSENT740Type'''
     RefNumSUBENR909 = RequiredStr(max_length=8, help_text='Reference number')
 
 
 class TraderEntryCarrier(rf.Serializer):
+    '''TRACARENT601Type'''
     NamTRACARENT604 = NotRequiredStr(help_text='Name')
     StrNumTRACARENT607 = NotRequiredStr(help_text='Street and number')
     PstCodTRACARENT606 = NotRequiredStr(help_text='Postal code')
@@ -145,6 +157,7 @@ class TraderEntryCarrier(rf.Serializer):
 
 
 class TraderRepresentative(rf.Serializer):
+    '''TRAREPType'''
     NamTRE1 = NotRequiredStr(help_text='Name')
     StrAndNumTRE1 = NotRequiredStr(help_text='Street and number')
     PosCodTRE1 = NotRequiredStr(help_text='Postal code')

@@ -98,7 +98,6 @@ class ENSPresentationSerializer(TestIndicatorMixin, ENSMixin, AEATRequest):
 class ENSModificationSerializer(TestIndicatorMixin, ENSMixin, AEATRequest):
     service_name = 'ens_modification'
 
-    NOTPAR670 = complex_types.NotifyParty()
     TRAREP = complex_types.TraderRepresentative()
 
 
