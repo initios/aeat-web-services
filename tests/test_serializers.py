@@ -5,8 +5,6 @@ import pytest
 
 import django
 
-import factories
-
 # Setup Django as soon as possible
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_test_app.settings')
 django.setup()
@@ -81,9 +79,3 @@ def test_does_not_adds_test_indicator_in_production():
     serializer.is_valid(raise_exception=True)
 
     assert 'TesIndMES18' not in serializer.data
-
-
-def test_serialize_ens_modification():
-    data = factories.ENSPresentationFactory()
-    serializer = serializers.ENSModificationSerializer(data=data)
-    assert serializer.is_valid(raise_exception=False), serializer.errors
