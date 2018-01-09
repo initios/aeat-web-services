@@ -75,6 +75,25 @@ Usage (Spanish)
     assert result.data is not None
 
 
+Django Rest Framework
+=====================
+
+```
+from aeat.rest_framework import serializers as aeat_serializers
+
+serializrer = aeat_serializers.ENSPresentationSerializer(data=payload)
+serializer.is_valid(raise_exception=True)
+result = serializer.save()
+
+# aeat.Result object is returned
+assert result.valid
+assert result.data is not None
+asssert result.error is None
+assert result.raw_request is not None
+assert result.raw_response is not None
+```
+
+
 Prerequisites
 =============
 
