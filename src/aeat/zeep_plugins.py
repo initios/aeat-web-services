@@ -1,9 +1,8 @@
 import logging
 
-from lxml import etree
 from zeep import Plugin
 
-from aeat import xml_signing
+from aeat import utils, xml_signing
 
 logger = logging.getLogger(__name__)
 
@@ -28,7 +27,9 @@ class RawXMLPlugin(object):
         self.last_received = None
 
     def ingress(self, envelope, http_headers, operation):
-        self.last_received = etree.tostring(envelope, pretty_print=True).decode()
+        self.last_received = utils.lxml_to_string(envelope)
+        return envelope, http_headers, operation
 
     def egress(self, envelope, http_headers, operation, binding_options):
-        self.last_sent = etree.tostring(envelope, pretty_print=True).decode()
+        self.last_sent = utils.lxml_to_string(envelope)
+        return envelope, http_headers, operation, binding_options
