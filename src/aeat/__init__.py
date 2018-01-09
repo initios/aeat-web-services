@@ -128,6 +128,8 @@ class Controller:
             parser = self.get_response_parser()
             result = parser(data)
 
-        result.raw_request = self.raw_xml_plugin.last_sent
-        result.raw_response = self.raw_xml_plugin.last_received
+        if self.raw_xml_plugin:
+            result.raw_request = self.raw_xml_plugin.last_sent
+            result.raw_response = self.raw_xml_plugin.last_received
+
         return result
