@@ -28,8 +28,8 @@ class RawXMLPlugin(object):
 
     def ingress(self, envelope, http_headers, operation):
         self.last_received = utils.lxml_to_string(envelope)
-        return envelope, http_headers, operation
+        return envelope, http_headers
 
     def egress(self, envelope, http_headers, operation, binding_options):
         self.last_sent = utils.lxml_to_string(envelope)
-        return envelope, http_headers, operation, binding_options
+        return envelope, http_headers
