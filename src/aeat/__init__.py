@@ -109,6 +109,14 @@ class Controller:
     def get_response_parser(self):
         return RESPONSE_PARSERS.get(self.config.operation, DEFAULT_RESPONSE_PARSER)
 
+    @property
+    def last_request_raw(self):
+        self.history_plugin.last_sent if self.history_plugin else None
+
+    @property
+    def last_response_raw(self):
+        self.history_plugin.last_received if self.history_plugin else None
+
     def request(self, payload):
         if self.config.signed:
             # Skip WSDL validation. Is added later by zeep_plugins.SignMessage
@@ -118,20 +126,21 @@ class Controller:
             data = self.operation(**payload)
         except zeep_exceptions.Fault as e:
             logger.info('AEAT request failed.', exc_info=True)
-            return Result(None, e.message)
+            return Result(None, e.message, self.last_request_raw,
+                          self.last_response_raw)
         except zeep_exceptions.Error as e:
             logger.info('AEAT request failed.', exc_info=True)
-            return Result(None, 'Wrong AEAT response')
+            return Result(None, 'Wrong AEAT response', self.last_request_raw,
+                          self.last_response_raw)
         except Exception as e:
             logger.critical('Unexpected exception', exc_info=True)
-            return Result(None, 'Unknown error')
+            return Result(None, 'Unknown error', self.last_request_raw,
+                          self.last_response_raw)
         else:
             parser = self.get_response_parser()
-            history = self.history_plugin
-            result = parser(data)
 
-            if history:
-                result.raw_request = history.last_sent
-                result.raw_response = history.last_received
+            result = parser(data)
+            result.raw_request = self.last_request_raw
+            result.raw_response = self.last_response_raw
 
             return result
