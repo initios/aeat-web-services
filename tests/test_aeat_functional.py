@@ -53,7 +53,7 @@ def test_ens_presentation(make_aeat_test_controller):
 @pytest.mark.functional
 def test_ens_modification(make_aeat_test_controller):
     result = test_request(
-        factories.ENSPresentationFactory,  # @TODO Make custom factory
+        factories.ENSModificationFactory,
         serializers.ENSModificationSerializer,
         make_aeat_test_controller('ens_modification'),
         'TESTID201',

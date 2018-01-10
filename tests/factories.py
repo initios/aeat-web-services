@@ -27,6 +27,13 @@ class ENSPresentationHeader(factory.Factory):
     DecDatTimHEA114 = factory.LazyAttribute(lambda x: dt.datetime.now())
 
 
+class ENSModificationHeader(ENSPresentationHeader):
+    class Meta:
+        model = dict
+
+    DocNumHEA5 = 'mrn_number_xyz'
+
+
 class EXSHeader(factory.Factory):
     class Meta:
         model = dict
@@ -192,6 +199,19 @@ class TraderEntryCarrier(factory.Factory):
     TINTRACARENT602 = 'ESA08005688'
 
 
+class NotifyParty(factory.Factory):
+    class Meta:
+        model = dict
+
+    NamNOTPAR672 = 'ROSA'
+    StrNumNOTPAR673 = 'MONCLOA'
+    PosCodNOTPAR676 = '28007'
+    CitNOTPAR674 = 'MADRID'
+    CouCodNOTPAR675 = 'ES'
+    NOTPAR670LNG = 'ES'
+    TINNOTPAR671 = 'ESA08005688'
+
+
 class BaseMessageMixin(factory.Factory):
     MesSenMES3 = factory.Sequence(lambda n: 'VAT00000%d' % n)
     MesRecMES6 = 'NICA.ES'
@@ -233,9 +253,16 @@ class BaseMessageMixin(factory.Factory):
 
 
 class ENSPresentationFactory(BaseMessageMixin, factory.Factory):
-    '''For use directly with AEAT. Refactor to make it match ENSPresentationSerializer'''
     class Meta:
         model = dict
+
+
+class ENSModificationFactory(BaseMessageMixin, factory.Factory):
+    class Meta:
+        model = dict
+
+    NOTPAR670 = factory.SubFactory(NotifyParty)
+    HEAHEA = factory.SubFactory(ENSModificationHeader)
 
 
 class ENSQueryFactory(factory.Factory):
@@ -248,7 +275,6 @@ class ENSQueryFactory(factory.Factory):
 
 
 class EXSFactory(BaseMessageMixin, factory.Factory):
-    '''Factory for creating valid dictionaries for EXSSerializer'''
     class Meta:
         model = dict
 
