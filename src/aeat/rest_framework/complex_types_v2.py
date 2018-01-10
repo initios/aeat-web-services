@@ -1,8 +1,7 @@
 from django.conf import settings
-
 from rest_framework import serializers as rf
 
-from .fields import AEATDateField, AEATTimeField, AEATDateTimeField, NotRequiredStr, RequiredStr
+from .fields import AEATDateField, AEATDateTimeField, AEATTimeField, NotRequiredStr, RequiredStr
 
 
 class EXSHeader(rf.Serializer):

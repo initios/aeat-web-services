@@ -1,8 +1,7 @@
 from django.conf import settings
-
 from rest_framework import serializers as rf
 
-from .fields import AEATDateField, AEATDateTimeField, NotRequiredStr, RequiredStr, AEATTimeField
+from .fields import AEATDateField, AEATDateTimeField, AEATTimeField, NotRequiredStr, RequiredStr
 
 
 class ENSPresentationHeader(rf.Serializer):

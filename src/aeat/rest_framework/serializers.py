@@ -4,7 +4,9 @@ from rest_framework import serializers as rf
 
 import aeat
 
-from . import complex_types_v2 as v2, complex_types_v4 as v4, fields
+from . import complex_types_v2 as v2
+from . import complex_types_v4 as v4
+from . import fields
 
 
 def make_aeat_request(service_name, data):
