@@ -48,7 +48,10 @@ def raw_response_parser(data):
     return Result(data, None)
 
 
-def ens_presentation_response_parser(data):
+def mrn_response_parser(data):
+    '''
+    Returns the MRN from the response or error response
+    '''
     for item in data:
         mrn_el = item.find('DocNumHEA5')
         mrn = mrn_el.text if mrn_el is not None else None
@@ -62,7 +65,8 @@ def ens_presentation_response_parser(data):
 DEFAULT_RESPONSE_PARSER = raw_response_parser
 
 RESPONSE_PARSERS = {
-    'IE315V4': ens_presentation_response_parser
+    'IE315V4': mrn_response_parser,
+    'IE313V4': mrn_response_parser,
 }
 
 
