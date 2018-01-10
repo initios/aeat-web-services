@@ -3,8 +3,10 @@ import os
 import pytest
 
 import factories
+import setup_django  # NOQA
 
 import aeat
+import aeat.rest_framework.serializers as serializers
 
 
 '''
@@ -60,3 +62,18 @@ def test_ens_query(make_aeat_test_controller):
     assert result.data.ExpDatOfArr == '20110809'
     assert result.data['ConRefNum'] == '9294408'
     assert 770 == len(result.data.IMPOPE)
+
+
+@pytest.mark.functional
+def test_exs(make_aeat_test_controller):
+    payload = factories.EXSFactory(MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678'))
+    serializer = serializers.EXSSerializer(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
+
+    # ctrl = make_aeat_test_controller('exs_presentation')
+    # result = ctrl.request(factories.ENSPresentationFactory(
+    #     MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678')
+    # ))
+    # assert result.valid, result.error
+
+    # assert 'OK' == result.data  # WIP. Not sure what the response is yet

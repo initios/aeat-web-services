@@ -24,7 +24,20 @@ class ENSPresentationHeader(factory.Factory):
     PlaLoaGOOITE334LNG = 'ES'
     PlaUnlGOOITE334 = 'ESSegovia'
     CodPlUnHEA357LNG = 'ES'
-    DecDatTimHEA114 = factory.LazyAttribute(lambda x: dt.datetime.now().strftime('%Y%m%d%H%M'))
+    DecDatTimHEA114 = factory.LazyAttribute(lambda x: dt.datetime.now())
+
+
+class EXSHeader(factory.Factory):
+    class Meta:
+        model = dict
+
+    RefNumHEA4 = 'LRN000000041'
+    CusSubPlaHEA66 = '4611ZZZ999'
+    TotNumOfIteHEA305 = '3'
+    TotNumOfPacHEA306 = '50'
+    TotGroMasHEA307 = '10'
+    SpeCirIndHEA1 = 'A'
+    DecDatTimHEA114 = factory.LazyAttribute(lambda x: dt.datetime.now())
 
 
 class TraderConsignor(factory.Factory):
@@ -159,7 +172,7 @@ class CustomsOfficeFirstEntry(factory.Factory):
 
     RefNumCUSOFFFENT731 = 'ES009999'
     ExpDatOfArrFIRENT733 = factory.LazyAttribute(lambda x:
-                                                 dt.datetime.now().strftime('%Y%m%d%H%M'))
+                                                 dt.datetime.now())
 
 
 class CustomsOfficeSubsequentEntry(factory.Factory):
@@ -182,14 +195,11 @@ class TraderEntryCarrier(factory.Factory):
     TINTRACARENT602 = 'ESA08005688'
 
 
-class ENSPresentationFactory(factory.Factory):
-    class Meta:
-        model = dict
-
+class BaseMessageMixin(factory.Factory):
     MesSenMES3 = factory.Sequence(lambda n: 'VAT00000%d' % n)
     MesRecMES6 = 'NICA.ES'
-    DatOfPreMES9 = factory.LazyAttribute(lambda x: dt.datetime.now().strftime('%y%m%d'))
-    TimOfPreMES10 = factory.LazyAttribute(lambda x: dt.datetime.now().strftime('%H%M'))
+    DatOfPreMES9 = factory.LazyAttribute(lambda x: dt.datetime.now().date())
+    TimOfPreMES10 = factory.LazyAttribute(lambda x: dt.datetime.now().time())
     MesIdeMES19 = factory.Sequence(lambda n: 'Id000%d' % n)
     MesTypMES20 = 'CC315A'
 
@@ -225,6 +235,12 @@ class ENSPresentationFactory(factory.Factory):
             self['CUSOFFSENT740'] = [CustomsOfficeSubsequentEntry()]
 
 
+class ENSPresentationFactory(BaseMessageMixin, factory.Factory):
+    '''For use directly with AEAT. Refactor to make it match ENSPresentationSerializer'''
+    class Meta:
+        model = dict
+
+
 class ENSQueryFactory(factory.Factory):
     class Meta:
         model = dict
@@ -232,3 +248,11 @@ class ENSQueryFactory(factory.Factory):
     TraModAtBorHEA76 = '1'
     ExpDatOfArr = '20110809'
     ConRefNum = '9294408'
+
+
+class EXSFactory(BaseMessageMixin, factory.Factory):
+    '''Factory for creating valid dictionaries for EXSSerializer'''
+    class Meta:
+        model = dict
+
+    HEAHEA = factory.SubFactory(EXSHeader)
