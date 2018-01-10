@@ -1,5 +1,3 @@
-import os
-
 import pytest
 
 import factories
@@ -29,19 +27,17 @@ def make_aeat_test_controller(certificate_real):
     return make_controller_for_service
 
 
-def test_request(factory_cls, factory_kwargs, serializer_cls, controller):
-    payload = factory_cls(**factory_kwargs)
+def test_request(payload, serializer_cls, controller):
     serializer = serializer_cls(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
-
     return controller.request(serializer.data)
 
 
 @pytest.mark.functional
 def test_ens_presentation(make_aeat_test_controller):
+    payload = factories.ENSPresentationFactory(MesIdeMES19='TESTID101')
     result = test_request(
-        factories.ENSPresentationFactory,
-        {'MesIdeMES19': 'TESTID101'},
+        factories.ENSPresentationFactory(MesIdeMES19='TESTID101'),
         serializers.ENSPresentationSerializer,
         make_aeat_test_controller('ens_presentation'),
     )
@@ -53,8 +49,7 @@ def test_ens_presentation(make_aeat_test_controller):
 @pytest.mark.functional
 def test_ens_modification(make_aeat_test_controller):
     result = test_request(
-        factories.ENSModificationFactory,
-        {'MesIdeMES19': 'TESTID201'},
+        factories.ENSModificationFactory(MesIdeMES19='TESTID201'),
         serializers.ENSModificationSerializer,
         make_aeat_test_controller('ens_modification'),
     )
@@ -80,12 +75,11 @@ def test_ens_query(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_exs(make_aeat_test_controller):
-    payload = factories.EXSFactory()
-    serializer = serializers.EXSSerializer(data=payload)
-    assert serializer.is_valid(raise_exception=False), serializer.errors
+    result = test_request(
+        factories.EXSFactory(MesIdeMES19='TESTID301'),
+        serializers.EXSSerializer,
+        make_aeat_test_controller('exs_presentation'),
+    )
 
-    ctrl = make_aeat_test_controller('exs_presentation')
-    result = ctrl.request(serializer.data)
     assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
-
-    assert 'OK' == result.data  # WIP. Not sure what the response is yet
+    assert result.data
