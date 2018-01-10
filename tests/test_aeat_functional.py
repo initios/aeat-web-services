@@ -29,8 +29,8 @@ def make_aeat_test_controller(certificate_real):
     return make_controller_for_service
 
 
-def test_request(factory_cls, serializer_cls, controller, message_id):
-    payload = factory_cls(MesIdeMES19=message_id)
+def test_request(factory_cls, factory_kwargs, serializer_cls, controller):
+    payload = factory_cls(**factory_kwargs)
     serializer = serializer_cls(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
@@ -41,9 +41,9 @@ def test_request(factory_cls, serializer_cls, controller, message_id):
 def test_ens_presentation(make_aeat_test_controller):
     result = test_request(
         factories.ENSPresentationFactory,
+        {'MesIdeMES19': 'TESTID101'},
         serializers.ENSPresentationSerializer,
         make_aeat_test_controller('ens_presentation'),
-        'TESTID101',
     )
 
     assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
@@ -54,9 +54,9 @@ def test_ens_presentation(make_aeat_test_controller):
 def test_ens_modification(make_aeat_test_controller):
     result = test_request(
         factories.ENSModificationFactory,
+        {'MesIdeMES19': 'TESTID201'},
         serializers.ENSModificationSerializer,
         make_aeat_test_controller('ens_modification'),
-        'TESTID201',
     )
 
     assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
@@ -65,14 +65,16 @@ def test_ens_modification(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_ens_query(make_aeat_test_controller):
-    ctrl = make_aeat_test_controller('ens_query')
+    result = test_request(
+        factories.ENSQueryFactory,
+        {},
+        serializers.ENSQuerySerializer,
+        make_aeat_test_controller('ens_query'),
+    )
 
-    result = ctrl.request(factories.ENSQueryFactory())
+    assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
+    assert result.data
 
-    assert result.valid
-    assert result.data['TraModAtBorHEA76'] == '1'
-    assert result.data.ExpDatOfArr == '20110809'
-    assert result.data['ConRefNum'] == '9294408'
     assert 770 == len(result.data.IMPOPE)
 
 

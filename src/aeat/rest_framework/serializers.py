@@ -50,6 +50,14 @@ class ENSQuerySerializer(AEATRequest):
     ExpDatOfArr = fields.RequiredStr(help_text='Estimated date of arrival. EG 20110809')
     ConRefNum = fields.RequiredStr(help_text='Transport identifier. EG 9294408')
 
+    def to_representation(self, instance):
+        instance = super().to_representation(instance)
+
+        if 'TesIndMES18' in instance:
+            instance.pop('TesIndMES18')
+
+        return instance
+
 
 class ENSForkSerializer(AEATRequest):
     service_name = 'ens_fork'
