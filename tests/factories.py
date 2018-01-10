@@ -32,6 +32,8 @@ class ENSModificationHeader(ENSPresentationHeader):
         model = dict
 
     DocNumHEA5 = 'mrn_number_xyz'
+    AmdPlaHEA598 = 'Barcelona'
+    DatTimAmeHEA113 = factory.LazyAttribute(lambda x: dt.datetime.now())
 
 
 class EXSHeader(factory.Factory):
