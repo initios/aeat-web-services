@@ -70,6 +70,7 @@ def test_exs(make_aeat_test_controller):
     serializer = serializers.EXSSerializer(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
+    print(serializer.data)
     # ctrl = make_aeat_test_controller('exs_presentation')
     # result = ctrl.request(factories.ENSPresentationFactory(
     #     MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678')

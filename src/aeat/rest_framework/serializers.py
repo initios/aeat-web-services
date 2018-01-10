@@ -100,12 +100,8 @@ class ENSModificationSerializer(MessageMixin, AEATRequest):
 class EXSSerializer(MessageMixin, AEATRequest):
     service_name = 'exs_presentation'
 
-    Id = fields.RequiredStr(max_length=14, source='MesIdeMES19',
-                            help_text='Message identification. (like Id)')
-    NifDeclarante = fields.NotRequiredStr(max_length=14, read_only=True,
-                                          default=settings.AEAT_VAT_NUMBER)
-    NombreDeclarante = fields.NotRequiredStr(max_length=14, read_only=True,
-                                             default=settings.AEAT_LEGAL_NAME)
-    MesTypMES20 = fields.NotRequiredStr(default='CC615A', read_only=True,
-                                        help_text='Message type')
+    Id = rf.ReadOnlyField(source='MesIdeMES19', help_text='Message identification. (like Id)')
+    NifDeclarante = rf.ReadOnlyField(read_only=True, default=settings.AEAT_VAT_NUMBER)
+    NombreDeclarante = rf.ReadOnlyField(default=settings.AEAT_LEGAL_NAME)
+    MesTypMES20 = rf.ReadOnlyField(default='CC615A', help_text='Message type')
     HEAHEA = complex_types.EXSHeader(required=True)
