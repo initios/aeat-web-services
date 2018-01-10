@@ -1,14 +1,8 @@
-import os
 from unittest.mock import Mock, patch
 
 import pytest
 
-import django
-
-# Setup Django as soon as possible
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'django_test_app.settings')
-django.setup()
-
+import setup_django  # NOQA
 
 from django.core.exceptions import ImproperlyConfigured  # isort:skip # NOQA
 from django.test.utils import override_settings  # isort:skip # NOQA

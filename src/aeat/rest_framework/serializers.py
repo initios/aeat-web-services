@@ -30,6 +30,7 @@ def make_aeat_request(service_name, data):
 
 class AEATRequest(rf.Serializer):
     service_name = None
+    include_test_mode = True
 
     def save(self):
         return make_aeat_request(self.service_name, self.data)
@@ -37,7 +38,7 @@ class AEATRequest(rf.Serializer):
     def to_representation(self, instance):
         instance = super().to_representation(instance)
 
-        if settings.AEAT_TEST_MODE:
+        if self.include_test_mode and settings.AEAT_TEST_MODE:
             instance['TesIndMES18'] = '0'
 
         return instance
@@ -45,6 +46,7 @@ class AEATRequest(rf.Serializer):
 
 class ENSQuerySerializer(AEATRequest):
     service_name = 'ens_query'
+    include_test_mode = False
 
     TraModAtBorHEA76 = fields.RequiredStr(help_text='Transport mode at border. EG 1')
     ExpDatOfArr = fields.RequiredStr(help_text='Estimated date of arrival. EG 20110809')
@@ -100,12 +102,8 @@ class ENSModificationSerializer(MessageMixin, AEATRequest):
 class EXSSerializer(MessageMixin, AEATRequest):
     service_name = 'exs_presentation'
 
-    Id = fields.RequiredStr(max_length=14, source='MesIdeMES19',
-                            help_text='Message identification. (like Id)')
-    NifDeclarante = fields.NotRequiredStr(max_length=14, read_only=True,
-                                          default=settings.AEAT_VAT_NUMBER)
-    NombreDeclarante = fields.NotRequiredStr(max_length=14, read_only=True,
-                                             default=settings.AEAT_LEGAL_NAME)
-    MesTypMES20 = fields.NotRequiredStr(default='CC615A', read_only=True,
-                                        help_text='Message type')
+    Id = rf.ReadOnlyField(source='MesIdeMES19', help_text='Message identification. (like Id)')
+    NifDeclarante = rf.ReadOnlyField(read_only=True, default=settings.AEAT_VAT_NUMBER)
+    NombreDeclarante = rf.ReadOnlyField(default=settings.AEAT_LEGAL_NAME)
+    MesTypMES20 = rf.ReadOnlyField(default='CC615A', help_text='Message type')
     HEAHEA = complex_types.EXSHeader(required=True)

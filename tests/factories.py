@@ -24,7 +24,27 @@ class ENSPresentationHeader(factory.Factory):
     PlaLoaGOOITE334LNG = 'ES'
     PlaUnlGOOITE334 = 'ESSegovia'
     CodPlUnHEA357LNG = 'ES'
-    DecDatTimHEA114 = factory.LazyAttribute(lambda x: dt.datetime.now().strftime('%Y%m%d%H%M'))
+    DecDatTimHEA114 = factory.LazyAttribute(lambda x: dt.datetime.now())
+
+
+class ENSModificationHeader(ENSPresentationHeader):
+    class Meta:
+        model = dict
+
+    DocNumHEA5 = 'mrn_number_xyz'
+
+
+class EXSHeader(factory.Factory):
+    class Meta:
+        model = dict
+
+    RefNumHEA4 = 'LRN000000041'
+    CusSubPlaHEA66 = '4611ZZZ999'
+    TotNumOfIteHEA305 = '3'
+    TotNumOfPacHEA306 = '50'
+    TotGroMasHEA307 = '10'
+    SpeCirIndHEA1 = 'A'
+    DecDatTimHEA114 = factory.LazyAttribute(lambda x: dt.datetime.now())
 
 
 class TraderConsignor(factory.Factory):
@@ -36,7 +56,6 @@ class TraderConsignor(factory.Factory):
     PosCodCO123 = '28007'
     CitCO124 = 'Madrid'
     CouCO125 = 'ES'
-    NADLNGCO = 'ES'
     TINCO159 = 'ESA08005688'
 
 
@@ -49,7 +68,6 @@ class TraderConsignee(factory.Factory):
     PosCodCE123 = '28005'
     CitCE124 = 'Madrid'
     CouCE125 = 'ES'
-    NADLNGCE = 'ES'
     TINCE159 = 'ESA08005688'
 
 
@@ -59,7 +77,6 @@ class ProducedDocumentsCertificates(factory.Factory):
 
     DocTypDC21 = 'Y022'
     DocRefDC23 = 'ESAEOC1'
-    DocRefDCLNG = 'ES'
 
 
 class SpecialMentions(factory.Factory):
@@ -90,7 +107,7 @@ class Package(factory.Factory):
     KinOfPacGS23 = 'NE'
     NumOfPacGS24 = '0'
     NumOfPieGS25 = '10'
-    MarNumOfPacGSL21 = 'PAQUETES1'
+    # MarNumOfPacGSL21 = 'PAQUETES1'
     MarNumOfPacGSL21LNG = 'ES'
 
 
@@ -159,7 +176,7 @@ class CustomsOfficeFirstEntry(factory.Factory):
 
     RefNumCUSOFFFENT731 = 'ES009999'
     ExpDatOfArrFIRENT733 = factory.LazyAttribute(lambda x:
-                                                 dt.datetime.now().strftime('%Y%m%d%H%M'))
+                                                 dt.datetime.now())
 
 
 class CustomsOfficeSubsequentEntry(factory.Factory):
@@ -182,15 +199,25 @@ class TraderEntryCarrier(factory.Factory):
     TINTRACARENT602 = 'ESA08005688'
 
 
-class ENSPresentationFactory(factory.Factory):
+class NotifyParty(factory.Factory):
     class Meta:
         model = dict
 
+    NamNOTPAR672 = 'ROSA'
+    StrNumNOTPAR673 = 'MONCLOA'
+    PosCodNOTPAR676 = '28007'
+    CitNOTPAR674 = 'MADRID'
+    CouCodNOTPAR675 = 'ES'
+    NOTPAR670LNG = 'ES'
+    TINNOTPAR671 = 'ESA08005688'
+
+
+class BaseMessageMixin(factory.Factory):
     MesSenMES3 = factory.Sequence(lambda n: 'VAT00000%d' % n)
     MesRecMES6 = 'NICA.ES'
-    DatOfPreMES9 = factory.LazyAttribute(lambda x: dt.datetime.now().strftime('%y%m%d'))
-    TimOfPreMES10 = factory.LazyAttribute(lambda x: dt.datetime.now().strftime('%H%M'))
-    MesIdeMES19 = factory.Sequence(lambda n: 'Id000%d' % n)
+    DatOfPreMES9 = factory.LazyAttribute(lambda x: dt.datetime.now().date())
+    TimOfPreMES10 = factory.LazyAttribute(lambda x: dt.datetime.now().time())
+    MesIdeMES19 = factory.Sequence(lambda n: 'TESTID000%d' % n)
     MesTypMES20 = 'CC315A'
 
     HEAHEA = factory.SubFactory(ENSPresentationHeader)
@@ -225,6 +252,19 @@ class ENSPresentationFactory(factory.Factory):
             self['CUSOFFSENT740'] = [CustomsOfficeSubsequentEntry()]
 
 
+class ENSPresentationFactory(BaseMessageMixin, factory.Factory):
+    class Meta:
+        model = dict
+
+
+class ENSModificationFactory(BaseMessageMixin, factory.Factory):
+    class Meta:
+        model = dict
+
+    NOTPAR670 = factory.SubFactory(NotifyParty)
+    HEAHEA = factory.SubFactory(ENSModificationHeader)
+
+
 class ENSQueryFactory(factory.Factory):
     class Meta:
         model = dict
@@ -232,3 +272,10 @@ class ENSQueryFactory(factory.Factory):
     TraModAtBorHEA76 = '1'
     ExpDatOfArr = '20110809'
     ConRefNum = '9294408'
+
+
+class EXSFactory(BaseMessageMixin, factory.Factory):
+    class Meta:
+        model = dict
+
+    HEAHEA = factory.SubFactory(EXSHeader)

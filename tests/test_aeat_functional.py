@@ -1,10 +1,10 @@
-import os
-
 import pytest
 
 import factories
+import setup_django  # NOQA
 
 import aeat
+import aeat.rest_framework.serializers as serializers
 
 
 '''
@@ -29,34 +29,51 @@ def make_aeat_test_controller(certificate_real):
 
 @pytest.mark.functional
 def test_ens_presentation(make_aeat_test_controller):
-    ctrl = make_aeat_test_controller('ens_presentation')
-    result = ctrl.request(factories.ENSPresentationFactory(
-        MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678')
-    ))
-    assert result.valid, result.error
+    payload = factories.ENSPresentationFactory(MesIdeMES19='TEST10001')
+    serializer = serializers.ENSPresentationSerializer(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
 
-    assert 'OK' == result.data  # WIP. Not sure what the response is yet
+    controller = make_aeat_test_controller('ens_presentation')
+    result = controller.request(serializer.data)
+
+    assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
+    assert result.data
 
 
 @pytest.mark.functional
 def test_ens_modification(make_aeat_test_controller):
-    ctrl = make_aeat_test_controller('ens_modification')
-    result = ctrl.request(factories.ENSPresentationFactory(
-        MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678')
-    ))
-    assert result.valid, result.error
+    payload = factories.ENSModificationFactory(MesIdeMES19='TEST20001')
+    serializer = serializers.ENSModificationSerializer(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
 
-    assert 'OK' == result.data  # WIP. Not sure what the response is yet
+    controller = make_aeat_test_controller('ens_modification')
+    result = controller.request(serializer.data)
+
+    assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
+    assert result.data
 
 
 @pytest.mark.functional
 def test_ens_query(make_aeat_test_controller):
-    ctrl = make_aeat_test_controller('ens_query')
+    payload = factories.ENSQueryFactory()
+    serializer = serializers.ENSQuerySerializer(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
 
-    result = ctrl.request(factories.ENSQueryFactory())
+    controller = make_aeat_test_controller('ens_query')
+    result = controller.request(serializer.data)
 
-    assert result.valid
-    assert result.data['TraModAtBorHEA76'] == '1'
-    assert result.data.ExpDatOfArr == '20110809'
-    assert result.data['ConRefNum'] == '9294408'
+    assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
     assert 770 == len(result.data.IMPOPE)
+
+
+@pytest.mark.functional
+def test_exs(make_aeat_test_controller):
+    payload = factories.EXSFactory(MesIdeMES19='TEST30001')
+    serializer = serializers.EXSSerializer(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
+
+    controller = make_aeat_test_controller('exs_presentation')
+    result = controller.request(serializer.data)
+
+    assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
+    assert result.data
