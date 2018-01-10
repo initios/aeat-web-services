@@ -30,6 +30,7 @@ def make_aeat_request(service_name, data):
 
 class AEATRequest(rf.Serializer):
     service_name = None
+    include_test_mode = True
 
     def save(self):
         return make_aeat_request(self.service_name, self.data)
@@ -37,7 +38,7 @@ class AEATRequest(rf.Serializer):
     def to_representation(self, instance):
         instance = super().to_representation(instance)
 
-        if settings.AEAT_TEST_MODE:
+        if self.include_test_mode and settings.AEAT_TEST_MODE:
             instance['TesIndMES18'] = '0'
 
         return instance
@@ -45,18 +46,11 @@ class AEATRequest(rf.Serializer):
 
 class ENSQuerySerializer(AEATRequest):
     service_name = 'ens_query'
+    include_test_mode = False
 
     TraModAtBorHEA76 = fields.RequiredStr(help_text='Transport mode at border. EG 1')
     ExpDatOfArr = fields.RequiredStr(help_text='Estimated date of arrival. EG 20110809')
     ConRefNum = fields.RequiredStr(help_text='Transport identifier. EG 9294408')
-
-    def to_representation(self, instance):
-        instance = super().to_representation(instance)
-
-        if 'TesIndMES18' in instance:
-            instance.pop('TesIndMES18')
-
-        return instance
 
 
 class ENSForkSerializer(AEATRequest):
