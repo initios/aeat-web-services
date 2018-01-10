@@ -27,20 +27,14 @@ def make_aeat_test_controller(certificate_real):
     return make_controller_for_service
 
 
-def test_request(payload, serializer_cls, controller):
-    serializer = serializer_cls(data=payload)
-    assert serializer.is_valid(raise_exception=False), serializer.errors
-    return controller.request(serializer.data)
-
-
 @pytest.mark.functional
 def test_ens_presentation(make_aeat_test_controller):
-    payload = factories.ENSPresentationFactory(MesIdeMES19='TESTID101')
-    result = test_request(
-        factories.ENSPresentationFactory(MesIdeMES19='TESTID101'),
-        serializers.ENSPresentationSerializer,
-        make_aeat_test_controller('ens_presentation'),
-    )
+    payload = factories.ENSPresentationFactory(MesIdeMES19='TEST10001')
+    serializer = serializers.ENSPresentationSerializer(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
+
+    controller = make_aeat_test_controller('ens_presentation')
+    result = controller.request(serializer.data)
 
     assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
     assert result.data
@@ -48,11 +42,12 @@ def test_ens_presentation(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_ens_modification(make_aeat_test_controller):
-    result = test_request(
-        factories.ENSModificationFactory(MesIdeMES19='TESTID201'),
-        serializers.ENSModificationSerializer,
-        make_aeat_test_controller('ens_modification'),
-    )
+    payload = factories.ENSModificationFactory(MesIdeMES19='TEST20001')
+    serializer = serializers.ENSModificationSerializer(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
+
+    controller = make_aeat_test_controller('ens_modification')
+    result = controller.request(serializer.data)
 
     assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
     assert result.data
@@ -60,26 +55,25 @@ def test_ens_modification(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_ens_query(make_aeat_test_controller):
-    result = test_request(
-        factories.ENSQueryFactory,
-        {},
-        serializers.ENSQuerySerializer,
-        make_aeat_test_controller('ens_query'),
-    )
+    payload = factories.ENSQueryFactory()
+    serializer = serializers.ENSQuerySerializer(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
+
+    controller = make_aeat_test_controller('ens_query')
+    result = controller.request(serializer.data)
 
     assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
-    assert result.data
-
     assert 770 == len(result.data.IMPOPE)
 
 
 @pytest.mark.functional
 def test_exs(make_aeat_test_controller):
-    result = test_request(
-        factories.EXSFactory(MesIdeMES19='TESTID301'),
-        serializers.EXSSerializer,
-        make_aeat_test_controller('exs_presentation'),
-    )
+    payload = factories.EXSFactory(MesIdeMES19='TEST30001')
+    serializer = serializers.EXSSerializer(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
+
+    controller = make_aeat_test_controller('exs_presentation')
+    result = controller.request(serializer.data)
 
     assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
     assert result.data
