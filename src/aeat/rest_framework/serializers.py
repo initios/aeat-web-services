@@ -61,9 +61,8 @@ class ENSForkSerializer(AEATRequest):
     service_name = 'ens_fork'
 
 
-class ENSMixin(rf.Serializer):
-    '''Shared fields between ENS Presentation/Modification'''
-
+class MessageMixin(rf.Serializer):
+    '''Common attributes'''
     MesSenMES3 = fields.NotRequiredStr(max_length=35, read_only=True,
                                        default=settings.AEAT_VAT_NUMBER,
                                        help_text='Message Sender (VAT Number). EG. 89890001K')
@@ -89,7 +88,7 @@ class ENSMixin(rf.Serializer):
     TRACARENT601 = complex_types.TraderEntryCarrier(required=False)
 
 
-class ENSPresentationSerializer(ENSMixin, AEATRequest):
+class ENSPresentationSerializer(MessageMixin, AEATRequest):
     service_name = 'ens_presentation'
 
     MesTypMES20 = fields.NotRequiredStr(default='CC315A', read_only=True,
@@ -97,7 +96,7 @@ class ENSPresentationSerializer(ENSMixin, AEATRequest):
     HEAHEA = complex_types.ENSPresentationHeader(required=True)
 
 
-class ENSModificationSerializer(ENSMixin, AEATRequest):
+class ENSModificationSerializer(MessageMixin, AEATRequest):
     service_name = 'ens_modification'
 
     MesTypMES20 = fields.NotRequiredStr(default='CC313A', read_only=True,
@@ -105,5 +104,15 @@ class ENSModificationSerializer(ENSMixin, AEATRequest):
     HEAHEA = complex_types.ENSModificationHeader(required=True)
 
 
-class EXSPresentationSerializer(AEATRequest):
+class EXSSerializer(MessageMixin, AEATRequest):
     service_name = 'exs_presentation'
+
+    Id = fields.RequiredStr(max_length=14, source='MesIdeMES19',
+                            help_text='Message identification. (like Id)')
+    NifDeclarante = fields.NotRequiredStr(max_length=14, read_only=True,
+                                          default=settings.AEAT_VAT_NUMBER)
+    NombreDeclarante = fields.NotRequiredStr(max_length=14, read_only=True,
+                                             default=settings.AEAT_LEGAL_NAME)
+    MesTypMES20 = fields.NotRequiredStr(default='CC615A', read_only=True,
+                                        help_text='Message type')
+    HEAHEA = complex_types.EXSHeader(required=True)

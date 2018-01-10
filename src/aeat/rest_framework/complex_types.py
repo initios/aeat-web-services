@@ -35,6 +35,20 @@ class ENSModificationHeader(ENSPresentationHeader):
     DocNumHEA5 = RequiredStr(help_text='Document/reference number')
 
 
+class EXSHeader(rf.Serializer):
+    '''HEAHEAType EXS'''
+    RefNumHEA4 = RequiredStr(max_length=22, help_text='Reference Number. EG LRN000000041')
+    CusSubPlaHEA66 = RequiredStr(max_length=22, help_text='Customs sub place. EG 4611ZZZ999')
+    TotNumOfIteHEA305 = rf.IntegerField(required=True, min_value=0, max_value=5,
+                                        help_text='Total number of items. EG: 3')
+    TotNumOfPacHEA306 = NotRequiredStr(max_length=7,
+                                       help_text='Total number of packages. EG: 50')
+    TotGroMasHEA307 = NotRequiredStr(help_text='Total gross mass. EG 10')
+    SpeCirIndHEA1 = NotRequiredStr(help_text='Specific Circumstance Indicator. EG A')
+    DecDatTimHEA114 = AEATDateTimeField(
+        required=True, help_text='Declaration date and time. EG 201207041455')
+
+
 class TraderConsignor(rf.Serializer):
     '''TRACONCO1Type'''
     NamCO17 = NotRequiredStr(help_text='Name. EG JUAN CARLOS')
