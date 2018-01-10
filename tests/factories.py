@@ -41,12 +41,15 @@ class EXSHeader(factory.Factory):
         model = dict
 
     RefNumHEA4 = 'LRN000000041'
-    CusSubPlaHEA66 = '4611ZZZ999'
     TotNumOfIteHEA305 = '3'
     TotNumOfPacHEA306 = '50'
     TotGroMasHEA307 = '10'
+    DecPlaHEA394 = 'Madrid'
     SpeCirIndHEA1 = 'A'
+    TraChaMetOfPayHEA1 = 'C'
+    ComRefNumHEA = 'a828rt'
     DecDatTimHEA114 = factory.LazyAttribute(lambda x: dt.datetime.now())
+    CusSubPlaHEA66 = '4611ZZZ999'
 
 
 class TraderConsignor(factory.Factory):
@@ -276,7 +279,7 @@ class ENSQueryFactory(factory.Factory):
     ConRefNum = '9294408'
 
 
-class EXSFactory(BaseMessageMixin, factory.Factory):
+class EXSPresentationFactory(BaseMessageMixin, factory.Factory):
     class Meta:
         model = dict
 
