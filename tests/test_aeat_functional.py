@@ -66,15 +66,13 @@ def test_ens_query(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_exs(make_aeat_test_controller):
-    payload = factories.EXSFactory(MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678'))
+    payload = factories.EXSFactory()
+    print(payload)
     serializer = serializers.EXSSerializer(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
-    print(serializer.data)
-    # ctrl = make_aeat_test_controller('exs_presentation')
-    # result = ctrl.request(factories.ENSPresentationFactory(
-    #     MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678')
-    # ))
-    # assert result.valid, result.error
+    ctrl = make_aeat_test_controller('exs_presentation')
+    result = ctrl.request(serializer.data)
+    assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
 
-    # assert 'OK' == result.data  # WIP. Not sure what the response is yet
+    assert 'OK' == result.data  # WIP. Not sure what the response is yet

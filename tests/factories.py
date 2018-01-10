@@ -49,7 +49,6 @@ class TraderConsignor(factory.Factory):
     PosCodCO123 = '28007'
     CitCO124 = 'Madrid'
     CouCO125 = 'ES'
-    NADLNGCO = 'ES'
     TINCO159 = 'ESA08005688'
 
 
@@ -62,7 +61,6 @@ class TraderConsignee(factory.Factory):
     PosCodCE123 = '28005'
     CitCE124 = 'Madrid'
     CouCE125 = 'ES'
-    NADLNGCE = 'ES'
     TINCE159 = 'ESA08005688'
 
 
@@ -72,7 +70,6 @@ class ProducedDocumentsCertificates(factory.Factory):
 
     DocTypDC21 = 'Y022'
     DocRefDC23 = 'ESAEOC1'
-    DocRefDCLNG = 'ES'
 
 
 class SpecialMentions(factory.Factory):
@@ -103,8 +100,8 @@ class Package(factory.Factory):
     KinOfPacGS23 = 'NE'
     NumOfPacGS24 = '0'
     NumOfPieGS25 = '10'
-    MarNumOfPacGSL21 = 'PAQUETES1'
-    MarNumOfPacGSL21LNG = 'ES'
+    # MarNumOfPacGSL21 = 'PAQUETES1'
+    # MarNumOfPacGSL21LNG = 'ES'
 
 
 class GoodsItem(factory.Factory):
