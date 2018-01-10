@@ -77,8 +77,6 @@ class EXSPresentationSerializer(v2.BaseV2Mixin, AEATRequest):
     service_name = 'exs_common'
 
     Id = rf.ReadOnlyField(source='MesIdeMES19', help_text='Message identification')
-    NifDeclarante = rf.ReadOnlyField(read_only=True, default=settings.AEAT_VAT_NUMBER)
-    NombreDeclarante = rf.ReadOnlyField(default=settings.AEAT_LEGAL_NAME)
     MesTypMES20 = rf.ReadOnlyField(default='CC615A', help_text='Message type')
 
     HEAHEA = v2.EXSHeader(required=True)
