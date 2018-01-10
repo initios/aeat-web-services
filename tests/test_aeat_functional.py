@@ -29,32 +29,38 @@ def make_aeat_test_controller(certificate_real):
     return make_controller_for_service
 
 
-def test_service_helper(factory_cls, serializer_cls, message_id):
-    payload = factories.ENSPresentationFactory(MesIdeMES19='TESTID101')
-    serializer = serializers.ENSPresentationSerializer(data=payload)
+def test_request(factory_cls, serializer_cls, controller, message_id):
+    payload = factory_cls(MesIdeMES19=message_id)
+    serializer = serializer_cls(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
-    ctrl = make_aeat_test_controller('ens_presentation')
-    return ctrl.request(serializer.data)
+    return controller.request(serializer.data)
 
 
 @pytest.mark.functional
 def test_ens_presentation(make_aeat_test_controller):
-    result = ctrl.request(serializer.data)
+    result = test_request(
+        factories.ENSPresentationFactory,
+        serializers.ENSPresentationSerializer,
+        make_aeat_test_controller('ens_presentation'),
+        'TESTID101',
+    )
 
     assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
-    assert 'OK' == result.data  # WIP. Not sure what the response is yet
+    assert result.data
 
 
 @pytest.mark.functional
 def test_ens_modification(make_aeat_test_controller):
-    ctrl = make_aeat_test_controller('ens_modification')
-    result = ctrl.request(factories.ENSPresentationFactory(
-        MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678')
-    ))
-    assert result.valid, result.error
+    result = test_request(
+        factories.ENSPresentationFactory,  # @TODO Make custom factory
+        serializers.ENSModificationSerializer,
+        make_aeat_test_controller('ens_modification'),
+        'TESTID201',
+    )
 
-    assert 'OK' == result.data  # WIP. Not sure what the response is yet
+    assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
+    assert result.data
 
 
 @pytest.mark.functional
