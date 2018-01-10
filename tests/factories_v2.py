@@ -153,7 +153,6 @@ class SealsIdentity(factory.Factory):
         model = dict
 
     SeaIdSEAID530 = '1'
-    SeaIdSEAID530LNG = 'ES'
 
 
 class BaseMessageMixin(factory.Factory):

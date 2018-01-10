@@ -118,7 +118,6 @@ class Itinerary(rf.Serializer):
 class SealsIdentity(rf.Serializer):
     '''SEAID529Type'''
     SeaIdSEAID530 = RequiredStr(max_length=20, help_text='Seals identity')
-    SeaIdSEAID530LNG = NotRequiredStr(help_text='Seals identity LNG')
 
 
 class BaseV2Mixin(rf.Serializer):
