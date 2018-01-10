@@ -33,12 +33,7 @@ class AEATRequest(rf.Serializer):
     service_name = None
 
     def save(self):
-        result = make_aeat_request(self.service_name, self.data)
-
-        if not result.valid:
-            raise ValidationError(result.error)
-
-        return {'data': result.data, 'raw_response': result.raw_response}
+        return make_aeat_request(self.service_name, self.data)
 
     def to_representation(self, instance):
         instance = super().to_representation(instance)
@@ -77,7 +72,6 @@ class MessageMixin(rf.Serializer):
 
     TRACONCO1 = complex_types.TraderConsignor(required=True)
     TRACONCE1 = complex_types.TraderConsignee(required=True)
-    NOTPAR670 = complex_types.NotifyParty()
     GOOITEGDS = complex_types.GoodsItem(required=True, many=True)
     ITI = complex_types.Itinerary(required=False, many=True)
     TRAREP = complex_types.TraderRepresentative(required=False)
@@ -98,7 +92,7 @@ class ENSPresentationSerializer(MessageMixin, AEATRequest):
 
 class ENSModificationSerializer(MessageMixin, AEATRequest):
     service_name = 'ens_modification'
-
+    NOTPAR670 = complex_types.NotifyParty(required=True)
     MesTypMES20 = fields.NotRequiredStr(default='CC313A', read_only=True,
                                         help_text='Message type. EG CC313A')
     HEAHEA = complex_types.ENSModificationHeader(required=True)
