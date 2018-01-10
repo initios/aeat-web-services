@@ -3,39 +3,6 @@ import datetime as dt
 import factory
 
 
-class ENSPresentationHeader(factory.Factory):
-    class Meta:
-        model = dict
-
-    RefNumHEA4 = 'LRN000000041'
-    TraModAtBorHEA76 = '5'
-    IdeOfMeaOfTraCroHEA85 = '1111111'
-    IdeOfMeaOfTraCroHEA85LNG = 'ES'
-    TotNumOfIteHEA305 = '3'
-    TotNumOfPacHEA306 = '50'
-    TotGroMasHEA307 = '10'
-    DecPlaHEA394 = 'Madrid'
-    DecPlaHEA394LNG = 'ES'
-    SpeCirIndHEA1 = 'A'
-    TraChaMetOfPayHEA1 = 'C'
-    ComRefNumHEA = 'a828rt'
-    ConRefNumHEA = '7777b'
-    PlaLoaGOOITE334 = 'ESMadrid'
-    PlaLoaGOOITE334LNG = 'ES'
-    PlaUnlGOOITE334 = 'ESSegovia'
-    CodPlUnHEA357LNG = 'ES'
-    DecDatTimHEA114 = factory.LazyAttribute(lambda x: dt.datetime.now())
-
-
-class ENSModificationHeader(ENSPresentationHeader):
-    class Meta:
-        model = dict
-
-    DocNumHEA5 = 'mrn_number_xyz'
-    AmdPlaHEA598 = 'Barcelona'
-    DatTimAmeHEA113 = factory.LazyAttribute(lambda x: dt.datetime.now())
-
-
 class EXSHeader(factory.Factory):
     class Meta:
         model = dict
@@ -112,8 +79,22 @@ class Package(factory.Factory):
     KinOfPacGS23 = 'NE'
     NumOfPacGS24 = '0'
     NumOfPieGS25 = '10'
-    # MarNumOfPacGSL21 = 'PAQUETES1'
     MarNumOfPacGSL21LNG = 'ES'
+
+
+class PreviousDocument(factory.Factory):
+    class Meta:
+        model = dict
+
+    DocTypPD11 = 'XSUM'
+    DocRefPD12 = '4611099999900002'
+
+
+class CustomsOfficeLodgement(factory.Factory):
+    class Meta:
+        model = dict
+
+    RefNumCOL1 = 'ES004611'
 
 
 class GoodsItem(factory.Factory):
@@ -128,6 +109,7 @@ class GoodsItem(factory.Factory):
 
     SPEMENMT2 = factory.SubFactory(SpecialMentions)
     COMCODGODITM = factory.SubFactory(CommodityCode)
+    PREDOCGODITM1 = factory.SubFactory(PreviousDocument)
 
     @factory.post_generation
     def CONNR2(self, create, extracted, **kwargs):
@@ -163,7 +145,6 @@ class PersonLodgingSummaryDeclaration(factory.Factory):
     PosCodPLD1 = '28003'
     CitPLD1 = 'MADRID'
     CouCodPLD1 = 'ES'
-    PERLODSUMDECLNG = 'ES'
     TINPLD1 = 'ESA08005688'
 
 
@@ -175,62 +156,17 @@ class SealsIdentity(factory.Factory):
     SeaIdSEAID530LNG = 'ES'
 
 
-class CustomsOfficeFirstEntry(factory.Factory):
-    class Meta:
-        model = dict
-
-    RefNumCUSOFFFENT731 = 'ES009999'
-    ExpDatOfArrFIRENT733 = factory.LazyAttribute(lambda x:
-                                                 dt.datetime.now())
-
-
-class CustomsOfficeSubsequentEntry(factory.Factory):
-    class Meta:
-        model = dict
-
-    RefNumSUBENR909 = 'FR000010'
-
-
-class TraderEntryCarrier(factory.Factory):
-    class Meta:
-        model = dict
-
-    NamTRACARENT604 = 'ROSA'
-    StrNumTRACARENT607 = 'MONCLOA'
-    PstCodTRACARENT606 = '28007'
-    CtyTRACARENT603 = 'MADRID'
-    CouCodTRACARENT605 = 'ES'
-    TRACARENT601LNG = 'ES'
-    TINTRACARENT602 = 'ESA08005688'
-
-
-class NotifyParty(factory.Factory):
-    class Meta:
-        model = dict
-
-    NamNOTPAR672 = 'ROSA'
-    StrNumNOTPAR673 = 'MONCLOA'
-    PosCodNOTPAR676 = '28007'
-    CitNOTPAR674 = 'MADRID'
-    CouCodNOTPAR675 = 'ES'
-    NOTPAR670LNG = 'ES'
-    TINNOTPAR671 = 'ESA08005688'
-
-
 class BaseMessageMixin(factory.Factory):
     MesSenMES3 = factory.Sequence(lambda n: 'VAT00000%d' % n)
-    MesRecMES6 = 'NICA.ES'
     DatOfPreMES9 = factory.LazyAttribute(lambda x: dt.datetime.now().date())
     TimOfPreMES10 = factory.LazyAttribute(lambda x: dt.datetime.now().time())
     MesIdeMES19 = factory.Sequence(lambda n: 'TESTID000%d' % n)
-    MesTypMES20 = 'CC315A'
 
-    HEAHEA = factory.SubFactory(ENSPresentationHeader)
+    HEAHEA = factory.SubFactory(EXSHeader)
     TRACONCO1 = factory.SubFactory(TraderConsignor)
     TRACONCE1 = factory.SubFactory(TraderConsignee)
     PERLODSUMDEC = factory.SubFactory(PersonLodgingSummaryDeclaration)
-    CUSOFFFENT730 = factory.SubFactory(CustomsOfficeFirstEntry)
-    TRACARENT601 = factory.SubFactory(TraderEntryCarrier)
+    CUSOFFLON = factory.SubFactory(CustomsOfficeLodgement)
 
     @factory.post_generation
     def GOOITEGDS(self, create, extracted, **kwargs):
@@ -247,36 +183,6 @@ class BaseMessageMixin(factory.Factory):
             self['SEAID529'] = extracted
         else:
             self['SEAID529'] = [SealsIdentity()]
-
-    @factory.post_generation
-    def CUSOFFSENT740(self, create, extracted, **kwargs):
-        if extracted:
-            # A list of groups were passed in, use them
-            self['CUSOFFSENT740'] = extracted
-        else:
-            self['CUSOFFSENT740'] = [CustomsOfficeSubsequentEntry()]
-
-
-class ENSPresentationFactory(BaseMessageMixin, factory.Factory):
-    class Meta:
-        model = dict
-
-
-class ENSModificationFactory(BaseMessageMixin, factory.Factory):
-    class Meta:
-        model = dict
-
-    NOTPAR670 = factory.SubFactory(NotifyParty)
-    HEAHEA = factory.SubFactory(ENSModificationHeader)
-
-
-class ENSQueryFactory(factory.Factory):
-    class Meta:
-        model = dict
-
-    TraModAtBorHEA76 = '1'
-    ExpDatOfArr = '20110809'
-    ConRefNum = '9294408'
 
 
 class EXSPresentationFactory(BaseMessageMixin, factory.Factory):

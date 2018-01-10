@@ -31,6 +31,33 @@ class Package(rf.Serializer):
                                       help_text='Marks & numbers of packages (long)')
 
 
+class PreviousDocument(rf.Serializer):
+    DocTypPD11 = RequiredStr(help_text='Previous Document Type. EG XSUM')
+    DocRefPD12 = RequiredStr(help_text='Previous Document Reference. EG 4611099999900002')
+
+
+class CustomsOfficeLodgement(rf.Serializer):
+    RefNumCOL1 = RequiredStr(help_text='Reference Number. EG ES004611')
+
+
+class ProducedDocumentsCertificates(rf.Serializer):
+    '''PRODOCDC2Type'''
+    DocTypDC21 = RequiredStr(max_length=4, help_text='Document type. EG Y022')
+    DocRefDC23 = RequiredStr(max_length=35, help_text='Document reference. EG ESAEOC1')
+    DocRefDCLNG = NotRequiredStr(help_text='Document reference LNG')
+
+
+class CommodityCode(rf.Serializer):
+    '''COMCODGODITMType'''
+    ComNomCMD1 = RequiredStr(min_length=4, max_length=8,
+                             help_text='Combined Nomenclature. EG 123456')
+
+
+class Container(rf.Serializer):
+    '''CONNR2Type'''
+    ConNumNR21 = RequiredStr(max_length=17, help_text='Container number')
+
+
 class GoodsItem(rf.Serializer):
     '''GOOITEGDSType'''
     IteNumGDS7 = rf.IntegerField(required=True, help_text='Item Number. EG 1')
@@ -43,11 +70,55 @@ class GoodsItem(rf.Serializer):
     PlaLoaGOOITE333LNG = NotRequiredStr(help_text='Place of loading LNG. Min=0')
     PlaUnlGOOITE333 = NotRequiredStr(help_text='Place of unloading. Max 35. Min=0')
     PlaUnlGOOITE333LNG = NotRequiredStr(help_text='Place of unloading LNG. Min=0')
-
-    # PRODOCDC2 = ProducedDocumentsCertificates(required=False, many=True)
-    # COMCODGODITM = CommodityCode(required=False)
-    # CONNR2 = Container(many=True, required=False)
+    PREDOCGODITM1 = PreviousDocument(required=True)
+    PRODOCDC2 = ProducedDocumentsCertificates(required=False, many=True)
+    COMCODGODITM = CommodityCode(required=False)
+    CONNR2 = Container(many=True, required=False)
     PACGS2 = Package(many=True, required=False)
+
+
+class PersonLodgingSummaryDeclaration(rf.Serializer):
+    '''PERLODSUMDECType'''
+    NamPLD1 = NotRequiredStr(help_text='Name')
+    StrAndNumPLD1 = NotRequiredStr(help_text='Street and number')
+    PosCodPLD1 = NotRequiredStr(help_text='Postal code')
+    CitPLD1 = NotRequiredStr(help_text='City')
+    CouCodPLD1 = NotRequiredStr(help_text='Country code')
+    TINPLD1 = RequiredStr(min_length=3, max_length=17,
+                          help_text='Trader indentification number')
+
+
+class TraderConsignor(rf.Serializer):
+    '''TRACONCO1Type'''
+    NamCO17 = NotRequiredStr(help_text='Name. EG JUAN CARLOS')
+    StrAndNumCO122 = NotRequiredStr(help_text='Street and number. EG Almansa')
+    PosCodCO123 = NotRequiredStr(help_text='Postal code. EG 28007')
+    CitCO124 = NotRequiredStr(help_text='City. EG Madrid')
+    CouCO125 = NotRequiredStr(help_text='Country code. EG ES')
+    NADLNGCO = NotRequiredStr(help_text='NAD LNG. EG ES')
+    TINCO159 = NotRequiredStr(help_text='TIN (Trader identification number). EG ESA08005688')
+
+
+class TraderConsignee(rf.Serializer):
+    '''TRACONCE1Type'''
+    NamCE17 = NotRequiredStr(help_text='Name. EG luis')
+    StrAndNumCE122 = NotRequiredStr(help_text='Street and number. EG cruz')
+    PosCodCE123 = NotRequiredStr(help_text='Postal code. EG 28005')
+    CitCE124 = NotRequiredStr(help_text='City. EG Madrid')
+    CouCE125 = NotRequiredStr(help_text='Country code. EG ES')
+    NADLNGCE = NotRequiredStr(help_text='NAD LNG. EG ES')
+    TINCE159 = NotRequiredStr(help_text='TIN (Trader identification number). EG ESA08005688')
+
+
+class Itinerary(rf.Serializer):
+    '''ITIType'''
+    CouOfRouCodITI1 = RequiredStr(help_text='Country of routing code')
+
+
+class SealsIdentity(rf.Serializer):
+    '''SEAID529Type'''
+    SeaIdSEAID530 = RequiredStr(max_length=20, help_text='Seals identity')
+    SeaIdSEAID530LNG = NotRequiredStr(help_text='Seals identity LNG')
 
 
 class BaseV2Mixin(rf.Serializer):
@@ -64,13 +135,10 @@ class BaseV2Mixin(rf.Serializer):
     MesIdeMES19 = RequiredStr(max_length=14, help_text='Message identification. '
                                                        'EG 09ES112222110 (like Id)')
 
-    # TRACONCO1 = TraderConsignor(required=True)
-    # TRACONCE1 = TraderConsignee(required=True)
+    TRACONCO1 = TraderConsignor(required=True)
+    TRACONCE1 = TraderConsignee(required=True)
     GOOITEGDS = GoodsItem(required=True, many=True)
-    # ITI = Itinerary(required=False, many=True)
-    # TRAREP = TraderRepresentative(required=False)
-    # PERLODSUMDEC = PersonLodgingSummaryDeclaration(required=False)
-    # SEAID529 = SealsIdentity(required=False, many=True)
-    # CUSOFFFENT730 = CustomsOfficeFirstEntry(required=True)
-    # CUSOFFSENT740 = CustomsOfficeSubsequentEntry(many=True)
-    # TRACARENT601 = TraderEntryCarrier(required=False)
+    CUSOFFLON = CustomsOfficeLodgement(required=True)
+    ITI = Itinerary(required=False, many=True)
+    PERLODSUMDEC = PersonLodgingSummaryDeclaration(required=False)
+    SEAID529 = SealsIdentity(required=False, many=True)
