@@ -46,18 +46,18 @@ def test_make_aeat_request_without_key_path_env_var_fails(ctrl_builder):
 
 @patch('aeat.rest_framework.serializers.make_aeat_request',
        lambda x, y: Result(data=None, error='NO REENVIABLE'))
-def test_aeat_request_serializer_raises_validation_error_if_request_fails():
+def test_aeat_request_serializer_returns_result_failed_when_request_fails():
     serializer = serializers.AEATRequest()
-
-    with pytest.raises(serializers.ValidationError, match='NO REENVIABLE'):
-        serializer.save()
+    result = serializer.save()
+    assert not result.valid
 
 
 @patch('aeat.rest_framework.serializers.make_aeat_request',
        lambda x, y: Result(data='xyz', error=None, raw_response='xml...'))
-def test_aeat_request_serializer_returns_aeat_response_if_request_succeed():
+def test_aeat_request_serializer_returns_result_if_request_is_successfull():
     serializer = serializers.AEATRequest()
-    assert {'data': 'xyz', 'raw_response': 'xml...'} == serializer.save()
+    result = serializer.save()
+    assert result.valid
 
 
 def test_adds_test_indicator_when_test_mode_is_enabled():
