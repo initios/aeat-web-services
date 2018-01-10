@@ -30,9 +30,32 @@ class ENSPresentationHeader(rf.Serializer):
         required=True, help_text='Declaration date and time. EG 201207041455')
 
 
-class ENSModificationHeader(ENSPresentationHeader):
+class ENSModificationHeader(rf.Serializer):
     '''HEAHEAType with mandatory MRNType'''
+    TraModAtBorHEA76 = RequiredStr(max_length=2, help_text='Transport mode at border. EG 5.')
+    IdeOfMeaOfTraCroHEA85 = NotRequiredStr(
+        max_length=27, help_text='Identity of means of transport crossing border. EG 1111111')
+    IdeOfMeaOfTraCroHEA85LNG = NotRequiredStr(help_text='Identity of means of transport '
+                                                        'crossing border LNG. EG ES')
+    TotNumOfIteHEA305 = rf.IntegerField(required=True, min_value=0, max_value=5,
+                                        help_text='Total number of items. EG: 3')
+    TotNumOfPacHEA306 = NotRequiredStr(max_length=7,
+                                       help_text='Total number of packages. EG: 50')
+    TotGroMasHEA307 = NotRequiredStr(help_text='Total gross mass. EG 10')
+    SpeCirIndHEA1 = NotRequiredStr(help_text='Specific Circumstance Indicator. EG A')
+    TraChaMetOfPayHEA1 = NotRequiredStr(help_text='Transport charges / Method of Payment. EG C')
+    ComRefNumHEA = NotRequiredStr(max_length=70, help_text='Commercial Reference Numer. EG a828rt')
+    ConRefNumHEA = NotRequiredStr(max_length=35, help_text='Conveyance reference number. EG 7777b')
+    PlaLoaGOOITE334 = NotRequiredStr(max_length=35, help_text='Place of loading. EG ESMadrid')
+    PlaLoaGOOITE334LNG = NotRequiredStr(help_text='Place of loading LNG. EG ES')
+    PlaUnlGOOITE334 = NotRequiredStr(max_length=35, help_text='Place of unloading. EG ESSegovia')
+    CodPlUnHEA357LNG = NotRequiredStr(help_text='Place of unloading LNG. EG ES')
+
+    # Specific Modification fields
     DocNumHEA5 = RequiredStr(help_text='Document/reference number')
+    AmdPlaHEA598 = RequiredStr(help_text='Amendment place')
+    DatTimAmeHEA113 = AEATDateTimeField(
+        required=True, help_text='Declaration date and time. EG 201207041455')
 
 
 class EXSHeader(rf.Serializer):
