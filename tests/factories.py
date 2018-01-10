@@ -101,7 +101,7 @@ class Package(factory.Factory):
     NumOfPacGS24 = '0'
     NumOfPieGS25 = '10'
     # MarNumOfPacGSL21 = 'PAQUETES1'
-    # MarNumOfPacGSL21LNG = 'ES'
+    MarNumOfPacGSL21LNG = 'ES'
 
 
 class GoodsItem(factory.Factory):
@@ -197,7 +197,7 @@ class BaseMessageMixin(factory.Factory):
     MesRecMES6 = 'NICA.ES'
     DatOfPreMES9 = factory.LazyAttribute(lambda x: dt.datetime.now().date())
     TimOfPreMES10 = factory.LazyAttribute(lambda x: dt.datetime.now().time())
-    MesIdeMES19 = factory.Sequence(lambda n: 'Id000%d' % n)
+    MesIdeMES19 = factory.Sequence(lambda n: 'TESTID000%d' % n)
     MesTypMES20 = 'CC315A'
 
     HEAHEA = factory.SubFactory(ENSPresentationHeader)

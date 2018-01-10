@@ -29,14 +29,20 @@ def make_aeat_test_controller(certificate_real):
     return make_controller_for_service
 
 
+def test_service_helper(factory_cls, serializer_cls, message_id):
+    payload = factories.ENSPresentationFactory(MesIdeMES19='TESTID101')
+    serializer = serializers.ENSPresentationSerializer(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
+
+    ctrl = make_aeat_test_controller('ens_presentation')
+    return ctrl.request(serializer.data)
+
+
 @pytest.mark.functional
 def test_ens_presentation(make_aeat_test_controller):
-    ctrl = make_aeat_test_controller('ens_presentation')
-    result = ctrl.request(factories.ENSPresentationFactory(
-        MesSenMES3=os.environ.get('AEAT_VAT_NUMBER', 'X12345678')
-    ))
-    assert result.valid, result.error
+    result = ctrl.request(serializer.data)
 
+    assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
     assert 'OK' == result.data  # WIP. Not sure what the response is yet
 
 
@@ -67,7 +73,6 @@ def test_ens_query(make_aeat_test_controller):
 @pytest.mark.functional
 def test_exs(make_aeat_test_controller):
     payload = factories.EXSFactory()
-    print(payload)
     serializer = serializers.EXSSerializer(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
