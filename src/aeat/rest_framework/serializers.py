@@ -20,7 +20,4 @@ class DequeToDictMixin:
 
 
 class MRNSerializer(DequeToDictMixin, rf.Serializer):
-    mrn = rf.SerializerMethodField()
-
-    def get_mrn(self, obj):
-        return obj['HEAHEA']['DocNumHEA5']
+    mrn = rf.CharField(source='HEAHEA.DocNumHEA5')
