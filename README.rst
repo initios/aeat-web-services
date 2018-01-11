@@ -101,7 +101,7 @@ Several AEAT Validators and Serializers are provided.
     # Parse the response
     from aeat.rest_framework import serializers
 
-    serializer = serializers.ENSSerializer(data=result.data)
+    serializer = serializers.get_class_for_aeat_response(data=result.data)
     assert serializer.is_valid(raise_exception=False)
     assert {'mrn': 'XXXX'} == serializer.data
 
