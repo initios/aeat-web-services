@@ -19,5 +19,9 @@ class DequeToDictMixin:
         return {item.tag: lxml_to_dict(item) for item in data}
 
 
-class MRNSerializer(DequeToDictMixin, rf.Serializer):
+class ENSSerializer(DequeToDictMixin, rf.Serializer):
+    mrn = rf.CharField(source='HEAHEA.DocNumHEA5')
+
+
+class EXSSerializer(DequeToDictMixin, rf.Serializer):
     mrn = rf.CharField(source='HEAHEA.DocNumHEA5')

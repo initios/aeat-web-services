@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE616V2Sal.xsd" targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE616V2Sal.xsd" elementFormDefault="qualified" version="1.00">
+	<!--===== Includes =====-->
+	<!-- <xs:include schemaLocation="types_exs_all.xsd"/>-->
+	<xs:include schemaLocation="types_exs_simple.xsd"/>
+	<xs:include schemaLocation="types_exs_complex.xsd"/>
+	<xs:include schemaLocation="types_exs_codeList.xsd"/>
+	<xs:include schemaLocation="types_exs_documentation.xsd"/>
+	<!--===== Root Element =====-->
+	<xs:element name="CC616A" type="CC616AType"/>
+	<!--===== Root Element Content =====-->
+	<xs:complexType name="CC616AType">
+		<xs:sequence>
+			<xs:group ref="MESSAGE"/>
+			<xs:element name="HEAHEA" type="HEAHEAType">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="HEADER"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="FUNERRER1" type="FUNERRER1Type" minOccurs="0" maxOccurs="999">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="FUNCTIONAL ERROR"/>
+						<rule name="R123"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===== MESSAGE Content =====-->
+	<xs:group name="MESSAGE">
+		<xs:sequence>
+			<xs:element name="MesSenMES3" type="Alphanumeric_Max35">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Message sender"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MesRecMES6" type="Alphanumeric_Max35">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Message recipient"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatOfPreMES9" type="Numeric_6">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Date of preparation"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimOfPreMES10" type="Numeric_4">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Time of preparation"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PriMES15" type="Alpha_1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Priority"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TesIndMES18" type="Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Test indicator"/>
+						<rule name="TR9085"/>
+						<codeList name="Flag"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MesIdeMES19" type="Alphanumeric_Max14">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Message identification"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MesTypMES20" type="MessageTypes">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Message type"/>
+						<codeList name="MessageTypes"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CorIdeMES25" type="Alphanumeric_Max14" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Correlation identifier"/>
+						<rule name="TR9181"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<!--===== HEADER =====-->
+	<xs:complexType name="HEAHEAType">
+		<xs:annotation>
+			<xs:documentation>
+				<xs:description value="HEADER"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RefNumHEA4" type="Alphanumeric_Max22">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Reference number"/>
+						<rule name="R891"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecRejReaHEA252" type="Alphanumeric_Max350" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Declaration rejection reason"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecRejDatTimHEA116" type="DateTimeType">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Declaration rejection date and time"/>
+						<rule name="R660"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===== FUNCTIONAL ERROR =====-->
+	<xs:complexType name="FUNERRER1Type">
+		<xs:annotation>
+			<xs:documentation>
+				<xs:description value="FUNCTIONAL ERROR"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrTypER11" type="FunctionalErrorCodes">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Error type"/>
+						<rule name="R098"/>
+						<codeList name="FunctionalErrorCodes"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrPoiER12" type="Alphanumeric_Max210">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Error pointer"/>
+						<rule name="R098"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrReaER13" type="Alphanumeric_Max6" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Error reason"/>
+						<rule name="R098"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriAttValER14" type="Alphanumeric_Max140" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Original attribute value"/>
+						<rule name="R098"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>
