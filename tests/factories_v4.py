@@ -41,12 +41,15 @@ class EXSHeader(factory.Factory):
         model = dict
 
     RefNumHEA4 = 'LRN000000041'
-    CusSubPlaHEA66 = '4611ZZZ999'
     TotNumOfIteHEA305 = '3'
     TotNumOfPacHEA306 = '50'
     TotGroMasHEA307 = '10'
+    DecPlaHEA394 = 'Madrid'
     SpeCirIndHEA1 = 'A'
+    TraChaMetOfPayHEA1 = 'C'
+    ComRefNumHEA = 'a828rt'
     DecDatTimHEA114 = factory.LazyAttribute(lambda x: dt.datetime.now())
+    CusSubPlaHEA66 = '4611ZZZ999'
 
 
 class TraderConsignor(factory.Factory):
@@ -216,11 +219,9 @@ class NotifyParty(factory.Factory):
 
 class BaseMessageMixin(factory.Factory):
     MesSenMES3 = factory.Sequence(lambda n: 'VAT00000%d' % n)
-    MesRecMES6 = 'NICA.ES'
     DatOfPreMES9 = factory.LazyAttribute(lambda x: dt.datetime.now().date())
     TimOfPreMES10 = factory.LazyAttribute(lambda x: dt.datetime.now().time())
     MesIdeMES19 = factory.Sequence(lambda n: 'TESTID000%d' % n)
-    MesTypMES20 = 'CC315A'
 
     HEAHEA = factory.SubFactory(ENSPresentationHeader)
     TRACONCO1 = factory.SubFactory(TraderConsignor)
@@ -274,10 +275,3 @@ class ENSQueryFactory(factory.Factory):
     TraModAtBorHEA76 = '1'
     ExpDatOfArr = '20110809'
     ConRefNum = '9294408'
-
-
-class EXSFactory(BaseMessageMixin, factory.Factory):
-    class Meta:
-        model = dict
-
-    HEAHEA = factory.SubFactory(EXSHeader)

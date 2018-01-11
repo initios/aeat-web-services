@@ -37,7 +37,9 @@ ADUANET_SERVICES = {
         'service': 'ConsENSV3Service',
         'signed': False,
     },
-    'exs_presentation': {
+
+    # EXS shares the same WSDL
+    'exs_common': {
         'verbose_name': "Presentación de Declaración Sumaria de Salida",
         'wsdl': 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE615V2.wsdl',  # NOQA
         'operation': 'IE615V2',

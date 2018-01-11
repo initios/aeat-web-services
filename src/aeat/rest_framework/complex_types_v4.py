@@ -1,6 +1,7 @@
+from django.conf import settings
 from rest_framework import serializers as rf
 
-from .fields import AEATDateTimeField, NotRequiredStr, RequiredStr
+from .fields import AEATDateField, AEATDateTimeField, AEATTimeField, NotRequiredStr, RequiredStr
 
 
 class ENSPresentationHeader(rf.Serializer):
@@ -55,20 +56,6 @@ class ENSModificationHeader(rf.Serializer):
     DocNumHEA5 = RequiredStr(help_text='Document/reference number')
     AmdPlaHEA598 = RequiredStr(help_text='Amendment place')
     DatTimAmeHEA113 = AEATDateTimeField(
-        required=True, help_text='Declaration date and time. EG 201207041455')
-
-
-class EXSHeader(rf.Serializer):
-    '''HEAHEAType EXS'''
-    RefNumHEA4 = RequiredStr(max_length=22, help_text='Reference Number. EG LRN000000041')
-    CusSubPlaHEA66 = RequiredStr(max_length=22, help_text='Customs sub place. EG 4611ZZZ999')
-    TotNumOfIteHEA305 = rf.IntegerField(required=True, min_value=0, max_value=5,
-                                        help_text='Total number of items. EG: 3')
-    TotNumOfPacHEA306 = NotRequiredStr(max_length=7,
-                                       help_text='Total number of packages. EG: 50')
-    TotGroMasHEA307 = NotRequiredStr(help_text='Total gross mass. EG 10')
-    SpeCirIndHEA1 = NotRequiredStr(help_text='Specific Circumstance Indicator. EG A')
-    DecDatTimHEA114 = AEATDateTimeField(
         required=True, help_text='Declaration date and time. EG 201207041455')
 
 
@@ -218,3 +205,29 @@ class NotifyParty(rf.Serializer):
     CouCodNOTPAR675 = NotRequiredStr(help_text='Country code')
     NOTPAR670LNG = NotRequiredStr(help_text='NAD LNG')
     TINNOTPAR671 = NotRequiredStr(help_text='Trader indentification number')
+
+
+class BaseV4Mixin(rf.Serializer):
+    '''Common attributes'''
+    MesSenMES3 = NotRequiredStr(max_length=35, read_only=True,
+                                default=settings.AEAT_VAT_NUMBER,
+                                help_text='Message Sender (VAT Number). EG. 89890001K')
+    MesRecMES6 = NotRequiredStr(max_length=35, default='NICA.ES', read_only=True,
+                                help_text='EG NICA.ES (default)')
+    DatOfPreMES9 = AEATDateField(required=True, allow_null=False,
+                                 help_text='Date of preparation. EG 101010 (YYMMDD)')
+    TimOfPreMES10 = AEATTimeField(required=True, allow_null=False,
+                                  help_text='Time of preparation. EG 1010 (HHMM)')
+    MesIdeMES19 = RequiredStr(max_length=14, help_text='Message identification. '
+                                                       'EG 09ES112222110 (like Id)')
+
+    TRACONCO1 = TraderConsignor(required=True)
+    TRACONCE1 = TraderConsignee(required=True)
+    GOOITEGDS = GoodsItem(required=True, many=True)
+    ITI = Itinerary(required=False, many=True)
+    TRAREP = TraderRepresentative(required=False)
+    PERLODSUMDEC = PersonLodgingSummaryDeclaration(required=False)
+    SEAID529 = SealsIdentity(required=False, many=True)
+    CUSOFFFENT730 = CustomsOfficeFirstEntry(required=True)
+    CUSOFFSENT740 = CustomsOfficeSubsequentEntry(many=True)
+    TRACARENT601 = TraderEntryCarrier(required=False)

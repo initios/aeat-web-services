@@ -1,6 +1,7 @@
 import pytest
 
-import factories
+import factories_v2
+import factories_v4
 import setup_django  # NOQA
 
 import aeat
@@ -29,7 +30,7 @@ def make_aeat_test_controller(certificate_real):
 
 @pytest.mark.functional
 def test_ens_presentation(make_aeat_test_controller):
-    payload = factories.ENSPresentationFactory(MesIdeMES19='TEST10001')
+    payload = factories_v4.ENSPresentationFactory(MesIdeMES19='TEST10001')
     serializer = serializers.ENSPresentationSerializer(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
@@ -42,7 +43,7 @@ def test_ens_presentation(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_ens_modification(make_aeat_test_controller):
-    payload = factories.ENSModificationFactory(MesIdeMES19='TEST20001')
+    payload = factories_v4.ENSModificationFactory(MesIdeMES19='TEST20001')
     serializer = serializers.ENSModificationSerializer(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
@@ -55,7 +56,7 @@ def test_ens_modification(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_ens_query(make_aeat_test_controller):
-    payload = factories.ENSQueryFactory()
+    payload = factories_v4.ENSQueryFactory()
     serializer = serializers.ENSQuerySerializer(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
@@ -67,12 +68,12 @@ def test_ens_query(make_aeat_test_controller):
 
 
 @pytest.mark.functional
-def test_exs(make_aeat_test_controller):
-    payload = factories.EXSFactory(MesIdeMES19='TEST30001')
-    serializer = serializers.EXSSerializer(data=payload)
+def test_exs_presentation(make_aeat_test_controller):
+    payload = factories_v2.EXSPresentationFactory(MesIdeMES19='TEST30001')
+    serializer = serializers.EXSPresentationSerializer(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
-    controller = make_aeat_test_controller('exs_presentation')
+    controller = make_aeat_test_controller('exs_common')
     result = controller.request(serializer.data)
 
     assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
