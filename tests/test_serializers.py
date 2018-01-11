@@ -22,4 +22,5 @@ def test_exs_serializer(zeep_response):
     serializer = serializers.EXSSerializer(data=aeat_response)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
-    assert {'mrn': '17ES00361160001234'} == serializer.data
+    assert {'mrn': '17ES00361160001234',
+            'item_number_involved': 0, 'customs_intervention_code': 'V'} == serializer.data
