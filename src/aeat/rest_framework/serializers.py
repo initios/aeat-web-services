@@ -3,7 +3,7 @@ from rest_framework import serializers as rf
 
 def raw_tag(item):
     '''Returns item tag without namespace'''
-    return item.tag.partition('}')[2]
+    return item.tag.partition('}')[2] or item.tag
 
 
 def lxml_to_dict(node):

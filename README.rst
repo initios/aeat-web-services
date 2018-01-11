@@ -88,7 +88,7 @@ Several AEAT Validators and Serializers are provided.
     from aeat.rest_framework import validators
 
     validator = validators.ENSPresentationValidator(data=payload)
-    validator.is_valid(raise_exception=True)
+    assert validator.is_valid(raise_exception=True)
 
     # Send the request to AEAT
     import aeat
@@ -102,7 +102,7 @@ Several AEAT Validators and Serializers are provided.
     from aeat.rest_framework import serializers
 
     serializer = serializers.ENSSerializer(data=result.data)
-    serializer.is_valid(raise_exception=False)
+    assert serializer.is_valid(raise_exception=False)
     assert {'mrn': 'XXXX'} == serializer.data
 
 

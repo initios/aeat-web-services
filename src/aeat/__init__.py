@@ -100,7 +100,7 @@ class Controller:
             logger.critical('Unexpected exception', exc_info=True)
             result = Result(None, 'Unknown error')
         else:
-            Result(data, None)
+            result = Result(data, None)
 
         if self.raw_xml_plugin:
             result.raw_request = self.raw_xml_plugin.last_sent
