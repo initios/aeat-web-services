@@ -85,18 +85,25 @@ Several AEAT Validators and Serializers are provided.
 
 .. code:: python
 
-    from aeat.rest_framework import serializers as aeat_serializers
+    from aeat.rest_framework import validators
 
-    serializer = aeat_serializers.ENSPresentationSerializer(data=payload)
-    serializer.is_valid(raise_exception=True)
-    result = serializer.save()
+    validator = validators.ENSPresentationValidator(data=payload)
+    validator.is_valid(raise_exception=True)
 
-    # aeat.Result object is returned
+    # Send the request to AEAT
+    import aeat
+
+    config = aeat.Config(service_name, test_mode=settings.AEAT_TEST_MODE)
+    ctrl = aeat.Controller.build_from_config(config, cert_path, key_path)
+    result = ctrl.request(validator.data)
     assert result.valid
-    assert result.data is not None
-    assert result.error is None
-    assert result.raw_request is not None
-    assert result.raw_response is not None
+
+    # Parse the response
+    from aeat.rest_framework import serializers
+
+    serializer = serializers.ENSSerializer(data=result.data)
+    serializer.is_valid(raise_exception=False)
+    assert {'mrn': 'XXXX'} == serializer.data
 
 
 Prerequisites
