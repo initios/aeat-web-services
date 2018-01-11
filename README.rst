@@ -78,7 +78,10 @@ Usage (Spanish)
 Django Rest Framework
 =====================
 
-Several AEAT Serializers are provided.
+Several AEAT Validators and Serializers are provided.
+
+- Validators: Validate input data to send to AEAT
+- Serializers: Serialize AEAT request
 
 .. code:: python
 
