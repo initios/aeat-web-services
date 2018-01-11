@@ -17,9 +17,13 @@ def lxml_to_dict(node):
     return storage
 
 
+def deque_to_dict(data):
+    return {raw_tag(item): lxml_to_dict(item) for item in data}
+
+
 class DequeToDictMixin:
     def to_internal_value(self, data):
-        return {raw_tag(item): lxml_to_dict(item) for item in data}
+        return deque_to_dict(data)
 
 
 class ENSSerializer(DequeToDictMixin, rf.Serializer):
@@ -33,4 +37,21 @@ class EXSSerializer(DequeToDictMixin, rf.Serializer):
 
 
 def get_class_for_aeat_response(data):
-    return None
+    try:
+        xsd = data[0].nsmap[None]
+    except KeyError:
+        xsd = None
+
+    ENSV4Base = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/'
+    EXSV2Base = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/'
+
+    return {
+
+        f'{ENSV4Base}IE315V4Ent.xsd': ENSSerializer,
+        # xmlns:IE316V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE316V4Sal.xsd"
+        # xmlns:IE328V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE328V4Sal.xsd"
+        # xmlns:IE351V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE351V4Sal.xsd"
+        # xmlns:IE917V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE917V4Sal.xsd"
+
+        f'{EXSV2Base}IE628V2Sal.xsd': EXSSerializer,
+    }.get(xsd)

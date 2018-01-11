@@ -33,4 +33,9 @@ def test_exs_serializer(zeep_response):
 ])
 def test_get_serializer_for_aeat_response(zeep_response, url, response, operation, expected):
     aeat_response = zeep_response(url, response, operation)
-    assert expected == serializers.get_class_for_aeat_response(aeat_response)
+    serializer_cls = serializers.get_class_for_aeat_response(aeat_response)
+    assert expected == serializer_cls
+
+    # It should parse the response without errors
+    serializer = serializer_cls(data=aeat_response)
+    assert serializer.is_valid()
