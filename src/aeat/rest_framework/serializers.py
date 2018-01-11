@@ -36,6 +36,11 @@ class EXSSerializer(DequeToDictMixin, rf.Serializer):
     customs_intervention_code = rf.CharField(source='RISANA.CusIntCodRKA1')
 
 
+class UnknownSerializer(rf.Serializer):
+    def validate(self, data):
+        raise rf.ValidationError('Unknown AEAT response')
+
+
 def get_class_for_aeat_response(data):
     try:
         xsd = data[0].nsmap[None]
@@ -54,4 +59,4 @@ def get_class_for_aeat_response(data):
         # xmlns:IE917V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE917V4Sal.xsd"
 
         f'{EXSV2Base}IE628V2Sal.xsd': EXSSerializer,
-    }.get(xsd)
+    }.get(xsd, UnknownSerializer)
