@@ -11,4 +11,5 @@ def test_mrn_serializer(zeep_response):
     serializer = serializers.MRNSerializer(data=aeat_response)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
+    raise Exception(serializer.data)
     assert {'mrn': '17ES004311Z0000010'} == serializer.data
