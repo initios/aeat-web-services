@@ -1,3 +1,4 @@
+import pytest
 import setup_django  # NOQA
 
 from aeat.rest_framework import serializers
@@ -24,3 +25,12 @@ def test_exs_serializer(zeep_response):
 
     assert {'mrn': '17ES00361160001234',
             'item_number_involved': 0, 'customs_intervention_code': 'V'} == serializer.data
+
+
+@pytest.mark.parametrize('url,response,operation,expected', [
+    ('wsdl_exs_IE615V2.wsdl', 'exs_presentation_success_IE628V2Sal.xml', 'IE615V2',
+     serializers.EXSSerializer),
+])
+def test_get_serializer_for_aeat_response(zeep_response, url, response, operation, expected):
+    aeat_response = zeep_response(url, response, operation)
+    assert expected == serializers.get_class_for_aeat_response(aeat_response)

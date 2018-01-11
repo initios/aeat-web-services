@@ -30,3 +30,7 @@ class EXSSerializer(DequeToDictMixin, rf.Serializer):
     mrn = rf.CharField(source='HEAHEA.DocNumHEA5')
     item_number_involved = rf.IntegerField(source='RISANA.IteNumInvRKA1')
     customs_intervention_code = rf.CharField(source='RISANA.CusIntCodRKA1')
+
+
+def get_class_for_aeat_response(data):
+    return None
