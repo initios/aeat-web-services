@@ -28,21 +28,30 @@ def test_exs_serializer(zeep_response):
             'item_number_involved': 0, 'customs_intervention_code': 'V'} == serializer.data
 
 
-@pytest.mark.parametrize('url,response,operation,expected,err', [
+@pytest.mark.parametrize('url,response,operation,expected,is_error,expected_data', [
+    # ENS
     ('wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_success_IE328V4Sal.xml', 'IE315V4',
-     serializers.ENSSerializer, False),
+     serializers.ENSSerializer, False, {'mrn': '17ES004311Z0000010'}),
 
-    ('wsdl_exs_IE615V2.wsdl', 'exs_presentation_success_IE628V2Sal.xml', 'IE615V2',
-     serializers.EXSSerializer, False),
+    ('wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_error_IE316V4Sal.xml', 'IE315V4',
+     serializers.ENSFunctionalErrorSerializer, True,
+     {'type': '12', 'pointer': 'MES.MesSenMES3', 'reason': '1234-Message Sender is not valid'}),
+
+    # EXS
+    # ('wsdl_exs_IE615V2.wsdl', 'exs_presentation_success_IE628V2Sal.xml', 'IE615V2',
+    #  serializers.EXSSerializer, False),
 ])
-def test_get_serializer_for_mapped_response(zeep_response, url, response, operation, expected, err):
+def test_get_serializer_for_mapped_response(zeep_response, url, response, operation, expected,
+                                            is_error, expected_data):
     aeat_response = zeep_response(url, response, operation)
     serializer_cls = serializers.get_class_for_aeat_response(aeat_response)
     assert expected == serializer_cls
 
     # It should parse the response without errors
     serializer = serializer_cls(data=aeat_response)
-    assert serializer.is_valid()
+    assert is_error == serializer.is_error
+    assert serializer.is_valid(), serializer.errors
+    assert expected_data == serializer.data
 
 
 def test_get_serializer_for_unmapped_response():

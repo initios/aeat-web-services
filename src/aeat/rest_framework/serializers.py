@@ -27,10 +27,14 @@ class DequeToDictMixin:
 
 
 class ENSSerializer(DequeToDictMixin, rf.Serializer):
+    is_error = False
+
     mrn = rf.CharField(source='HEAHEA.DocNumHEA5')
 
 
 class EXSSerializer(DequeToDictMixin, rf.Serializer):
+    is_error = False
+
     mrn = rf.CharField(source='HEAHEA.DocNumHEA5')
     item_number_involved = rf.IntegerField(source='RISANA.IteNumInvRKA1')
     customs_intervention_code = rf.CharField(source='RISANA.CusIntCodRKA1')
@@ -43,7 +47,7 @@ class UnknownResponseSerializer(rf.Serializer):
         return {'reason': 'Unknown AEAT response'}
 
 
-class ENSFunctionalErrorSerializer(rf.Serializer):
+class ENSFunctionalErrorSerializer(DequeToDictMixin, rf.Serializer):
     is_error = True
 
     type = rf.CharField(source='FUNERRER1.ErrTypER11')
@@ -77,5 +81,6 @@ def get_class_for_aeat_response(data):
 
     return {
         f'{ens}IE328V4Sal.xsd': ENSSerializer,
+        f'{ens}IE316V4Sal.xsd': ENSFunctionalErrorSerializer,
         f'{exs}IE628V2Sal.xsd': EXSSerializer,
     }.get(xsd, UnknownResponseSerializer)
