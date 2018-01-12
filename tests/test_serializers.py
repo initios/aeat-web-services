@@ -1,4 +1,5 @@
 import pytest
+
 import setup_django  # NOQA
 
 from aeat.rest_framework import serializers
