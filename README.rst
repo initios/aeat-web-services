@@ -104,6 +104,7 @@ Several AEAT Validators and Serializers are provided.
     serializer = serializers.get_class_for_aeat_response(data=result.data)
     assert serializer.is_valid(raise_exception=False)
     assert {'mrn': 'XXXX'} == serializer.data
+    assert not serializer.is_error
 
 
 Prerequisites

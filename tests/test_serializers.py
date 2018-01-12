@@ -28,11 +28,14 @@ def test_exs_serializer(zeep_response):
             'item_number_involved': 0, 'customs_intervention_code': 'V'} == serializer.data
 
 
-@pytest.mark.parametrize('url,response,operation,expected', [
+@pytest.mark.parametrize('url,response,operation,expected,err', [
+    ('wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_success_IE328V4Sal.xml', 'IE315V4',
+     serializers.ENSSerializer, False),
+
     ('wsdl_exs_IE615V2.wsdl', 'exs_presentation_success_IE628V2Sal.xml', 'IE615V2',
-     serializers.EXSSerializer),
+     serializers.EXSSerializer, False),
 ])
-def test_get_serializer_for_aeat_response(zeep_response, url, response, operation, expected):
+def test_get_serializer_for_mapped_response(zeep_response, url, response, operation, expected, err):
     aeat_response = zeep_response(url, response, operation)
     serializer_cls = serializers.get_class_for_aeat_response(aeat_response)
     assert expected == serializer_cls
@@ -42,11 +45,10 @@ def test_get_serializer_for_aeat_response(zeep_response, url, response, operatio
     assert serializer.is_valid()
 
 
-def test_get_serializer_for_aeat_response_defaults_to_unknown_when_unmapped():
+def test_get_serializer_for_unmapped_response():
     aeat_response = {}
     serializer_cls = serializers.get_class_for_aeat_response(aeat_response)
     assert serializers.UnknownResponseSerializer == serializer_cls
     serializer = serializer_cls(data=aeat_response)
-    assert not serializer.is_valid()
-    errors = {'non_field_errors': ['Unknown AEAT response']}
-    assert errors == serializer.errors
+    assert serializer.is_valid(), serializer.errors
+    assert {'reason': 'Unknown AEAT response'} == serializer.data

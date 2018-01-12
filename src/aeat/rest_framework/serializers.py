@@ -37,24 +37,45 @@ class EXSSerializer(DequeToDictMixin, rf.Serializer):
 
 
 class UnknownResponseSerializer(rf.Serializer):
-    def validate(self, data):
-        raise rf.ValidationError('Unknown AEAT response')
+    is_error = True
+
+    def to_representation(self, obj):
+        return {'reason': 'Unknown AEAT response'}
 
 
-def get_class_for_aeat_response(data):
+class ENSFunctionalErrorSerializer(rf.Serializer):
+    is_error = True
+
+    type = rf.CharField(source='FUNERRER1.ErrTypER11')
+    pointer = rf.CharField(source='FUNERRER1.ErrPoiER12')
+    reason = rf.CharField(source='FUNERRER1.OriAttValER14')
+
+
+def parse_xsd(data):
+    # Try V2 Style
     try:
         xsd = data[0].nsmap[None]
     except (IndexError, KeyError):
-        xsd = None
+        pass
+    else:
+        return xsd
 
-    ENSV4Base = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/'
-    EXSV2Base = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/'
+    # Try V4 Style
+    try:
+        xsd = data[0].nsmap['ie']
+    except (IndexError, KeyError):
+        pass
+    else:
+        return xsd
+
+
+def get_class_for_aeat_response(data):
+    xsd = parse_xsd(data)
+
+    ens = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/'
+    exs = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/'
 
     return {
-        f'{ENSV4Base}IE328V4Sal.xsd': ENSSerializer,
-        # xmlns:IE316V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE316V4Sal.xsd"
-        # xmlns:IE351V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE351V4Sal.xsd"
-        # xmlns:IE917V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE917V4Sal.xsd"
-
-        f'{EXSV2Base}IE628V2Sal.xsd': EXSSerializer,
+        f'{ens}IE328V4Sal.xsd': ENSSerializer,
+        f'{exs}IE628V2Sal.xsd': EXSSerializer,
     }.get(xsd, UnknownResponseSerializer)
