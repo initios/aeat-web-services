@@ -39,3 +39,13 @@ def test_get_serializer_for_aeat_response(zeep_response, url, response, operatio
     # It should parse the response without errors
     serializer = serializer_cls(data=aeat_response)
     assert serializer.is_valid()
+
+
+def test_get_serializer_for_aeat_response_defaults_to_unknown_when_unmapped():
+    aeat_response = {}
+    serializer_cls = serializers.get_class_for_aeat_response(aeat_response)
+    assert serializers.UnknownResponseSerializer == serializer_cls
+    serializer = serializer_cls(data=aeat_response)
+    assert not serializer.is_valid()
+    errors = {'non_field_errors': ['Unknown AEAT response']}
+    assert errors == serializer.errors

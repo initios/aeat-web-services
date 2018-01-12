@@ -36,7 +36,7 @@ class EXSSerializer(DequeToDictMixin, rf.Serializer):
     customs_intervention_code = rf.CharField(source='RISANA.CusIntCodRKA1')
 
 
-class UnknownSerializer(rf.Serializer):
+class UnknownResponseSerializer(rf.Serializer):
     def validate(self, data):
         raise rf.ValidationError('Unknown AEAT response')
 
@@ -44,19 +44,17 @@ class UnknownSerializer(rf.Serializer):
 def get_class_for_aeat_response(data):
     try:
         xsd = data[0].nsmap[None]
-    except KeyError:
+    except (IndexError, KeyError):
         xsd = None
 
     ENSV4Base = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/'
     EXSV2Base = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/'
 
     return {
-
-        f'{ENSV4Base}IE315V4Ent.xsd': ENSSerializer,
+        f'{ENSV4Base}IE328V4Sal.xsd': ENSSerializer,
         # xmlns:IE316V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE316V4Sal.xsd"
-        # xmlns:IE328V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE328V4Sal.xsd"
         # xmlns:IE351V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE351V4Sal.xsd"
         # xmlns:IE917V4Sal="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE917V4Sal.xsd"
 
         f'{EXSV2Base}IE628V2Sal.xsd': EXSSerializer,
-    }.get(xsd, UnknownSerializer)
+    }.get(xsd, UnknownResponseSerializer)
