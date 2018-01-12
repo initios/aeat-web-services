@@ -1,75 +1,64 @@
-from unittest.mock import Mock, patch
-
 import pytest
 
 import setup_django  # NOQA
 
-from django.core.exceptions import ImproperlyConfigured  # isort:skip # NOQA
-from django.test.utils import override_settings  # isort:skip # NOQA
-
-from rest_framework import serializers as rf  # isort:skip # NOQA
-
-from aeat import Result  # isort:skip # NOQA
-from aeat.rest_framework import serializers  # isort:skip # NOQA
+from aeat.rest_framework import serializers
 
 
-@patch('aeat.rest_framework.serializers.aeat.Config', Mock())
-@patch('aeat.rest_framework.serializers.aeat.Controller')
-def test_make_aeat_request(ctrl_builder):
-    ctrl_mock = Mock()
-    ctrl_builder.build_from_config.return_value = ctrl_mock
-    serializers.make_aeat_request('ens_query', {'count': '2'})
-    assert ctrl_mock.request.called_with({'count': '2'})
+def test_ens_serializer(zeep_response):
+    aeat_response = zeep_response(
+        'wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_success_IE328V4Sal.xml', 'IE315V4'
+    )
+
+    serializer = serializers.ENSSerializer(data=aeat_response)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
+
+    assert {'mrn': '17ES004311Z0000010'} == serializer.data
 
 
-@override_settings(AEAT_CERT_PATH=None)
-@patch('aeat.rest_framework.serializers.aeat.Config', Mock())
-@patch('aeat.rest_framework.serializers.aeat.Controller')
-def test_make_aeat_request_without_cert_path_env_var_fails(ctrl_builder):
-    with pytest.raises(ImproperlyConfigured):
-        serializers.make_aeat_request('test_service', data={})
+def test_exs_serializer(zeep_response):
+    aeat_response = zeep_response(
+        'wsdl_exs_IE615V2.wsdl', 'exs_presentation_success_IE628V2Sal.xml', 'IE615V2'
+    )
+
+    serializer = serializers.EXSSerializer(data=aeat_response)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
+
+    assert {'mrn': '17ES00361160001234',
+            'item_number_involved': 0, 'customs_intervention_code': 'V'} == serializer.data
 
 
-@override_settings(AEAT_KEY_PATH=None)
-@patch('aeat.rest_framework.serializers.aeat.Config', Mock())
-@patch('aeat.rest_framework.serializers.aeat.Controller')
-def test_make_aeat_request_without_key_path_env_var_fails(ctrl_builder):
-    with pytest.raises(ImproperlyConfigured):
-        serializers.make_aeat_request('test_service', data={})
+@pytest.mark.parametrize('url,response,operation,expected,is_error,expected_data', [
+    # ENS
+    ('wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_success_IE328V4Sal.xml', 'IE315V4',
+     serializers.ENSSerializer, False, {'mrn': '17ES004311Z0000010'}),
+
+    ('wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_error_IE316V4Sal.xml', 'IE315V4',
+     serializers.ENSFunctionalErrorSerializer, True,
+     {'type': '12', 'pointer': 'MES.MesSenMES3', 'reason': '1234-Message Sender is not valid'}),
+
+    # EXS
+    ('wsdl_exs_IE615V2.wsdl', 'exs_presentation_success_IE628V2Sal.xml', 'IE615V2',
+     serializers.EXSSerializer, False,
+     {'mrn': '17ES00361160001234', 'customs_intervention_code': 'V', 'item_number_involved': 0}),
+])
+def test_get_serializer_for_mapped_response(zeep_response, url, response, operation, expected,
+                                            is_error, expected_data):
+    aeat_response = zeep_response(url, response, operation)
+    serializer_cls = serializers.get_class_for_aeat_response(aeat_response)
+    assert expected == serializer_cls
+
+    # It should parse the response without errors
+    serializer = serializer_cls(data=aeat_response)
+    assert is_error == serializer.is_error
+    assert serializer.is_valid(), serializer.errors
+    assert expected_data == serializer.data
 
 
-@patch('aeat.rest_framework.serializers.make_aeat_request',
-       lambda x, y: Result(data=None, error='NO REENVIABLE'))
-def test_aeat_request_serializer_returns_result_failed_when_request_fails():
-    serializer = serializers.AEATRequest()
-    result = serializer.save()
-    assert not result.valid
-
-
-@patch('aeat.rest_framework.serializers.make_aeat_request',
-       lambda x, y: Result(data='xyz', error=None, raw_response='xml...'))
-def test_aeat_request_serializer_returns_result_if_request_is_successfull():
-    serializer = serializers.AEATRequest()
-    result = serializer.save()
-    assert result.valid
-
-
-def test_adds_test_indicator_when_test_mode_is_enabled():
-    class TestSerializer(serializers.AEATRequest, rf.Serializer):
-        pass
-
-    serializer = TestSerializer(data={})
-    serializer.is_valid(raise_exception=True)
-
-    assert '0' == serializer.data['TesIndMES18']
-
-
-@override_settings(AEAT_TEST_MODE=False)
-def test_does_not_adds_test_indicator_in_production():
-    class TestSerializer(serializers.AEATRequest, rf.Serializer):
-        pass
-
-    serializer = TestSerializer(data={})
-    serializer.is_valid(raise_exception=True)
-
-    assert 'TesIndMES18' not in serializer.data
+def test_get_serializer_for_unmapped_response():
+    aeat_response = {}
+    serializer_cls = serializers.get_class_for_aeat_response(aeat_response)
+    assert serializers.UnknownResponseSerializer == serializer_cls
+    serializer = serializer_cls(data=aeat_response)
+    assert serializer.is_valid(), serializer.errors
+    assert {'reason': 'Unknown AEAT response'} == serializer.data

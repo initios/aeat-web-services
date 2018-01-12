@@ -1,83 +1,86 @@
-from django.conf import settings
-from django.core.exceptions import ImproperlyConfigured
 from rest_framework import serializers as rf
 
-import aeat
 
-from . import complex_types_v2 as v2
-from . import complex_types_v4 as v4
-from . import fields
-
-
-def make_aeat_request(service_name, data):
-    '''
-    Helper to make AEAT requests
-
-    :rtype: aduanet.aeat.Result
-    '''
-
-    cert_path = settings.AEAT_CERT_PATH
-    key_path = settings.AEAT_KEY_PATH
-
-    if not cert_path:
-        raise ImproperlyConfigured('AEAT_CERT_PATH required')
-
-    if not key_path:
-        raise ImproperlyConfigured('AEAT_KEY_PATH required')
-
-    config = aeat.Config(service_name, test_mode=settings.AEAT_TEST_MODE)
-    ctrl = aeat.Controller.build_from_config(config, cert_path, key_path)
-    return ctrl.request(data)
+def raw_tag(item):
+    '''Returns item tag without namespace'''
+    return item.tag.partition('}')[2] or item.tag
 
 
-class AEATRequest(rf.Serializer):
-    service_name = None
-    include_test_mode = True
+def lxml_to_dict(node):
+    '''Convert an lxml.etree node tree into a dict recursively'''
+    storage = {}
 
-    def save(self):
-        return make_aeat_request(self.service_name, self.data)
+    for child in node.iterchildren():
+        key = raw_tag(child)
+        storage[key] = child.text if child.text else lxml_to_dict(child)
 
-    def to_representation(self, instance):
-        instance = super().to_representation(instance)
-
-        if self.include_test_mode and settings.AEAT_TEST_MODE:
-            instance['TesIndMES18'] = '0'
-
-        return instance
+    return storage
 
 
-class ENSQuerySerializer(AEATRequest):
-    service_name = 'ens_query'
-    include_test_mode = False
-
-    TraModAtBorHEA76 = fields.RequiredStr(help_text='Transport mode at border. EG 1')
-    ExpDatOfArr = fields.RequiredStr(help_text='Estimated date of arrival. EG 20110809')
-    ConRefNum = fields.RequiredStr(help_text='Transport identifier. EG 9294408')
+def deque_to_dict(data):
+    return {raw_tag(item): lxml_to_dict(item) for item in data}
 
 
-class ENSForkSerializer(AEATRequest):
-    service_name = 'ens_fork'
+class DequeToDictMixin:
+    def to_internal_value(self, data):
+        return deque_to_dict(data)
 
 
-class ENSPresentationSerializer(v4.BaseV4Mixin, AEATRequest):
-    service_name = 'ens_presentation'
+class ENSSerializer(DequeToDictMixin, rf.Serializer):
+    is_error = False
 
-    MesTypMES20 = fields.NotRequiredStr(default='CC315A', read_only=True,
-                                        help_text='Message type. EG CC315A')
-    HEAHEA = v4.ENSPresentationHeader(required=True)
+    mrn = rf.CharField(source='HEAHEA.DocNumHEA5')
 
 
-class ENSModificationSerializer(v4.BaseV4Mixin, AEATRequest):
-    service_name = 'ens_modification'
-    NOTPAR670 = v4.NotifyParty(required=True)
-    MesTypMES20 = fields.NotRequiredStr(default='CC313A', read_only=True,
-                                        help_text='Message type. EG CC313A')
-    HEAHEA = v4.ENSModificationHeader(required=True)
+class EXSSerializer(DequeToDictMixin, rf.Serializer):
+    is_error = False
+
+    mrn = rf.CharField(source='HEAHEA.DocNumHEA5')
+    item_number_involved = rf.IntegerField(source='RISANA.IteNumInvRKA1')
+    customs_intervention_code = rf.CharField(source='RISANA.CusIntCodRKA1')
 
 
-class EXSPresentationSerializer(v2.BaseV2Mixin, AEATRequest):
-    service_name = 'exs_common'
+class UnknownResponseSerializer(rf.Serializer):
+    is_error = True
 
-    Id = rf.ReadOnlyField(source='MesIdeMES19', help_text='Message identification')
-    MesTypMES20 = rf.ReadOnlyField(default='CC615A', help_text='Message type')
-    HEAHEA = v2.EXSHeader(required=True)
+    def to_representation(self, obj):
+        return {'reason': 'Unknown AEAT response'}
+
+
+class ENSFunctionalErrorSerializer(DequeToDictMixin, rf.Serializer):
+    is_error = True
+
+    type = rf.CharField(source='FUNERRER1.ErrTypER11')
+    pointer = rf.CharField(source='FUNERRER1.ErrPoiER12')
+    reason = rf.CharField(source='FUNERRER1.OriAttValER14')
+
+
+def parse_xsd(data):
+    # Try V2 Style
+    try:
+        xsd = data[0].nsmap[None]
+    except (IndexError, KeyError):
+        pass
+    else:
+        return xsd
+
+    # Try V4 Style
+    try:
+        xsd = data[0].nsmap['ie']
+    except (IndexError, KeyError):
+        pass
+    else:
+        return xsd
+
+
+def get_class_for_aeat_response(data):
+    xsd = parse_xsd(data)
+
+    ens = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/'
+    exs = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/'
+
+    return {
+        f'{ens}IE328V4Sal.xsd': ENSSerializer,
+        f'{ens}IE316V4Sal.xsd': ENSFunctionalErrorSerializer,
+        f'{exs}IE628V2Sal.xsd': EXSSerializer,
+    }.get(xsd, UnknownResponseSerializer)

@@ -142,25 +142,6 @@ def test_controller_with_ens_presentation_success_message(operation_patch, zeep_
     result = ctrl.request(factories_v4.ENSPresentationFactory())
 
     assert result.valid
-    assert '17ES004311Z0000010' == result.data
-
-
-@pytest.mark.parametrize('response_xml', [
-    'ens_presentation_error_IE316V4Sal.xml',
-    'ens_presentation_error_IE917V4Sal.xml',
-])
-@patch('aeat.Controller.operation', new_callable=PropertyMock)
-def test_controller_with_incorrect_responses(operation_patch, zeep_response, response_xml):
-    def response():
-        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl', response_xml, 'IE315V4')
-
-    operation_patch.return_value = lambda **kwargs: response()
-    ctrl = Controller(Mock(), Mock(operation='IE315V4'))
-    result = ctrl.request(factories_v4.ENSPresentationFactory())
-
-    assert not result.valid
-    assert result.data is None
-    assert 'AEAT response error' == result.error
 
 
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
@@ -176,3 +157,22 @@ def test_controller_result_includes_raw_request_and_response(operation_patch, ze
 
     assert 'xyz' == result.raw_request
     assert 'zyx' == result.raw_response
+
+
+@pytest.mark.parametrize('response_xml', [
+    'ens_presentation_error_IE316V4Sal.xml',
+    'ens_presentation_error_IE917V4Sal.xml',
+])
+@patch('aeat.Controller.operation', new_callable=PropertyMock)
+def test_controller_with_incorrect_responses(operation_patch, zeep_response, response_xml):
+    def response():
+        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl', response_xml, 'IE315V4')
+
+    operation_patch.return_value = lambda **kwargs: response()
+    ctrl = Controller(Mock(), Mock(operation='IE315V4'))
+    result = ctrl.request(factories_v4.ENSPresentationFactory())
+
+    # Response is Valid
+    assert result.valid
+    assert result.data is not None
+    assert not result.error

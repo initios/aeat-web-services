@@ -44,32 +44,6 @@ class Result:
         return self.error is None
 
 
-def raw_response_parser(data):
-    return Result(data, None)
-
-
-def mrn_response_parser(data):
-    '''
-    Returns the MRN from the response or error response
-    '''
-    for item in data:
-        mrn_el = item.find('DocNumHEA5')
-        mrn = mrn_el.text if mrn_el is not None else None
-
-        if mrn:
-            return Result(mrn, None)
-
-    return Result(None, 'AEAT response error')
-
-
-DEFAULT_RESPONSE_PARSER = raw_response_parser
-
-RESPONSE_PARSERS = {
-    'IE315V4': mrn_response_parser,
-    'IE313V4': mrn_response_parser,
-}
-
-
 class Controller:
     def __init__(self, client, config, raw_xml_plugin=None):
         self.client = client
@@ -109,9 +83,6 @@ class Controller:
     def operation(self):
         return getattr(self.client.service, self.config.operation)
 
-    def get_response_parser(self):
-        return RESPONSE_PARSERS.get(self.config.operation, DEFAULT_RESPONSE_PARSER)
-
     def request(self, payload):
         if self.config.signed:
             # Skip WSDL validation. Is added later by zeep_plugins.SignMessage
@@ -129,8 +100,7 @@ class Controller:
             logger.critical('Unexpected exception', exc_info=True)
             result = Result(None, 'Unknown error')
         else:
-            parser = self.get_response_parser()
-            result = parser(data)
+            result = Result(data, None)
 
         if self.raw_xml_plugin:
             result.raw_request = self.raw_xml_plugin.last_sent
