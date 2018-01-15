@@ -5,7 +5,7 @@ import factories_v4
 import setup_django  # NOQA
 
 import aeat
-import aeat.rest_framework.serializers as serializers
+import aeat.rest_framework.validators as validators
 
 
 '''
@@ -31,7 +31,7 @@ def make_aeat_test_controller(certificate_real):
 @pytest.mark.functional
 def test_ens_presentation(make_aeat_test_controller):
     payload = factories_v4.ENSPresentationFactory(MesIdeMES19='TEST10001')
-    serializer = serializers.ENSPresentationSerializer(data=payload)
+    serializer = validators.ENSPresentationValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
     controller = make_aeat_test_controller('ens_presentation')
@@ -44,7 +44,7 @@ def test_ens_presentation(make_aeat_test_controller):
 @pytest.mark.functional
 def test_ens_modification(make_aeat_test_controller):
     payload = factories_v4.ENSModificationFactory(MesIdeMES19='TEST20001')
-    serializer = serializers.ENSModificationSerializer(data=payload)
+    serializer = validators.ENSModificationValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
     controller = make_aeat_test_controller('ens_modification')
@@ -57,7 +57,7 @@ def test_ens_modification(make_aeat_test_controller):
 @pytest.mark.functional
 def test_ens_query(make_aeat_test_controller):
     payload = factories_v4.ENSQueryFactory()
-    serializer = serializers.ENSQuerySerializer(data=payload)
+    serializer = validators.ENSQueryValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
     controller = make_aeat_test_controller('ens_query')
@@ -70,7 +70,7 @@ def test_ens_query(make_aeat_test_controller):
 @pytest.mark.functional
 def test_exs_presentation(make_aeat_test_controller):
     payload = factories_v2.EXSPresentationFactory(MesIdeMES19='TEST30001')
-    serializer = serializers.EXSPresentationSerializer(data=payload)
+    serializer = validators.EXSPresentationValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
     controller = make_aeat_test_controller('exs_common')
