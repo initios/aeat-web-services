@@ -51,5 +51,18 @@ class ENSModificationValidator(v4.BaseV4Mixin, ValidatorBase):
 class EXSPresentationValidator(v1.BaseV2Mixin, ValidatorBase):
     service_name = 'exs_common'
 
-    MesTypMES20 = rf.ReadOnlyField(default='CC615A', help_text='Message type')
     HEAHEA = v1.EXSHeader(required=True)
+
+
+class EXSModificationValidator(v1.BaseV2Mixin, ValidatorBase):
+    service_name = 'exs_common'
+
+    DocOpeHEA = rf.ReadOnlyField(default='M')
+    HEAHEA = v1.EXSHeaderModification(required=True)
+
+
+class EXSCancellationValidator(v1.BaseV2Mixin, ValidatorBase):
+    service_name = 'exs_common'
+
+    DocOpeHEA = rf.ReadOnlyField(default='A')
+    HEAHEA = v1.EXSHeaderModification(required=True)
