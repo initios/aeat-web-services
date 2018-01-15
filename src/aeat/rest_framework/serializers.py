@@ -62,7 +62,6 @@ class ENSFunctionalErrorSerializer(DequeToDictMixin, rf.Serializer):
 
 def parse_xsd(data):
     try:
-        # V2 only
         body = data.find('.//soapenv:Body', namespaces=data.nsmap)
     except AttributeError:
         body = data
