@@ -38,14 +38,13 @@ ADUANET_SERVICES = {
         'signed': False,
     },
 
-    # EXS shares the same WSDL
     'exs_common': {
-        'verbose_name': "Presentación de Declaración Sumaria de Salida",
-        'wsdl': 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE615V2.wsdl',  # NOQA
-        'operation': 'IE615V2',
-        'port_production': 'IE615V2',
-        'port_test': 'IE615V2Pruebas',
-        'service': 'IE615V2Service',
+        'verbose_name': "Servicio de envío de EXIT Sumary (EXS) v1",
+        'wsdl': 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE615V1.wsdl',  # NOQA
+        'operation': 'IE615V1',
+        'port_production': 'IE615V1',
+        'port_test': 'IE615V1Pruebas',
+        'service': 'IE615V1Service',
         'signed': True,
     },
 }
