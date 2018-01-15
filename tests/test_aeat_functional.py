@@ -76,8 +76,6 @@ def test_exs_presentation(make_aeat_test_controller):
     controller = make_aeat_test_controller('exs_common')
     result = controller.request(serializer.data)
 
-    print(result.raw_response)
-
     assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
     assert result.data
 
