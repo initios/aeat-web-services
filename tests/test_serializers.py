@@ -38,7 +38,7 @@ def test_exs_serializer(zeep_response):
      {'type': '12', 'pointer': 'MES.MesSenMES3', 'reason': '1234-Message Sender is not valid'}),
 
     # EXS
-    ('wsdl_exs_IE615V2.wsdl', 'exs_presentation_success_IE628V2Sal.xml', 'IE615V2',
+    ('wsdl_exs_IE615V1.wsdl', 'exs_presentation_success_IE628V2Sal.xml', 'IE615V1',
      serializers.EXSSerializer, False,
      {'mrn': '17ES00361160001234', 'customs_intervention_code': 'V', 'item_number_involved': 0}),
 ])

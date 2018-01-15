@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+    xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/"
+    xmlns:apachesoap="http://xml.apache.org/xml-soap"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:IE615V1=		"https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE615V1.wsdl"
+    xmlns:IE615V1Ent=	"https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE615V1Ent.xsd"
+    xmlns:IE628V1Sal=	"https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE628V1Sal.xsd"
+    xmlns:IE616V1Sal=	"https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE616V1Sal.xsd"
+    xmlns:IE919V1Sal=	"https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE919V1Sal.xsd" targetNamespace=	"https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE615V1.wsdl">
+    <wsdl:documentation>Servicio que define el envio de una EXit Sumary (EXS) para su alta en el sistema de informacion de aduanas.</wsdl:documentation>
+    <wsdl:types>
+        <schema elementFormDefault="qualified" targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE615V1.wsdl"
+            xmlns="http://www.w3.org/2001/XMLSchema">
+            <xsd:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE615V1Ent.xsd" schemaLocation="IE615V1Ent.xsd"/>
+            <xsd:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE616V1Sal.xsd" schemaLocation="IE616V1Sal.xsd"/>
+            <xsd:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE628V1Sal.xsd" schemaLocation="IE628V1Sal.xsd"/>
+            <xsd:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE919V1Sal.xsd" schemaLocation="IE919V1Sal.xsd"/>
+            <xsd:complexType name="IE615V1SalType">
+                <xsd:choice>
+                    <xsd:element ref="IE616V1Sal:CC616A"/>
+                    <xsd:element ref="IE628V1Sal:CC628A"/>
+                    <xsd:element ref="IE919V1Sal:CD919B"/>
+                </xsd:choice>
+            </xsd:complexType>
+            <xsd:element name="Salida" type="IE615V1:IE615V1SalType"/>
+        </schema>
+    </wsdl:types>
+    <wsdl:message name="Entrada">
+        <wsdl:part name="IE615V1Ent" element="IE615V1Ent:CC615A"/>
+    </wsdl:message>
+    <wsdl:message name="Salida">
+        <wsdl:part name="IE615V1Sal" element="IE615V1:Salida"/>
+    </wsdl:message>
+    <wsdl:portType name="IE615V1">
+        <wsdl:operation name="IE615V1">
+            <wsdl:input name="Entrada" message="IE615V1:Entrada"/>
+            <wsdl:output name="Salida" message="IE615V1:Salida"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="IE615V1SoapBinding" type="IE615V1:IE615V1">
+        <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="IE615V1">
+            <wsdlsoap:operation soapAction=""/>
+            <wsdl:input name="Entrada">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="Salida">
+                <wsdlsoap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="IE615V1Service">
+        <wsdl:port name="IE615V1" binding="IE615V1:IE615V1SoapBinding">
+            <wsdlsoap:address location="https://www1.agenciatributaria.gob.es/L/inwinvoc/es.aeat.dit.adu.adrx.ws.IE615V1SOAP"/>
+        </wsdl:port>
+        <wsdl:port binding="IE615V1:IE615V1SoapBinding" name="IE615V1Pruebas">
+            <wsdlsoap:address location="https://www1.agenciatributaria.gob.es/L/inwinvoc/es.aeat.dit.adu.adrx.ws.IE615P1SOAP"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
