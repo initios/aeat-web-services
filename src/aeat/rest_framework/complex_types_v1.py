@@ -24,6 +24,13 @@ class EXSHeader(rf.Serializer):
 class EXSHeaderModification(EXSHeader, rf.Serializer):
     '''HEAHEAType EXS including MRN'''
     DocNumHEA5 = RequiredStr(help_text='EXS MRN to modify.')
+    DocOpeHEA = rf.ReadOnlyField(default='M')
+
+
+class EXSHeaderCancellation(EXSHeader, rf.Serializer):
+    '''HEAHEAType EXS including MRN'''
+    DocNumHEA5 = RequiredStr(help_text='EXS MRN to modify.')
+    DocOpeHEA = rf.ReadOnlyField(default='A')
 
 
 class Package(rf.Serializer):

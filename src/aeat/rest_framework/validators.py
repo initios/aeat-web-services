@@ -57,12 +57,10 @@ class EXSPresentationValidator(v1.BaseV2Mixin, ValidatorBase):
 class EXSModificationValidator(v1.BaseV2Mixin, ValidatorBase):
     service_name = 'exs_common'
 
-    DocOpeHEA = rf.ReadOnlyField(default='M')
     HEAHEA = v1.EXSHeaderModification(required=True)
 
 
 class EXSCancellationValidator(v1.BaseV2Mixin, ValidatorBase):
     service_name = 'exs_common'
 
-    DocOpeHEA = rf.ReadOnlyField(default='A')
-    HEAHEA = v1.EXSHeaderModification(required=True)
+    HEAHEA = v1.EXSHeaderCancellation(required=True)
