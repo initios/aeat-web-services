@@ -41,6 +41,10 @@ def test_exs_serializer(zeep_response):
     ('wsdl_exs_IE615V1.wsdl', 'exs_presentation_success_IE628V2Sal.xml', 'IE615V1',
      serializers.EXSSerializer, False,
      {'mrn': '17ES00361160001234', 'customs_intervention_code': 'V', 'item_number_involved': 0}),
+
+    ('wsdl_exs_IE615V1.wsdl', 'exs_presentation_error_IE919V1Sal.xml', 'IE615V1',
+     serializers.UnknownResponseSerializer, True, {'reason': 'Unknown AEAT response'}),
+
 ])
 def test_get_serializer_for_mapped_response(zeep_response, url, response, operation, expected,
                                             is_error, expected_data):

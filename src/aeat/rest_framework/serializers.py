@@ -43,6 +43,11 @@ class EXSSerializer(DequeToDictMixin, rf.Serializer):
 class UnknownResponseSerializer(rf.Serializer):
     is_error = True
 
+    def __init__(self, *args, **kwargs):
+        kwargs.pop('data') if 'data' in kwargs else None
+        data = {}
+        super().__init__(self, *args, data=data, **kwargs)
+
     def to_representation(self, obj):
         return {'reason': 'Unknown AEAT response'}
 
