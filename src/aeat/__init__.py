@@ -101,12 +101,12 @@ class Controller:
         except Exception as e:
             logger.critical('Unexpected exception', exc_info=True)
             result = Result(None, 'Unknown error')
-            result.raw_response = e.message
+            result.raw_response = e.message if hasattr(e, 'message') else str(e)
         else:
             result = Result(data, None)
 
-            if self.raw_xml_plugin:
-                result.raw_request = self.raw_xml_plugin.last_sent
-                result.raw_response = self.raw_xml_plugin.last_received
+        if self.raw_xml_plugin:
+            result.raw_request = self.raw_xml_plugin.last_sent
+            result.raw_response = self.raw_xml_plugin.last_received
 
         return result
