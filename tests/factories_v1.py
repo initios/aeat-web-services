@@ -19,6 +19,20 @@ class EXSHeader(factory.Factory):
     CusSubPlaHEA66 = '4611ZZZ999'
 
 
+class EXSModificationHeader(EXSHeader):
+    class Meta:
+        model = dict
+
+    DocNumHEA5 = 'MRNCODE12345'
+
+
+class EXSCancellationHeader(EXSHeader):
+    class Meta:
+        model = dict
+
+    DocNumHEA5 = 'MRNCODE12345'
+
+
 class TraderConsignor(factory.Factory):
     class Meta:
         model = dict
@@ -189,3 +203,17 @@ class EXSPresentationFactory(BaseMessageMixin, factory.Factory):
         model = dict
 
     HEAHEA = factory.SubFactory(EXSHeader)
+
+
+class EXSModificationFactory(BaseMessageMixin, factory.Factory):
+    class Meta:
+        model = dict
+
+    HEAHEA = factory.SubFactory(EXSModificationHeader)
+
+
+class EXSCancellationFactory(BaseMessageMixin, factory.Factory):
+    class Meta:
+        model = dict
+
+    HEAHEA = factory.SubFactory(EXSCancellationHeader)

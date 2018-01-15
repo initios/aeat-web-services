@@ -1,7 +1,7 @@
 from django.conf import settings
 from rest_framework import serializers as rf
 
-from . import complex_types_v2 as v2
+from . import complex_types_v1 as v1
 from . import complex_types_v4 as v4
 from . import fields
 
@@ -48,8 +48,19 @@ class ENSModificationValidator(v4.BaseV4Mixin, ValidatorBase):
     HEAHEA = v4.ENSModificationHeader(required=True)
 
 
-class EXSPresentationValidator(v2.BaseV2Mixin, ValidatorBase):
+class EXSPresentationValidator(v1.BaseV2Mixin, ValidatorBase):
     service_name = 'exs_common'
 
-    MesTypMES20 = rf.ReadOnlyField(default='CC615A', help_text='Message type')
-    HEAHEA = v2.EXSHeader(required=True)
+    HEAHEA = v1.EXSHeader(required=True)
+
+
+class EXSModificationValidator(v1.BaseV2Mixin, ValidatorBase):
+    service_name = 'exs_common'
+
+    HEAHEA = v1.EXSHeaderModification(required=True)
+
+
+class EXSCancellationValidator(v1.BaseV2Mixin, ValidatorBase):
+    service_name = 'exs_common'
+
+    HEAHEA = v1.EXSHeaderCancellation(required=True)

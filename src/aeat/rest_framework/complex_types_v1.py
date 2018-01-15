@@ -21,6 +21,18 @@ class EXSHeader(rf.Serializer):
     CusSubPlaHEA66 = RequiredStr(max_length=17, help_text='Customs sub place. EG 4611ZZZ999')
 
 
+class EXSHeaderModification(EXSHeader, rf.Serializer):
+    '''HEAHEAType EXS including MRN'''
+    DocNumHEA5 = RequiredStr(help_text='EXS MRN to modify.')
+    DocOpeHEA = rf.ReadOnlyField(default='M')
+
+
+class EXSHeaderCancellation(EXSHeader, rf.Serializer):
+    '''HEAHEAType EXS including MRN'''
+    DocNumHEA5 = RequiredStr(help_text='EXS MRN to modify.')
+    DocOpeHEA = rf.ReadOnlyField(default='A')
+
+
 class Package(rf.Serializer):
     '''PACGS2Type'''
     KinOfPacGS23 = RequiredStr(max_length=2, help_text='Kind of packages')
@@ -121,9 +133,7 @@ class SealsIdentity(rf.Serializer):
 
 class BaseV2Mixin(rf.Serializer):
     '''Common attributes'''
-    Id = rf.ReadOnlyField(source='MesIdeMES19', help_text='Message identification')
-    NifDeclarante = rf.ReadOnlyField(default=settings.AEAT_VAT_NUMBER)
-    NombreDeclarante = rf.ReadOnlyField(default=settings.AEAT_LEGAL_NAME)
+    MesTypMES20 = rf.ReadOnlyField(default='CC615A', help_text='Message type')
     MesSenMES3 = NotRequiredStr(max_length=35, read_only=True,
                                 default=settings.AEAT_VAT_NUMBER,
                                 help_text='Message Sender (VAT Number). EG. 89890001K')

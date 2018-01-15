@@ -48,13 +48,13 @@ def resource_path():
 
 
 @pytest.fixture
-def request_etree_element():
+def response_etree_element():
     tests_path = os.path.dirname(os.path.abspath(__file__))
-    resources_path = os.path.join(tests_path, 'resources', 'xml', 'requests')
+    resources_path = os.path.join(tests_path, 'resources', 'xml', 'response')
 
     def get_xml(filename):
         path = os.path.join(*[resources_path] + [filename])
-        with open(path, 'r') as xml_template:
+        with open(path, 'rb') as xml_template:
             return etree.fromstring(xml_template.read())
 
     return get_xml

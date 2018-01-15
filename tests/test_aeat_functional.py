@@ -1,6 +1,6 @@
 import pytest
 
-import factories_v2
+import factories_v1
 import factories_v4
 import setup_django  # NOQA
 
@@ -69,8 +69,34 @@ def test_ens_query(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_exs_presentation(make_aeat_test_controller):
-    payload = factories_v2.EXSPresentationFactory(MesIdeMES19='TEST30001')
+    payload = factories_v1.EXSPresentationFactory(MesIdeMES19='TEST30005')
     serializer = validators.EXSPresentationValidator(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
+
+    controller = make_aeat_test_controller('exs_common')
+    result = controller.request(serializer.data)
+
+    assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
+    assert result.data
+
+
+@pytest.mark.functional
+def test_exs_modification(make_aeat_test_controller):
+    payload = factories_v1.EXSModificationFactory(MesIdeMES19='TEST30003')
+    serializer = validators.EXSModificationValidator(data=payload)
+    assert serializer.is_valid(raise_exception=False), serializer.errors
+
+    controller = make_aeat_test_controller('exs_common')
+    result = controller.request(serializer.data)
+
+    assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
+    assert result.data
+
+
+@pytest.mark.functional
+def test_exs_cancellation(make_aeat_test_controller):
+    payload = factories_v1.EXSCancellationFactory(MesIdeMES19='TEST30003')
+    serializer = validators.EXSCancellationValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
     controller = make_aeat_test_controller('exs_common')

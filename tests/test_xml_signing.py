@@ -35,7 +35,7 @@ def test_verify_wrong_signature(certificate_example):
     assert xml_signing.verify(root, *certificate_example) is False
 
 
-def test_sign_complete_xades_epel(certificate_example, request_etree_element):
+def test_sign_complete_xades_epel(certificate_example):
     root = etree.Element('Envelope')
     body = etree.SubElement(root, 'Body')
     etree.SubElement(body, 'Data', Id='myid')

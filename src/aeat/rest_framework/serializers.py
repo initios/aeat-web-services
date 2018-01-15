@@ -43,6 +43,11 @@ class EXSSerializer(DequeToDictMixin, rf.Serializer):
 class UnknownResponseSerializer(rf.Serializer):
     is_error = True
 
+    def __init__(self, *args, **kwargs):
+        kwargs.pop('data') if 'data' in kwargs else None
+        data = {}
+        super().__init__(self, *args, data=data, **kwargs)
+
     def to_representation(self, obj):
         return {'reason': 'Unknown AEAT response'}
 
@@ -56,9 +61,14 @@ class ENSFunctionalErrorSerializer(DequeToDictMixin, rf.Serializer):
 
 
 def parse_xsd(data):
+    try:
+        body = data.find('.//soapenv:Body', namespaces=data.nsmap)
+    except AttributeError:
+        body = data
+
     # Try V2 Style
     try:
-        xsd = data[0].nsmap[None]
+        xsd = body[0].nsmap[None]
     except (IndexError, KeyError):
         pass
     else:
@@ -66,7 +76,7 @@ def parse_xsd(data):
 
     # Try V4 Style
     try:
-        xsd = data[0].nsmap['ie']
+        xsd = body[0].nsmap['ie']
     except (IndexError, KeyError):
         pass
     else:
@@ -82,5 +92,5 @@ def get_class_for_aeat_response(data):
     return {
         f'{ens}IE328V4Sal.xsd': ENSSerializer,
         f'{ens}IE316V4Sal.xsd': ENSFunctionalErrorSerializer,
-        f'{exs}IE628V2Sal.xsd': EXSSerializer,
+        f'{exs}IE628V1Sal.xsd': EXSSerializer,
     }.get(xsd, UnknownResponseSerializer)
