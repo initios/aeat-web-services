@@ -69,7 +69,16 @@ def test_get_serializer_for_unmapped_response():
 
 @pytest.mark.parametrize('filename,expected', [
     ('exs_presentation_success_IE628V1Sal.xml',
-     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE628V1Sal.xsd')
+     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE628V1Sal.xsd'),
+
+    ('exs_presentation_error_IE919V1Sal.xml',
+     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE919V1Sal.xsd'),
+
+    ('ens_presentation_success_IE328V4Sal.xml',
+     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE328V4Sal.xsd'),  # NOQA
+
+    ('ens_presentation_error_IE917V4Sal.xml',
+     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE917V4Sal.xsd'),  # NOQA
 ])
 def test_parse_xsd(response_etree_element, filename, expected):
     xml = response_etree_element(filename)
