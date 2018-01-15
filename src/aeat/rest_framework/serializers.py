@@ -87,5 +87,5 @@ def get_class_for_aeat_response(data):
     return {
         f'{ens}IE328V4Sal.xsd': ENSSerializer,
         f'{ens}IE316V4Sal.xsd': ENSFunctionalErrorSerializer,
-        f'{exs}IE628V2Sal.xsd': EXSSerializer,
+        f'{exs}IE628V1Sal.xsd': EXSSerializer,
     }.get(xsd, UnknownResponseSerializer)

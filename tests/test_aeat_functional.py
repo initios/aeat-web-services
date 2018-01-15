@@ -69,12 +69,14 @@ def test_ens_query(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_exs_presentation(make_aeat_test_controller):
-    payload = factories_v1.EXSPresentationFactory(MesIdeMES19='TEST30003')
+    payload = factories_v1.EXSPresentationFactory(MesIdeMES19='TEST30005')
     serializer = validators.EXSPresentationValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
     controller = make_aeat_test_controller('exs_common')
     result = controller.request(serializer.data)
+
+    print(result.raw_response)
 
     assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
     assert result.data
