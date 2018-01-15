@@ -93,17 +93,20 @@ class Controller:
         except zeep_exceptions.Fault as e:
             logger.info('AEAT request failed.', exc_info=True)
             result = Result(None, e.message)
+            result.raw_response = e.message
         except zeep_exceptions.Error as e:
             logger.info('AEAT request failed.', exc_info=True)
             result = Result(None, 'Wrong AEAT response')
+            result.raw_response = e.message
         except Exception as e:
             logger.critical('Unexpected exception', exc_info=True)
             result = Result(None, 'Unknown error')
+            result.raw_response = e.message
         else:
             result = Result(data, None)
 
-        if self.raw_xml_plugin:
-            result.raw_request = self.raw_xml_plugin.last_sent
-            result.raw_response = self.raw_xml_plugin.last_received
+            if self.raw_xml_plugin:
+                result.raw_request = self.raw_xml_plugin.last_sent
+                result.raw_response = self.raw_xml_plugin.last_received
 
         return result
