@@ -32,7 +32,7 @@ class ENSForkValidator(ValidatorBase):
     service_name = 'ens_fork'
 
 
-class ENSPresentationValidator(v4.BaseV4Mixin, ValidatorBase):
+class ENSPresentationValidator(v4.BaseMixin, ValidatorBase):
     service_name = 'ens_presentation'
 
     MesTypMES20 = fields.NotRequiredStr(default='CC315A', read_only=True,
@@ -40,7 +40,7 @@ class ENSPresentationValidator(v4.BaseV4Mixin, ValidatorBase):
     HEAHEA = v4.ENSPresentationHeader(required=True)
 
 
-class ENSModificationValidator(v4.BaseV4Mixin, ValidatorBase):
+class ENSModificationValidator(v4.BaseMixin, ValidatorBase):
     service_name = 'ens_modification'
     NOTPAR670 = v4.NotifyParty(required=True)
     MesTypMES20 = fields.NotRequiredStr(default='CC313A', read_only=True,
@@ -48,19 +48,19 @@ class ENSModificationValidator(v4.BaseV4Mixin, ValidatorBase):
     HEAHEA = v4.ENSModificationHeader(required=True)
 
 
-class EXSPresentationValidator(v1.BaseV2Mixin, ValidatorBase):
+class EXSPresentationValidator(v1.BaseMixin, ValidatorBase):
     service_name = 'exs_common'
 
     HEAHEA = v1.EXSHeader(required=True)
 
 
-class EXSModificationValidator(v1.BaseV2Mixin, ValidatorBase):
+class EXSModificationValidator(v1.BaseMixin, ValidatorBase):
     service_name = 'exs_common'
 
     HEAHEA = v1.EXSHeaderModification(required=True)
 
 
-class EXSCancellationValidator(v1.BaseV2Mixin, ValidatorBase):
+class EXSCancellationValidator(v1.BaseMixin, ValidatorBase):
     service_name = 'exs_common'
 
     HEAHEA = v1.EXSHeaderCancellation(required=True)

@@ -131,7 +131,7 @@ class SealsIdentity(rf.Serializer):
     SeaIdSEAID530 = RequiredStr(max_length=20, help_text='Seals identity')
 
 
-class BaseV2Mixin(rf.Serializer):
+class BaseMixin(rf.Serializer):
     '''Common attributes'''
     MesTypMES20 = rf.ReadOnlyField(default='CC615A', help_text='Message type')
     MesSenMES3 = NotRequiredStr(max_length=35, read_only=True,

@@ -207,7 +207,7 @@ class NotifyParty(rf.Serializer):
     TINNOTPAR671 = NotRequiredStr(help_text='Trader indentification number')
 
 
-class BaseV4Mixin(rf.Serializer):
+class BaseMixin(rf.Serializer):
     '''Common attributes'''
     MesSenMES3 = NotRequiredStr(max_length=35, read_only=True,
                                 default=settings.AEAT_VAT_NUMBER,
