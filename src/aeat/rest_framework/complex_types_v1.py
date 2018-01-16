@@ -38,8 +38,7 @@ class Package(rf.Serializer):
     KinOfPacGS23 = RequiredStr(max_length=2, help_text='Kind of packages')
     NumOfPacGS24 = NotRequiredStr(max_length=5, help_text='Number of packages')
     NumOfPieGS25 = NotRequiredStr(max_length=5, help_text='Number of pieces')
-    MarNumOfPacGSL21 = NotRequiredStr(max_length=140,
-                                      help_text='Marks & numbers of packages (long)')
+    MarNumOfPacGS21 = NotRequiredStr(max_length=140, help_text='Marks & numbers of packages')
 
 
 class PreviousDocument(rf.Serializer):

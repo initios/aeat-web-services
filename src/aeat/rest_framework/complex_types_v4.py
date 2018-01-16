@@ -111,7 +111,7 @@ class Package(rf.Serializer):
     NumOfPieGS25 = NotRequiredStr(max_length=5, help_text='Number of pieces')
     MarNumOfPacGSL21 = NotRequiredStr(max_length=140,
                                       help_text='Marks & numbers of packages (long)')
-    MarNumOfPacGSL21LNG = RequiredStr(help_text='Marks & numbers of packages (long) LNG')
+    MarNumOfPacGSL21LNG = NotRequiredStr(help_text='Marks & numbers of packages (long) LNG')
 
 
 class GoodsItem(rf.Serializer):
