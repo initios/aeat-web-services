@@ -33,6 +33,9 @@ def test_exs_serializer(zeep_response):
     ('wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_success_IE328V4Sal.xml', 'IE315V4',
      serializers.ENSSerializer, False, {'mrn': '17ES004311Z0000010'}),
 
+    ('wsdl_ens_modification_IE313V4.wsdl', 'ens_modification_success_IE304V4Sal.xml', 'IE313V4',
+     serializers.ENSSerializer, False, {'mrn': '18ES003611Z0123456'}),
+
     ('wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_error_IE316V4Sal.xml', 'IE315V4',
      serializers.ENSFunctionalErrorSerializer, True,
      {'type': '12', 'pointer': 'MES.MesSenMES3', 'reason': '1234-Message Sender is not valid'}),
@@ -77,10 +80,12 @@ def test_get_serializer_for_unmapped_response():
     ('ens_presentation_success_IE328V4Sal.xml',
      'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE328V4Sal.xsd'),  # NOQA
 
+    ('ens_modification_success_IE304V4Sal.xml',
+     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE304V4Sal.xsd'),  # NOQA
+
     ('ens_presentation_error_IE917V4Sal.xml',
      'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE917V4Sal.xsd'),  # NOQA
 ])
 def test_parse_xsd(response_etree_element, filename, expected):
     xml = response_etree_element(filename)
-    print(xml)
     assert expected == serializers.parse_xsd(xml)
