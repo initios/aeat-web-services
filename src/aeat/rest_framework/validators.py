@@ -42,7 +42,7 @@ class ENSPresentationValidator(v4.BaseMixin, ValidatorBase):
 
 class ENSModificationValidator(v4.BaseMixin, ValidatorBase):
     service_name = 'ens_modification'
-    NOTPAR670 = v4.NotifyParty(required=True)
+    NOTPAR670 = v4.NotifyParty(required=False)
     MesTypMES20 = fields.NotRequiredStr(default='CC313A', read_only=True,
                                         help_text='Message type. EG CC313A')
     HEAHEA = v4.ENSModificationHeader(required=True)
