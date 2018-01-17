@@ -33,11 +33,23 @@ class Config:
 
 
 class Result:
-    def __init__(self, data, error, raw_request=None, raw_response=None):
+    default_context = {
+        'raw_request': None,
+        'raw_response': None,
+        'exception': None,
+    }
+
+    def __init__(self, data, error, context=None):
+        self.context = context or {}
+
+        for k, v in self.default_context.items():
+            self.context[k] = self.context.get(k, v)
+
         self.data = data
         self.error = error
-        self.raw_request = raw_request
-        self.raw_response = raw_response
+
+    def __getattr__(self, name):
+        return self.context[name]
 
     @property
     def valid(self):
@@ -92,21 +104,18 @@ class Controller:
             data = self.operation(**payload)
         except zeep_exceptions.Fault as e:
             logger.info('AEAT request failed.', exc_info=True)
-            result = Result(None, e.message)
-            result.raw_response = e.message
+            result = Result(None, e.message, context={'exception': e.message})
         except zeep_exceptions.Error as e:
             logger.info('AEAT request failed.', exc_info=True)
-            result = Result(None, 'Wrong AEAT response')
-            result.raw_response = e.message
+            result = Result(None, 'Wrong AEAT response',  context={'exception': e.message})
         except Exception as e:
             logger.critical('Unexpected exception', exc_info=True)
-            result = Result(None, 'Unknown error')
-            result.raw_response = e.message if hasattr(e, 'message') else str(e)
+            result = Result(None, 'Unknown error',  context={'exception': str(e)})
         else:
             result = Result(data, None)
 
         if self.raw_xml_plugin:
-            result.raw_request = self.raw_xml_plugin.last_sent
-            result.raw_response = self.raw_xml_plugin.last_received
+            result.context['raw_request'] = self.raw_xml_plugin.last_sent
+            result.context['raw_response'] = self.raw_xml_plugin.last_received
 
         return result
