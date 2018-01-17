@@ -82,7 +82,7 @@ class Controller:
 
         if config.signed:
             sign_plugin = zeep_plugins.SignMessage(pub_cert, priv_cert)
-            plugins = [sign_plugin, raw_xml_plugin]
+            plugins = [raw_xml_plugin, sign_plugin]
         else:
             plugins = [raw_xml_plugin]
 
