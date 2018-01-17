@@ -7,7 +7,7 @@ from aeat import utils, xml_signing
 logger = logging.getLogger(__name__)
 
 
-class SignMessage(Plugin):
+class SignMessagePlugin(Plugin):
     def __init__(self, cert_path, key_path):
         self.cert_path = cert_path
         self.key_path = key_path

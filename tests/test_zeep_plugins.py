@@ -15,7 +15,7 @@ def envelope():
 
 
 def test_sign_message_egress(certificate_example, envelope):
-    plugin = zeep_plugins.SignMessage(*certificate_example)
+    plugin = zeep_plugins.SignMessagePlugin(*certificate_example)
     envelope, _ = plugin.egress(envelope, None, 'test', None)
 
     xml_str = utils.etree_to_string(envelope).decode()

@@ -81,8 +81,8 @@ class Controller:
         raw_xml_plugin = zeep_plugins.RawXMLPlugin()
 
         if config.signed:
-            sign_plugin = zeep_plugins.SignMessage(pub_cert, priv_cert)
-            plugins = [sign_plugin, raw_xml_plugin]
+            sign_plugin = zeep_plugins.SignMessagePlugin(pub_cert, priv_cert)
+            plugins = [raw_xml_plugin, sign_plugin]
         else:
             plugins = [raw_xml_plugin]
 
@@ -97,7 +97,7 @@ class Controller:
 
     def request(self, payload):
         if self.config.signed:
-            # Skip WSDL validation. Is added later by zeep_plugins.SignMessage
+            # Skip WSDL validation. Is added later by zeep_plugins.SignMessagePlugin
             payload['Signature'] = xsd.SkipValue
 
         try:
