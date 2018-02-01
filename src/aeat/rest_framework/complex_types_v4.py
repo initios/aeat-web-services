@@ -229,5 +229,5 @@ class BaseMixin(rf.Serializer):
     PERLODSUMDEC = PersonLodgingSummaryDeclaration(required=False)
     SEAID529 = SealsIdentity(required=False, many=True)
     CUSOFFFENT730 = CustomsOfficeFirstEntry(required=True)
-    CUSOFFSENT740 = CustomsOfficeSubsequentEntry(many=True)
+    CUSOFFSENT740 = CustomsOfficeSubsequentEntry(required=False, many=True)
     TRACARENT601 = TraderEntryCarrier(required=False)
