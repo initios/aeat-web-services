@@ -2,7 +2,7 @@ from unittest.mock import Mock, PropertyMock, patch
 
 import pytest
 
-import factories_v4
+import factories_v5
 from zeep import exceptions as zeep_exceptions
 from zeep import xsd
 
@@ -35,20 +35,6 @@ def test_config_is_built_from_service_name(test_mode, expected_port):
     assert expected_port == config.port
 
 
-@patch('aeat.Controller.operation', new_callable=PropertyMock)
-def test_controller_ens_query_with_valid_response(operation_patch, zeep_response):
-    response = zeep_response(
-        'wsdl_ens_query_ConsENSV3.wsdl', 'ens_query_valid.xml', 'ConsENSV3'
-    )
-
-    operation_patch.return_value = lambda **kwargs: response
-    ctrl = Controller(Mock(), Mock())
-    result = ctrl.request(factories_v4.ENSQueryFactory())
-
-    assert result.valid
-    assert 2 == len(result.data['IMPOPE'])
-
-
 @patch('aeat.Controller.operation')
 def test_controller_marks_signature_as_skip_if_config_is_signed(operation_patch):
     config = Mock(signed=True)
@@ -66,7 +52,7 @@ def test_controller_with_99999_error(operation_patch, zeep_response):
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock())
-    result = ctrl.request(factories_v4.ENSQueryFactory())
+    result = ctrl.request(factories_v5.ENSPresentationFactory())
 
     assert not result.valid
     assert 'Mensaje REENVIABLE. Codigo[99999].' == result.error
@@ -76,12 +62,12 @@ def test_controller_with_99999_error(operation_patch, zeep_response):
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
 def test_controller_with_html_error(operation_patch, zeep_response):
     def response():
-        return zeep_response('wsdl_ens_query_ConsENSV3.wsdl', 'unknown_certificate.html',
+        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl', 'unknown_certificate.html',
                              'ConsENSV3')
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock())
-    result = ctrl.request(factories_v4.ENSQueryFactory())
+    result = ctrl.request(factories_v5.ENSPresentationFactory())
 
     assert not result.valid
     assert 'Wrong AEAT response' == result.error
@@ -139,7 +125,7 @@ def test_controller_with_ens_presentation_success_message(operation_patch, zeep_
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock(operation='IE315V4'))
-    result = ctrl.request(factories_v4.ENSPresentationFactory())
+    result = ctrl.request(factories_v5.ENSPresentationFactory())
 
     assert result.valid
 
@@ -153,7 +139,7 @@ def test_controller_result_includes_raw_request_and_response(operation_patch, ze
     operation_patch.return_value = lambda **kwargs: response()
     history_plugin = Mock(last_sent='xyz', last_received='zyx')
     ctrl = Controller(Mock(), Mock(operation='IE315V4'), history_plugin)
-    result = ctrl.request(factories_v4.ENSPresentationFactory())
+    result = ctrl.request(factories_v5.ENSPresentationFactory())
 
     assert 'xyz' == result.raw_request
     assert 'zyx' == result.raw_response
@@ -170,7 +156,7 @@ def test_controller_with_incorrect_responses(operation_patch, zeep_response, res
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock(operation='IE315V4'))
-    result = ctrl.request(factories_v4.ENSPresentationFactory())
+    result = ctrl.request(factories_v5.ENSPresentationFactory())
 
     # Response is Valid
     assert result.valid

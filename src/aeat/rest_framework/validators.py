@@ -19,15 +19,6 @@ class ValidatorBase(rf.Serializer):
         return instance
 
 
-class ENSQueryValidator(ValidatorBase):
-    service_name = 'ens_query'
-    include_test_mode = False
-
-    TraModAtBorHEA76 = fields.RequiredStr(help_text='Transport mode at border. EG 1')
-    ExpDatOfArr = fields.RequiredStr(help_text='Estimated date of arrival. EG 20110809')
-    ConRefNum = fields.RequiredStr(help_text='Transport identifier. EG 9294408')
-
-
 class ENSForkValidator(ValidatorBase):
     service_name = 'ens_fork'
 

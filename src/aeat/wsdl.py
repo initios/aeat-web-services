@@ -28,18 +28,9 @@ ADUANET_SERVICES = {
         'service': 'IE315V5Service',
         'signed': True,
     },
-    'ens_query': {
-        'verbose_name': "Servicio Consulta de ENS's",
-        'wsdl': f'{BASE_ENS}ensws/ConsENSV3.wsdl',
-        'operation': 'ConsENSV3',
-        'port_production': 'ConsENSV3',
-        'port_test': 'ConsENSV3Pruebas',
-        'service': 'ConsENSV3Service',
-        'signed': False,
-    },
 
     'exs_common': {
-        'verbose_name': "Servicio de envío de EXIT Sumary (EXS) v1",
+        'verbose_name': "Servicio de envío de EXIT Sumary (EXS) v2",
         'wsdl': 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE615V1.wsdl',  # NOQA
         'operation': 'IE615V1',
         'port_production': 'IE615V1',

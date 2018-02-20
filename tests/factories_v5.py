@@ -266,12 +266,3 @@ class ENSModificationFactory(BaseMessageMixin, factory.Factory):
 
     NOTPAR670 = factory.SubFactory(NotifyParty)
     HEAHEA = factory.SubFactory(ENSModificationHeader)
-
-
-class ENSQueryFactory(factory.Factory):
-    class Meta:
-        model = dict
-
-    TraModAtBorHEA76 = '1'
-    ExpDatOfArr = '20110809'
-    ConRefNum = '9294408'
