@@ -95,5 +95,5 @@ def get_class_for_aeat_response(data):
         f'{ens}IE328V5Sal.xsd': ENSSerializer,
         f'{ens}IE304V5Sal.xsd': ENSSerializer,
         f'{ens}IE316V5Sal.xsd': ENSFunctionalErrorSerializer,
-        f'{exs}IE628V4Sal.xsd': EXSSerializer,
+        f'{exs}IE628V2Sal.xsd': EXSSerializer,
     }.get(xsd, UnknownResponseSerializer)

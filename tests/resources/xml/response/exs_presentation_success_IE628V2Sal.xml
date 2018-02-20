@@ -2,7 +2,7 @@
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
     <soapenv:Header/>
     <soapenv:Body Id="Body">
-        <CC628A xmlns="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE628V1Sal.xsd">
+        <CC628A xmlns="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE628V2Sal.xsd">
             <MesSenMES3>NICA.ES</MesSenMES3>
             <MesRecMES6>B12345678</MesRecMES6>
             <DatOfPreMES9>171218</DatOfPreMES9>

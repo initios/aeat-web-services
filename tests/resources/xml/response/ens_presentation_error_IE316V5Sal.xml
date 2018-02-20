@@ -6,7 +6,7 @@
     <soapenv:Header/>
     <soapenv:Body>
         <ie:CC316A
-            xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE316V4Sal.xsd">
+            xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE316V5Sal.xsd">
             <MesSenMES3>NICA.ES</MesSenMES3>
             <MesRecMES6>1234</MesRecMES6>
             <DatOfPreMES9>180105</DatOfPreMES9>
