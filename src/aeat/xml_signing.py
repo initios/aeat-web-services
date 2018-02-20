@@ -1,4 +1,5 @@
 import datetime as dt
+from datetime import timezone as tz
 import logging
 
 import xmlsec
@@ -8,8 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def aeat_object_with_qualifying_properties():
-    now_iso_format = '2018-02-19T11:01:11+01:00'
-    # now_iso_format = dt.datetime.now().isoformat()
+    now_iso_format = dt.datetime.now(tz.utc).astimezone().isoformat(timespec='seconds')
 
     return etree.fromstring(f'''
         <Object xmlns="http://www.w3.org/2000/09/xmldsig#">

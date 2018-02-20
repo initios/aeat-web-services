@@ -26,7 +26,6 @@ class SignMessagePlugin(Plugin):
         </soapenv:Envelope>'''.format(
             etree.tostring(signed).decode())
 
-        print("Sending", data)
         envelope = etree.fromstring(data)
         return envelope, http_headers
 
