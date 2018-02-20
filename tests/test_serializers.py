@@ -6,9 +6,8 @@ from aeat.rest_framework import serializers
 
 
 def test_ens_serializer(zeep_response):
-    aeat_response = zeep_response(
-        'wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_success_IE328V4Sal.xml', 'IE315V4'
-    )
+    aeat_response = zeep_response('enswsv4', 'wsdl_ens_presentation_IE315V4.wsdl',
+        'ens_presentation_success_IE328V4Sal.xml', 'IE315V4')
 
     serializer = serializers.ENSSerializer(data=aeat_response)
     assert serializer.is_valid(raise_exception=False), serializer.errors

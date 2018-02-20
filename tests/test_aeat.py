@@ -62,8 +62,9 @@ def test_controller_with_99999_error(operation_patch, zeep_response):
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
 def test_controller_with_html_error(operation_patch, zeep_response):
     def response():
-        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl', 'unknown_certificate.html',
-                             'ConsENSV3')
+        return zeep_response('enswsv5', 'ens_presentation_IE315V5.wsdl',
+                             'unknown_certificate.html',
+                             'IE315V5')
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock())
@@ -120,8 +121,8 @@ def test_controller_operation_request_exception_handling(operation_patch, detail
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
 def test_controller_with_ens_presentation_success_message(operation_patch, zeep_response):
     def response():
-        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
-                             'ens_presentation_success_IE328V4Sal.xml', 'IE315V4')
+        return zeep_response('enswsv5', 'ens_presentation_IE315V5.wsdl',
+                             'ens_presentation_success_IE328V5Sal.xml', 'IE315V5')
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock(operation='IE315V4'))
@@ -133,8 +134,8 @@ def test_controller_with_ens_presentation_success_message(operation_patch, zeep_
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
 def test_controller_result_includes_raw_request_and_response(operation_patch, zeep_response):
     def response():
-        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
-                             'ens_presentation_success_IE328V4Sal.xml', 'IE315V4')
+        return zeep_response('enswsv5,' 'ens_presentation_IE315V5.wsdl',
+                             'ens_presentation_success_IE328V5Sal.xml', 'IE315V5')
 
     operation_patch.return_value = lambda **kwargs: response()
     history_plugin = Mock(last_sent='xyz', last_received='zyx')
@@ -152,10 +153,11 @@ def test_controller_result_includes_raw_request_and_response(operation_patch, ze
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
 def test_controller_with_incorrect_responses(operation_patch, zeep_response, response_xml):
     def response():
-        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl', response_xml, 'IE315V4')
+        return zeep_response('enswsv5', 'ens_presentation_IE315V5.wsdl',
+                             response_xml, 'IE315V5')
 
     operation_patch.return_value = lambda **kwargs: response()
-    ctrl = Controller(Mock(), Mock(operation='IE315V4'))
+    ctrl = Controller(Mock(), Mock(operation='IE315V5'))
     result = ctrl.request(factories_v5.ENSPresentationFactory())
 
     # Response is Valid
