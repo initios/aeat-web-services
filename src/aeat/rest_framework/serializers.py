@@ -86,12 +86,12 @@ def parse_xsd(data):
 def get_class_for_aeat_response(data):
     xsd = parse_xsd(data)
 
-    ens = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/'
+    ens = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/'
     exs = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/'
 
     return {
-        f'{ens}IE328V4Sal.xsd': ENSSerializer,
-        f'{ens}IE304V4Sal.xsd': ENSSerializer,
-        f'{ens}IE316V4Sal.xsd': ENSFunctionalErrorSerializer,
+        f'{ens}IE328V5Sal.xsd': ENSSerializer,
+        f'{ens}IE304V5Sal.xsd': ENSSerializer,
+        f'{ens}IE316V5Sal.xsd': ENSFunctionalErrorSerializer,
         f'{exs}IE628V1Sal.xsd': EXSSerializer,
     }.get(xsd, UnknownResponseSerializer)
