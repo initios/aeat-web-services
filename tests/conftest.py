@@ -62,8 +62,8 @@ def response_etree_element():
 
 @pytest.fixture
 def zeep_response(resource_path):
-    def response_maker(wsdl, response, operation):
-        wsdl_path = resource_path(['xml', 'xades', 'wsdl', wsdl])
+    def response_maker(version, wsdl, response, operation):
+        wsdl_path = resource_path(['xml', 'xades', version, wsdl])
 
         client = Client(wsdl_path, strict=False)
 

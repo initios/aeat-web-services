@@ -47,8 +47,8 @@ def test_controller_marks_signature_as_skip_if_config_is_signed(operation_patch)
 @patch('aeat.Controller.operation', new_callable=PropertyMock)
 def test_controller_with_99999_error(operation_patch, zeep_response):
     def response():
-        return zeep_response('wsdl_ens_presentation_IE315V4.wsdl',
-                             'ens_presentation_error_99999.xml', 'IE315V4')
+        return zeep_response('enswsv5', 'ens_presentation_IE315V5.wsdl',
+                             'ens_presentation_error_99999.xml', 'IE315V5')
 
     operation_patch.return_value = lambda **kwargs: response()
     ctrl = Controller(Mock(), Mock())

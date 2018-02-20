@@ -1,0 +1,61 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+
+xmlns:doc="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/doc.xsd"
+
+targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/doc.xsd"
+
+ elementFormDefault="unqualified" attributeFormDefault="unqualified" version="28.00">
+
+	<!--=========================================-->
+
+	<!--      DOCUMENTATION ELEMENTS             -->
+
+	<!--=========================================-->
+
+	<xs:element name="description">
+
+		<xs:complexType>
+
+			<xs:attribute name="value" type="xs:token" use="required"/>
+
+		</xs:complexType>
+
+	</xs:element>
+
+	<xs:element name="rule">
+
+		<xs:complexType>
+
+			<xs:attribute name="name" type="xs:token" use="required"/>
+
+		</xs:complexType>
+
+	</xs:element>
+
+	<xs:element name="condition">
+
+		<xs:complexType>
+
+			<xs:attribute name="name" type="xs:token" use="required"/>
+
+		</xs:complexType>
+
+	</xs:element>
+
+	<xs:element name="codeList">
+
+		<xs:complexType>
+
+			<xs:attribute name="name" type="xs:token" use="required"/>
+
+			<xs:attribute name="type" type="xs:token" default="technical"/>
+
+		</xs:complexType>
+
+	</xs:element>
+
+</xs:schema>
+

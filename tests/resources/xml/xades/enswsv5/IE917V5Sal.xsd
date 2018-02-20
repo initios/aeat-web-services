@@ -1,0 +1,377 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema attributeFormDefault="unqualified"
+
+xmlns:xs="http://www.w3.org/2001/XMLSchema"
+
+xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE917V5Sal.xsd"
+
+xmlns:tcl_ics="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/tcl_ics.xsd"
+
+xmlns:tcl="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/tcl.xsd"
+
+xmlns:simple_ics="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/simple_types_ics.xsd"
+
+xmlns:complex_ics="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/complex_types_ics.xsd"
+
+xmlns:simple="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/simple_types.xsd"
+
+xmlns:doc="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/doc.xsd"
+
+xmlns:ds="http://www.w3.org/2000/09/xmldsig#"
+
+targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE917V5Sal.xsd"
+
+elementFormDefault="unqualified" version="28.00">
+
+	<!--=========================================-->
+
+	<!--===== IE917:C_XML_NCK  -->
+
+	<!--===== XML NACK  -->
+
+	<!--===== ICS Domain Definition  -->
+
+	<!--===== DDNIA v4.00  -->
+
+	<!--===== CSE v0.11 / DDNA KEL 0.21    -->
+
+	<!--===== Included Features: [10, 12, 18, 20, 26, 27, 28, 29]  -->
+
+	<!--=========================================-->
+
+	<!--===== Includes =====-->
+
+	<!--<xs:include schemaLocation="simple_types_ics.xsd"/>
+
+	<xs:include schemaLocation="tcl_ics.xsd"/>
+
+	<xs:include schemaLocation="doc.xsd"/>
+
+	<xs:include schemaLocation="complex_types_ics.xsd"/>-->
+
+	<!--<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="../../xades/xmldsig-core-schema.xsd"/>-->
+
+	<xs:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/doc.xsd" schemaLocation="doc.xsd"/>
+
+	<xs:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/simple_types_ics.xsd" schemaLocation="simple_types_ics.xsd"/>
+
+	<xs:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/complex_types_ics.xsd" schemaLocation="complex_types_ics.xsd"/>
+
+	<xs:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/simple_types.xsd" schemaLocation="simple_types.xsd"/>
+
+	<xs:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/tcl_ics.xsd" schemaLocation="tcl_ics.xsd"/>
+
+	<xs:import namespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/tcl.xsd" schemaLocation="tcl.xsd"/>
+
+	<!--===== Root Element =====-->
+
+	<xs:element name="CD917B" type="ie:CD917BType"/>
+
+	<!--===== Root Element Content =====-->
+
+	<xs:complexType name="CD917BType">
+
+		<xs:sequence>
+
+			<xs:group ref="ie:MESSAGE"/>
+
+			<xs:element name="HEAHEA" type="ie:HEAHEAType" minOccurs="0">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="HEADER"/>
+
+						<doc:rule name="TR1007"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="XMLERR805" type="complex_ics:XMLERR805Type" maxOccurs="unbounded">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="XML ERROR"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+		</xs:sequence>
+
+	</xs:complexType>
+
+	<!--===== MESSAGE Content =====-->
+
+	<xs:group name="MESSAGE">
+
+		<xs:sequence>
+
+			<xs:element name="MesSenMES3" type="simple:Alphanumeric_Max35">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Message sender"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="MesRecMES6" type="simple:Alphanumeric_Max35">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Message recipient"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="DatOfPreMES9" type="simple:DatePrepType">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Date of preparation"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="TimOfPreMES10" type="simple:TimeType">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Time of preparation"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="PriMES15" type="simple:Alpha_1" minOccurs="0">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Priority"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="TesIndMES18" type="tcl:Flag" minOccurs="0">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Test indicator"/>
+
+						<doc:rule name="TR9085"/>
+
+						<doc:codeList name="Flag"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="MesIdeMES19" type="simple:Alphanumeric_Max14">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Message identification"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="MesTypMES20" type="tcl:MessageTypes">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Message type"/>
+
+						<doc:codeList name="MessageTypes"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="CorIdeMES25" type="simple:Alphanumeric_Max14" minOccurs="0">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Correlation identifier"/>
+
+						<doc:rule name="TR9181"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+		</xs:sequence>
+
+	</xs:group>
+
+	<!--===== HEADER =====-->
+
+	<xs:complexType name="HEAHEAType">
+
+		<xs:annotation>
+
+			<xs:documentation>
+
+				<doc:description value="HEADER"/>
+
+			</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:sequence>
+
+			<xs:element name="DocNumHEA5" type="simple:MRNType" minOccurs="0">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Document/reference number"/>
+
+						<doc:rule name="TR9205"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="ENTKEYHEA200" type="ie:ENTKEYHEA200Type" minOccurs="0">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="ENTRY KEY"/>
+
+						<doc:rule name="TR9205"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+		</xs:sequence>
+
+	</xs:complexType>
+
+	<!--===== ENTRY KEY =====-->
+
+	<xs:complexType name="ENTKEYHEA200Type">
+
+		<xs:annotation>
+
+			<xs:documentation>
+
+				<doc:description value="ENTRY KEY"/>
+
+			</xs:documentation>
+
+		</xs:annotation>
+
+		<xs:sequence>
+
+			<xs:element name="ExpDatArrENTKEY201" type="simple:DateType" minOccurs="0">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Expected date of arrival"/>
+
+						<doc:rule name="R030"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="TraModBorENTKEY202" type="simple:Numeric_Max2">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Transport mode at border"/>
+
+						<doc:codeList name="TransportMode" type="business"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+			<xs:element name="IdeOfMeaOfTraENTKEY203" type="simple:Alphanumeric_Max35" minOccurs="0">
+
+				<xs:annotation>
+
+					<xs:documentation>
+
+						<doc:description value="Identification of the means of transport"/>
+
+					</xs:documentation>
+
+				</xs:annotation>
+
+			</xs:element>
+
+		</xs:sequence>
+
+	</xs:complexType>
+
+</xs:schema>
+
