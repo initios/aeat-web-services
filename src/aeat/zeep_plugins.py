@@ -23,10 +23,11 @@ class SignMessagePlugin(Plugin):
         <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
         <soapenv:Header/>
         <soapenv:Body>{}</soapenv:Body>
-        </soapenv:Envelope>'''.format(etree.tostring(signed).decode())
+        </soapenv:Envelope>'''.format(
+            etree.tostring(signed).decode())
 
+        print("Sending", data)
         envelope = etree.fromstring(data)
-
         return envelope, http_headers
 
 

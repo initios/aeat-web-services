@@ -2,7 +2,7 @@ BASE_ENS = 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/
 
 ADUANET_SERVICES = {
     'ens_fork': {
-        'verbose_name': 'Servicio Solicitud Desvío ENS V4.0',
+        'verbose_name': 'Servicio Solicitud Desvío ENS V5.0',
         'wsdl': f'{BASE_ENS}enswsv5/IE323V5.wsdl',
         'operation': 'IE323V5',
         'port_production': 'IE323V5',
@@ -11,7 +11,7 @@ ADUANET_SERVICES = {
         'signed': True,
     },
     'ens_modification': {
-        'verbose_name': 'Servicio Modificación ENS V4.0',
+        'verbose_name': 'Servicio Modificación ENS V5.0',
         'wsdl': f'{BASE_ENS}enswsv5/IE313V5.wsdl',
         'operation': 'IE313V5',
         'port_production': 'IE313V5',
