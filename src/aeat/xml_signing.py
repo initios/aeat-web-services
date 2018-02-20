@@ -1,5 +1,6 @@
 import datetime as dt
 import logging
+from datetime import timezone as tz
 
 import xmlsec
 from lxml import etree
@@ -8,7 +9,7 @@ logger = logging.getLogger(__name__)
 
 
 def aeat_object_with_qualifying_properties():
-    now_iso_format = dt.datetime.now().isoformat()
+    now_iso_format = dt.datetime.now(tz.utc).astimezone().isoformat(timespec='seconds')
 
     return etree.fromstring(f'''
         <Object xmlns="http://www.w3.org/2000/09/xmldsig#">
@@ -40,17 +41,15 @@ def sign(root, cert, key):
     '''
     Sign LXMLElement node with specified certificate
     '''
-    root_el = root[0][0]
-    root_id = root_el.get('Id')
+    root_id = root.get('Id')
 
     if not root_id:
-        root_el.attrib['Id'] = 'MessageRoot'
-        root_id = root_el.get('Id')
+        root.attrib['Id'] = 'MessageRoot'
+        root_id = 'MessageRoot'
 
     elem_uri = "#%s" % root_id
-
     signature = xmlsec.template.create(root,
-                                       c14n_method=xmlsec.constants.TransformInclC14N11,
+                                       c14n_method=xmlsec.constants.TransformInclC14NWithComments,
                                        sign_method=xmlsec.constants.TransformRsaSha1)
     signature.attrib['Id'] = 'Firma'
     # Main reference
@@ -58,20 +57,15 @@ def sign(root, cert, key):
                                         xmlsec.constants.TransformSha1,
                                         uri=elem_uri)
     xmlsec.template.add_transform(ref, xmlsec.constants.TransformEnveloped)
-    xmlsec.template.add_transform(ref, xmlsec.constants.TransformInclC14N11)
 
     # Keyinfo reference
     ref = xmlsec.template.add_reference(signature,
                                         xmlsec.constants.TransformSha1,
                                         uri='#CertificadoFirmante')
-    xmlsec.template.add_transform(ref,
-                                  xmlsec.constants.TransformEnveloped)
     # SignedProperties reference
     ref = xmlsec.template.add_reference(signature,
                                         xmlsec.constants.TransformSha1,
                                         uri='#SignatureProperties')
-    xmlsec.template.add_transform(ref,
-                                  xmlsec.constants.TransformEnveloped)
 
     # Add x509 keyinfo
     ki = xmlsec.template.ensure_key_info(signature, id="CertificadoFirmante")
@@ -79,16 +73,17 @@ def sign(root, cert, key):
 
     # Add external object
     signature.append(aeat_object_with_qualifying_properties())
-    root_el.append(signature)
+    root.append(signature)
 
     ctx = xmlsec.SignatureContext()
-    ctx.register_id(root_el, id_attr="Id")
+    ctx.register_id(root, id_attr="Id")
 
     ctx.key = xmlsec.Key.from_file(key,
                                    format=xmlsec.constants.KeyDataFormatPem)
     ctx.key.load_cert_from_file(cert, xmlsec.constants.KeyDataFormatPem)
 
     ctx.sign(signature)
+    return root
 
 
 def verify(root, cert, key):
