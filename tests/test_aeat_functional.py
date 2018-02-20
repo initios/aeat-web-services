@@ -30,7 +30,7 @@ def make_aeat_test_controller(certificate_real):
 
 @pytest.mark.functional
 def test_ens_presentation(make_aeat_test_controller):
-    payload = factories_v4.ENSPresentationFactory(MesIdeMES19='TEST10001')
+    payload = factories_v4.ENSPresentationFactory(MesIdeMES19='TEST10002')
     serializer = validators.ENSPresentationValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 

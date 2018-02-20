@@ -209,6 +209,10 @@ class NotifyParty(rf.Serializer):
 
 class BaseMixin(rf.Serializer):
     '''Common attributes'''
+    Id = NotRequiredStr(source='MesIdeMES19')
+    NifDeclarante = NotRequiredStr(read_only=True, default=settings.AEAT_VAT_NUMBER)
+    NombreDeclarante = NotRequiredStr(read_only=True, default=settings.AEAT_LEGAL_NAME)
+
     MesSenMES3 = NotRequiredStr(max_length=35, read_only=True,
                                 default=settings.AEAT_VAT_NUMBER,
                                 help_text='Message Sender (VAT Number). EG. 89890001K')

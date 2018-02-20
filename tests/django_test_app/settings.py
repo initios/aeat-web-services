@@ -9,6 +9,9 @@ SECRET_KEY = 'testing.'
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_DIR = os.path.dirname(BASE_DIR)
 
+USE_TZ = True
+TIME_ZONE = 'UTC'
+
 TEST_CERT_PATH = os.path.join(PROJECT_DIR, 'aduanet', 'tests', 'resources', 'certificate', 'cert.pem')  # NOQA
 TEST_KEY_PATH = os.path.join(PROJECT_DIR, 'aduanet', 'tests', 'resources', 'certificate', 'key.pem')  # NOQA
 

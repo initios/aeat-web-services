@@ -1,3 +1,5 @@
+from lxml import etree
+
 import logging
 
 from zeep import Plugin
@@ -13,8 +15,18 @@ class SignMessagePlugin(Plugin):
         self.key_path = key_path
 
     def egress(self, envelope, http_headers, operation, binding_options):
-        args = envelope, self.cert_path, self.key_path
-        xml_signing.sign(*args)
+        '''Sign enveloped message'''
+        args = envelope[0][0], self.cert_path, self.key_path
+        signed = xml_signing.sign(*args)
+
+        data = '''
+        <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+        <soapenv:Header/>
+        <soapenv:Body>{}</soapenv:Body>
+        </soapenv:Envelope>'''.format(
+            etree.tostring(signed).decode())
+
+        envelope = etree.fromstring(data)
         return envelope, http_headers
 
 
