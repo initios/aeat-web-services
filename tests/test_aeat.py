@@ -11,7 +11,7 @@ from aeat import Config, Controller, wsdl
 
 def test_config_as_str():
     config = Config('ens_presentation', test_mode=True)
-    assert 'Servicio de Presentación ENS V4.0' in config.__str__()
+    assert 'Servicio de Presentación ENS V5.0' in config.__str__()
 
 
 @pytest.mark.parametrize('signed', [True, False])
@@ -24,14 +24,14 @@ def test_controller_is_built_from_config_obj(client, signed):
 
 
 @pytest.mark.parametrize('test_mode,expected_port', [
-    (True, 'IE315V4Pruebas'),
-    (False, 'IE315V4'),
+    (True, 'IE315V5Pruebas'),
+    (False, 'IE315V5'),
 ])
 def test_config_is_built_from_service_name(test_mode, expected_port):
     config = Config('ens_presentation', test_mode=test_mode)
-    assert config.wsdl.endswith('IE315V4.wsdl')
-    assert 'IE315V4' == config.operation
-    assert 'IE315V4Service' == config.service
+    assert config.wsdl.endswith('IE315V5.wsdl')
+    assert 'IE315V5' == config.operation
+    assert 'IE315V5Service' == config.service
     assert expected_port == config.port
 
 
