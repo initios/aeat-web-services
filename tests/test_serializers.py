@@ -6,8 +6,10 @@ from aeat.rest_framework import serializers
 
 
 def test_ens_serializer(zeep_response):
-    aeat_response = zeep_response('enswsv4', 'wsdl_ens_presentation_IE315V4.wsdl',
-        'ens_presentation_success_IE328V4Sal.xml', 'IE315V4')
+    aeat_response = zeep_response(
+        'enswsv5',
+        'ens_presentation_IE315V5.wsdl', 'ens_presentation_success_IE328V4Sal.xml', 'IE315V4'
+    )
 
     serializer = serializers.ENSSerializer(data=aeat_response)
     assert serializer.is_valid(raise_exception=False), serializer.errors
@@ -17,7 +19,8 @@ def test_ens_serializer(zeep_response):
 
 def test_exs_serializer(zeep_response):
     aeat_response = zeep_response(
-        'wsdl_exs_IE615V1.wsdl', 'exs_presentation_success_IE628V1Sal.xml', 'IE615V1'
+        'enswsv4',
+        'wsdl_exs_IE615V4.wsdl', 'exs_presentation_success_IE628V1Sal.xml', 'IE615V1'
     )
 
     serializer = serializers.EXSSerializer(data=aeat_response)
@@ -27,29 +30,29 @@ def test_exs_serializer(zeep_response):
             'item_number_involved': 0, 'customs_intervention_code': 'V'} == serializer.data
 
 
-@pytest.mark.parametrize('url,response,operation,expected,is_error,expected_data', [
+@pytest.mark.parametrize('version,url,response,operation,expected,is_error,expected_data', [
     # ENS
-    ('wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_success_IE328V4Sal.xml', 'IE315V4',
+    ('enswsv5', 'wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_success_IE328V4Sal.xml', 'IE315V4',
      serializers.ENSSerializer, False, {'mrn': '17ES004311Z0000010'}),
 
-    ('wsdl_ens_modification_IE313V4.wsdl', 'ens_modification_success_IE304V4Sal.xml', 'IE313V4',
+    ('enswsv5','wsdl_ens_modification_IE313V4.wsdl', 'ens_modification_success_IE304V4Sal.xml', 'IE313V4',
      serializers.ENSSerializer, False, {'mrn': '18ES003611Z0123456'}),
 
-    ('wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_error_IE316V4Sal.xml', 'IE315V4',
+    ('enswsv5','wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_error_IE316V4Sal.xml', 'IE315V4',
      serializers.ENSFunctionalErrorSerializer, True,
      {'type': '12', 'pointer': 'MES.MesSenMES3', 'reason': '1234-Message Sender is not valid'}),
 
     # # EXS
-    ('wsdl_exs_IE615V1.wsdl', 'exs_presentation_success_IE628V1Sal.xml', 'IE615V1',
+    ('enswsv4','wsdl_exs_IE615V1.wsdl', 'exs_presentation_success_IE628V1Sal.xml', 'IE615V1',
      serializers.EXSSerializer, False,
      {'mrn': '17ES00361160001234', 'customs_intervention_code': 'V', 'item_number_involved': 0}),
 
-    ('wsdl_exs_IE615V1.wsdl', 'exs_presentation_error_IE919V1Sal.xml', 'IE615V1',
+    ('enswsv4','wsdl_exs_IE615V1.wsdl', 'exs_presentation_error_IE919V1Sal.xml', 'IE615V1',
      serializers.UnknownResponseSerializer, True, {'reason': 'Unknown AEAT response'}),
 ])
-def test_get_serializer_for_mapped_response(zeep_response, url, response, operation, expected,
+def test_get_serializer_for_mapped_response(version, zeep_response, url, response, operation, expected,
                                             is_error, expected_data):
-    aeat_response = zeep_response(url, response, operation)
+    aeat_response = zeep_response(version, url, response, operation)
     serializer_cls = serializers.get_class_for_aeat_response(aeat_response)
     assert expected == serializer_cls
 
