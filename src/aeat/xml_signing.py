@@ -1,6 +1,6 @@
 import datetime as dt
-from datetime import timezone as tz
 import logging
+from datetime import timezone as tz
 
 import xmlsec
 from lxml import etree

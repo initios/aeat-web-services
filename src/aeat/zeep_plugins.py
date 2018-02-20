@@ -1,7 +1,6 @@
-from lxml import etree
-
 import logging
 
+from lxml import etree
 from zeep import Plugin
 
 from aeat import utils, xml_signing
