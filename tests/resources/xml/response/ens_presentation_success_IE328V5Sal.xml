@@ -1,47 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<soapenv:Envelope
-    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <soapenv:Header></soapenv:Header>
-    <soapenv:Body>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header/>
+    <soapenv:Body Id="Body">
         <ie:CC328A
-            xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE328V5Sal.xsd">
+                xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE328V5Sal.xsd">
             <MesSenMES3>NICA.ES</MesSenMES3>
             <MesRecMES6>B88888888</MesRecMES6>
             <DatOfPreMES9>171221</DatOfPreMES9>
-            <TimOfPreMES10>2103</TimOfPreMES10>
+            <TimOfPreMES10>1815</TimOfPreMES10>
             <MesIdeMES19>00000000012345</MesIdeMES19>
             <MesTypMES20>CC328A</MesTypMES20>
             <CorIdeMES25>PREFIX00000001</CorIdeMES25>
-            <HEAHEA
-                xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE328V5Sal.xsd">
+            <HEAHEA>
                 <RefNumHEA4>LRN0000000000000009999</RefNumHEA4>
                 <DocNumHEA5>17ES004311Z0000010</DocNumHEA5>
                 <TraModAtBorHEA76>1</TraModAtBorHEA76>
                 <IdeOfMeaOfTraCroHEA85>9594432</IdeOfMeaOfTraCroHEA85>
                 <DecRegDatTimHEA115>201712212103</DecRegDatTimHEA115>
             </HEAHEA>
-            <GOOITEGDS
-                xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE328V5Sal.xsd">
+            <GOOITEGDS>
                 <IteNumGDS7>1</IteNumGDS7>
-                <PRODOCDC2
-                    xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE328V5Sal.xsd">
+                <PRODOCDC2>
                     <DocTypDC21>N730</DocTypDC21>
                     <DocRefDC23>SN</DocRefDC23>
                 </PRODOCDC2>
             </GOOITEGDS>
-            <PERLODSUMDEC
-                xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE328V5Sal.xsd">
+            <PERLODSUMDEC>
                 <PERLODSUMDECLNG>ES</PERLODSUMDECLNG>
                 <TINPLD1>ESB27712345</TINPLD1>
             </PERLODSUMDEC>
-            <CUSOFFFENT730
-                xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE328V5Sal.xsd">
+            <CUSOFFFENT730>
                 <RefNumCUSOFFFENT731>ES004311</RefNumCUSOFFFENT731>
                 <ExpDatOfArrFIRENT733>201712080000</ExpDatOfArrFIRENT733>
             </CUSOFFFENT730>
-            <!--Declaración presentada con Código Seguro de Verificación G79F32AAAAAAAAAA el día 21-12-2017 a las  21:03:23:698-->
         </ie:CC328A>
     </soapenv:Body>
 </soapenv:Envelope>

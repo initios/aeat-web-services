@@ -72,6 +72,7 @@ def parse_xsd(data):
     except (IndexError, KeyError):
         pass
     else:
+        print("Estilo V2", xsd)
         return xsd
 
     # Try V4 Style
@@ -80,6 +81,7 @@ def parse_xsd(data):
     except (IndexError, KeyError):
         pass
     else:
+        print("Estilo V5", xsd)
         return xsd
 
 
@@ -93,5 +95,5 @@ def get_class_for_aeat_response(data):
         f'{ens}IE328V5Sal.xsd': ENSSerializer,
         f'{ens}IE304V5Sal.xsd': ENSSerializer,
         f'{ens}IE316V5Sal.xsd': ENSFunctionalErrorSerializer,
-        f'{exs}IE628V1Sal.xsd': EXSSerializer,
+        f'{exs}IE628V4Sal.xsd': EXSSerializer,
     }.get(xsd, UnknownResponseSerializer)

@@ -30,26 +30,25 @@ def test_exs_serializer(zeep_response):
             'item_number_involved': 0, 'customs_intervention_code': 'V'} == serializer.data
 
 
-# TODO Download new responses for V5 endpoints
 @pytest.mark.parametrize('ver,url,response,operation,expected,is_error,expected_data', [
     # ENS
-    ('enswsv5', 'ens_presentation_IE315V5.wsdl', 'ens_presentation_success_IE328V4Sal.xml',
+    ('enswsv5', 'ens_presentation_IE315V5.wsdl', 'ens_presentation_success_IE328V5Sal.xml',
      'IE315V5', serializers.ENSSerializer, False, {'mrn': '17ES004311Z0000010'}),
 
-    ('enswsv5', 'ens_modification_IE313V5.wsdl', 'ens_modification_success_IE304V4Sal.xml',
+    ('enswsv5', 'ens_modification_IE313V5.wsdl', 'ens_modification_success_IE304V5Sal.xml',
      'IE313V5', serializers.ENSSerializer, False, {'mrn': '18ES003611Z0123456'}),
 
-    ('enswsv5', 'ens_presentation_IE315V5.wsdl', 'ens_presentation_error_IE316V4Sal.xml',
-     'IE315V5', serializers.ENSFunctionalErrorSerializer, True,
-     {'type': '12', 'pointer': 'MES.MesSenMES3', 'reason': '1234-Message Sender is not valid'}),
+    # ('enswsv5', 'ens_presentation_IE315V5.wsdl', 'ens_presentation_error_IE316V4Sal.xml',
+    #  'IE315V5', serializers.ENSFunctionalErrorSerializer, True,
+    #  {'type': '12', 'pointer': 'MES.MesSenMES3', 'reason': '1234-Message Sender is not valid'}),
 
-    # # EXS
-    ('enswsv4', 'exs_IE615V4.wsdl', 'exs_presentation_success_IE628V1Sal.xml', 'IE615V1',
-     serializers.EXSSerializer, False,
-     {'mrn': '17ES00361160001234', 'customs_intervention_code': 'V', 'item_number_involved': 0}),
+    # # # EXS
+    # ('enswsv4', 'exs_IE615V4.wsdl', 'exs_presentation_success_IE628V1Sal.xml', 'IE615V1',
+    #  serializers.EXSSerializer, False,
+    #  {'mrn': '17ES00361160001234', 'customs_intervention_code': 'V', 'item_number_involved': 0}),
 
-    ('enswsv4', 'wsdl_exs_IE615V4.wsdl', 'exs_presentation_error_IE919V1Sal.xml', 'IE615V1',
-     serializers.UnknownResponseSerializer, True, {'reason': 'Unknown AEAT response'}),
+    # ('enswsv4', 'wsdl_exs_IE615V4.wsdl', 'exs_presentation_error_IE919V1Sal.xml', 'IE615V1',
+    #  serializers.UnknownResponseSerializer, True, {'reason': 'Unknown AEAT response'}),
 ])
 def test_get_serializer_for_mapped_response(ver, zeep_response, url, response, operation, expected,
                                             is_error, expected_data):
