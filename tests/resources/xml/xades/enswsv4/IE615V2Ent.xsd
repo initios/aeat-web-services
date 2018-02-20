@@ -1,0 +1,396 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE615V2Ent.xsd" xmlns:ns1="http://uri.etsi.org/01903/v1.2.2#" targetNamespace="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE615V2Ent.xsd" elementFormDefault="qualified" version="1.00">
+	<!--===== Includes =====-->
+	<!-- <xs:include schemaLocation="types_exs_all.xsd"/>-->
+	<xs:include schemaLocation="types_exs_simple.xsd"/>
+	<xs:include schemaLocation="types_exs_complex.xsd"/>
+	<xs:include schemaLocation="types_exs_codeList.xsd"/>
+	<xs:include schemaLocation="types_exs_documentation.xsd"/>
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="../../xades/xmldsig-core-schema.xsd"/>
+	<xs:import namespace="http://uri.etsi.org/01903/v1.2.2#" schemaLocation="../../xades/XAdES.xsd"/>
+	<!-- ===== Root Element =====
+  -->
+	<xs:element name="CC615A">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="CC615A">
+					<xs:attribute name="Id" type="xs:string" use="optional"/>
+					<xs:attribute name="NifDeclarante" type="xs:string" use="optional"/>
+					<xs:attribute name="NombreDeclarante" type="xs:string" use="optional"/>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!-- ===== Root Element Content =====
+  -->
+	<xs:complexType name="CC615A">
+		<xs:sequence>
+			<xs:group ref="MESSAGE"/>
+			<xs:element name="HEAHEA" type="HEAHEA">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="HEADER"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TRACONCO1" type="TRACONCO1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="(CONSIGNOR) TRADER"/>
+						<rule name="R010"/>
+						<rule name="R804"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TRACONCE1" type="TRACONCE1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="(CONSIGNEE) TRADER"/>
+						<rule name="R011"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GOOITEGDS" type="GOOITEGDS" maxOccurs="100">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="GOODS ITEM"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ITI" type="ITI" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="ITINERARY"/>
+						<condition name="C570"/>
+						<rule name="R879"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CUSOFFLON" type="CUSOFFLON">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="(LODGEMENT) CUSTOMS OFFICE"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PERLODSUMDEC" type="PERLODSUMDEC">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="(LODGING SUMMARY DECLARATION) PERSON"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SEAID529" type="SEAID529" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="SEALS ID"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="ds:Signature"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===== MESSAGE Content =====-->
+	<xs:group name="MESSAGE">
+		<xs:sequence>
+			<xs:element name="MesSenMES3" type="Alphanumeric_Max35">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Message sender"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MesRecMES6" type="Alphanumeric_Max35">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Message recipient"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DatOfPreMES9" type="Numeric_6">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Date of preparation"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TimOfPreMES10" type="Numeric_4">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Time of preparation"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PriMES15" type="Alpha_1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Priority"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TesIndMES18" type="Flag" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Test indicator"/>
+						<rule name="TR9085"/>
+						<codeList name="Flag"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MesIdeMES19" type="Alphanumeric_Max14">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Message identification"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MesTypMES20" type="MessageTypes">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Message type"/>
+						<codeList name="MessageTypes"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CorIdeMES25" type="Alphanumeric_Max14" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Correlation identifier"/>
+						<rule name="TR9181"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:group>
+	<!--===== HEADER =====-->
+	<xs:complexType name="HEAHEA">
+		<xs:annotation>
+			<xs:documentation>
+				<xs:description value="HEADER"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RefNumHEA4" type="Alphanumeric_Max22">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Reference number"/>
+						<rule name="R891"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CusSubPlaHEA66" type="Alphanumeric_Max17">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Customs sub place"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotNumOfIteHEA305" type="Numeric_Max5">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Total number of items"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotNumOfPacHEA306" type="Numeric_Max7" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Total number of packages"/>
+						<rule name="R105"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TotGroMasHEA307" type="Decimal_11_3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Total gross mass"/>
+						<condition name="C581"/>
+						<rule name="TR002"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecDatTimHEA114" type="DateTimeType">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Declaration date and time"/>
+						<rule name="R660"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DecPlaHEA394" type="Alphanumeric_Max35">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Declaration place"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="SpeCirIndHEA1" type="Alpha_1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Specific Circumstance Indicator"/>
+						<rule name="R839"/>
+						<codeList name="SpecificCircumstanceIndicator" type="business"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NatSpeCirIndHEA" type="Alpha_1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="National Specific Circumstance Indicator"/>
+						<!-- Por definir códigos -->
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocOpeHEA" type="Alpha_1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Document operation"/>
+						<condition name="C991"/>
+						<codeList name="DocumentOperation" type="business"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocNumHEA5" type="MRNType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Document/reference number"/>
+						<condition name="C991"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TraChaMetOfPayHEA1" type="Alpha_1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Transport charges/ Method of Payment"/>
+						<codeList name="TransportChargesMethodOfPayment" type="business"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ComRefNumHEA" type="Alphanumeric_Max70" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Commercial Reference Number"/>
+						<condition name="C567"/>
+						<rule name="R876"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!--===== GOODS ITEM =====-->
+	<xs:complexType name="GOOITEGDS">
+		<xs:annotation>
+			<xs:documentation>
+				<xs:description value="GOODS ITEM"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IteNumGDS7" type="Numeric_Max5">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Item number"/>
+						<rule name="R005"/>
+						<rule name="R007"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GooDesGDS23" type="Alphanumeric_Max280" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Goods description"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="GroMasGDS46" type="Decimal_11_3" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Gross mass"/>
+						<condition name="C580"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MetOfPayGDI12" type="Alpha_1" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Transport charges/ Method of Payment"/>
+						<condition name="C576"/>
+						<rule name="TR9120"/>
+						<codeList name="TransportChargesMethodOfPayment" type="business"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ComRefNumGIM1" type="Alphanumeric_Max70" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="Commercial Reference Number"/>
+						<condition name="C567"/>
+						<rule name="R876"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="UNDanGooCodGDI1" type="Alphanumeric_4" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="UN dangerous goods code"/>
+						<codeList name="UnDangerousGoodsCode" type="business"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PRODOCDC2" type="PRODOCDC2" minOccurs="0" maxOccurs="10">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="PRODUCED DOCUMENTS/CERTIFICATES"/>
+						<condition name="C567"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PREDOCGODITM1" type="PREDOCGODITM1">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="PREVIOUS DOCUMENT"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TRACONCO2" type="TRACONCO2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="(CONSIGNOR) TRADER"/>
+						<rule name="R010"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="COMCODGODITM" type="COMCODGODITM" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="(CODE) COMMODITY"/>
+						<condition name="C585"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TRACONCE2" type="TRACONCE2" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="(CONSIGNEE) TRADER"/>
+						<rule name="R011"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CONNR2" type="CONNR2" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="CONTAINERS"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PACGS2" type="PACGS2" minOccurs="0" maxOccurs="99">
+				<xs:annotation>
+					<xs:documentation>
+						<xs:description value="PACKAGES"/>
+						<condition name="C577"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

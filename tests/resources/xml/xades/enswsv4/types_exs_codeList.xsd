@@ -1,0 +1,393 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.00">
+
+	<!--=========================================-->
+	<!--===== Flag =====-->
+	<!--===== Used for attributes that can have a positive or a negative value. =====-->
+	<!--===== Format: n1 =====-->
+	<!--===== Codelist: 27 =====-->
+	<!--=========================================-->
+	<xs:simpleType name="Flag">
+		<xs:annotation>
+			<xs:documentation>Used for attributes that can have a positive or a negative value. [Format: n1]</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="0">
+				<xs:annotation>
+					<xs:documentation>NO</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>YES</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--=========================================-->
+	<!--===== XmlErrorCodes =====-->
+	<!--===== Defines the codes to be used for reporting errors on XML messages. =====-->
+	<!--===== Format: n2 =====-->
+	<!--===== Codelist: 30 =====-->
+	<!--=========================================-->
+	<xs:simpleType name="XmlErrorCodes">
+		<xs:annotation>
+			<xs:documentation>Defines the codes to be used for reporting errors on XML messages. [Format: n2]</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Incorrect enumeration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Missing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>Not supported in this position</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="18">
+				<xs:annotation>
+					<xs:documentation>Unspecified Error / Other</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="19">
+				<xs:annotation>
+					<xs:documentation>Invalid decimal notation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35">
+				<xs:annotation>
+					<xs:documentation>Too many repetitions</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="39">
+				<xs:annotation>
+					<xs:documentation>Element too long (length constraint)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40">
+				<xs:annotation>
+					<xs:documentation>Element too short (length constraint)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="50">
+				<xs:annotation>
+					<xs:documentation>Invalid Value for the specific type</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="51">
+				<xs:annotation>
+					<xs:documentation>Invalid value according to the pattern</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="52">
+				<xs:annotation>
+					<xs:documentation>Invalid XML format</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="53">
+				<xs:annotation>
+					<xs:documentation>Invalid character(s)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="54">
+				<xs:annotation>
+					<xs:documentation>Value is lower than the allowed lowest limit (Minimum Inclusive)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="55">
+				<xs:annotation>
+					<xs:documentation>Value is greater than the allowed upper limit (Maximum Inclusive)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="56">
+				<xs:annotation>
+					<xs:documentation>Value is lower than or equal to the allowed lowest limit (Minimum Exlcusive)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="57">
+				<xs:annotation>
+					<xs:documentation>Value is greater than or equal to the allowed upper limit (Maximum Exclusive)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--=========================================-->
+	<!--===== FunctionalErrorCodes =====-->
+	<!--===== Subset of the UN/EDIFACT generic error table. - For remarks on the codes : see DDNTA Sec. VII. =====-->
+	<!--===== Format: n2 =====-->
+	<!--===== Codelist: 49 =====-->
+	<!--=========================================-->
+	<xs:simpleType name="FunctionalErrorCodes">
+		<xs:annotation>
+			<xs:documentation>- Subset of the UN/EDIFACT generic error table. - For remarks on the codes : see DDNTA Sec. VII. [Format: n2]</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="12">
+				<xs:annotation>
+					<xs:documentation>Incorrect (code) value</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="13">
+				<xs:annotation>
+					<xs:documentation>Missing</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="15">
+				<xs:annotation>
+					<xs:documentation>Not supported in this position</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="19">
+				<xs:annotation>
+					<xs:documentation>Invalid decimal notation</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="26">
+				<xs:annotation>
+					<xs:documentation>Duplicate detected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="35">
+				<xs:annotation>
+					<xs:documentation>Too many repetitions</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="37">
+				<xs:annotation>
+					<xs:documentation>Invalid type characters</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="38">
+				<xs:annotation>
+					<xs:documentation>Missing digit in front of decimal sign</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="39">
+				<xs:annotation>
+					<xs:documentation>Element too long (length constraint)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="40">
+				<xs:annotation>
+					<xs:documentation>Element too short (length constraint)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="81">
+				<xs:annotation>
+					<xs:documentation>Contenedor no se encuentra en DSDT</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="82">
+				<xs:annotation>
+					<xs:documentation>Bultos-Peso incompatibles en datado DSDT</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="83">
+				<xs:annotation>
+					<xs:documentation>Error al datar la DSDT</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="84">
+				<xs:annotation>
+					<xs:documentation>Error al actualizar datados DSDT</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="85">
+				<xs:annotation>
+					<xs:documentation>Error al anular datados DSDT</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="86">
+				<xs:annotation>
+					<xs:documentation>Error al consultar la DSDT en la UAR</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="90">
+				<xs:annotation>
+					<xs:documentation>Unknown MRN</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="91">
+				<xs:annotation>
+					<xs:documentation>Duplicate MRN</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="92">
+				<xs:annotation>
+					<xs:documentation>Message out of sequence</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="93">
+				<xs:annotation>
+					<xs:documentation>Invalid MRN</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--=========================================-->
+	<!--===== MessageTypes =====-->
+	<!--===== Used for attribute MESSAGE ERRORS.Association assigned code and MESSAGE.Message Type. The usage of each code in one of the UNSM templates is defined in the Remarks column. CC should in all cases be instantiated to the value of the particular domain in which the message is created. =====-->
+	<!--===== Format: an..6 =====-->
+	<!--===== Codelist: 60 =====-->
+	<!--=========================================-->
+	<xs:simpleType name="MessageTypes">
+		<xs:annotation>
+			<xs:documentation>Used for attribute MESSAGE ERRORS.Association assigned code and MESSAGE.Message Type. The usage of each code in one of the UNSM templates is defined in the Remarks column. CC should in all cases be instantiated to the value of the particular domain in which the message is created. [Format: an..6]</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="CC615A">
+				<xs:annotation>
+					<xs:documentation>Exit Summary Declaration</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CC628A">
+				<xs:annotation>
+					<xs:documentation>Exit Summary Declaration Accepted</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CC616A">
+				<xs:annotation>
+					<xs:documentation>Exit Summary Declaration Rejected</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="CD919B">
+				<xs:annotation>
+					<xs:documentation>XML NACK</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--=========================================-->
+	<!--===== SpecificCircumstanceIndicator =====-->
+	<!--===== It is an alphanumerical 1 character string (i.e. an1) that is used to define a special circumstance. =====-->
+	<!--===== Format: a1 =====-->
+	<!--===== Codelist: 96 =====-->
+	<!--=========================================-->
+	<xs:simpleType name="SpecificCircumstanceIndicator">
+		<xs:annotation>
+			<xs:documentation></xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="A">
+				<xs:annotation>
+					<xs:documentation>Envío Postal y Express</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="B">
+				<xs:annotation>
+					<xs:documentation>Suministros para barcos y aviones</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="E">
+				<xs:annotation>
+					<xs:documentation>Operador económico autorizado (OEA)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--=========================================-->
+	<!--===== DocumentOperation =====-->
+	<!--===== Format: an1 =====-->
+	<!--===== Codelist: 117 =====-->
+	<!--=========================================-->
+	<xs:simpleType name="DocumentOperation">
+		<xs:annotation>
+			<xs:documentation></xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="A">
+				<xs:annotation>
+					<xs:documentation>Anulación</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="M">
+				<xs:annotation>
+					<xs:documentation>Modificación</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--=========================================-->
+	<!--===== Previous Document Type =====-->
+	<!--===== Format: an..4 =====-->
+	<!--===== Codelist: 901 =====-->
+	<!--=========================================-->
+	<xs:simpleType name="PreviousDocumentType">
+		<xs:annotation>
+			<xs:documentation></xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="CNV">
+				<xs:annotation>
+					<xs:documentation>Contenedores vacíos</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="T2L">
+				<xs:annotation>
+					<xs:documentation>Mercancía comunitaria con transbordo en tercer país</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="XSUA">
+				<xs:annotation>
+					<xs:documentation>Sumaria de Descarga Aérea</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="XSUM">
+				<xs:annotation>
+					<xs:documentation>Sumaria de descarga marítima</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZEZF">
+				<xs:annotation>
+					<xs:documentation>Entrada en Zona o Depósito Franco</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ZIRR">
+				<xs:annotation>
+					<xs:documentation>Entrada Irregular</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<!--=========================================-->
+	<!--===== Customs Intervention Code =====-->
+	<!--===== Format: an1 =====-->
+	<!--===== Codelist: 902 =====-->
+	<!--=========================================-->
+	<xs:simpleType name="CustomsInterventionCode">
+		<xs:annotation>
+			<xs:documentation></xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="N">
+				<xs:annotation>
+					<xs:documentation>Circuito Naranja</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="R">
+				<xs:annotation>
+					<xs:documentation>Circuito Rojo</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="V">
+				<xs:annotation>
+					<xs:documentation>Circuito Verde</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
