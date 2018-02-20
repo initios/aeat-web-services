@@ -1,0 +1,38 @@
+  <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <ie:CC304A xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE304V5Sal.xsd">
+      <MesSenMES3>NICA.ES</MesSenMES3>
+      <MesRecMES6>B123456789</MesRecMES6>
+      <DatOfPreMES9>180116</DatOfPreMES9>
+      <TimOfPreMES10>1413</TimOfPreMES10>
+      <TesIndMES18>0</TesIndMES18>
+      <MesIdeMES19>00000000000334</MesIdeMES19>
+      <MesTypMES20>CC304A</MesTypMES20>
+      <CorIdeMES25>TEST000000190</CorIdeMES25>
+      <HEAHEA xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE304V5Sal.xsd">
+        <DocNumHEA5>18ES003611Z0123456</DocNumHEA5>
+        <TraModAtBorHEA76>1</TraModAtBorHEA76>
+        <IdeOfMeaOfTraCroHEA85>9381067</IdeOfMeaOfTraCroHEA85>
+        <IdeOfMeaOfTraCroHEA85LNG>ES</IdeOfMeaOfTraCroHEA85LNG>
+        <ComRefNumHEA>00001</ComRefNumHEA>
+        <AmeAccDatTimHEA111>201801161313</AmeAccDatTimHEA111>
+        <DatTimAmeHEA113>201801161413</DatTimAmeHEA113>
+      </HEAHEA>
+      <GOOITEGDS xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE304V5Sal.xsd">
+        <IteNumGDS7>1</IteNumGDS7>
+        <PRODOCDC2 xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE304V5Sal.xsd">
+          <DocTypDC21>N730</DocTypDC21>
+          <DocRefDC23>1111</DocRefDC23>
+        </PRODOCDC2>
+      </GOOITEGDS>
+      <PERLODSUMDEC xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE304V5Sal.xsd">
+        <TINPLD1>ESB27716000</TINPLD1>
+      </PERLODSUMDEC>
+      <CUSOFFFENT730 xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE304V5Sal.xsd">
+        <RefNumCUSOFFFENT731>ES001111</RefNumCUSOFFFENT731>
+        <ExpDatOfArrFIRENT733>201801262300</ExpDatOfArrFIRENT733>
+      </CUSOFFFENT730>
+    </ie:CC304A>
+  </soapenv:Body>
+</soapenv:Envelope>

@@ -7,7 +7,8 @@ from aeat.rest_framework import serializers
 
 def test_ens_serializer(zeep_response):
     aeat_response = zeep_response(
-        'wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_success_IE328V4Sal.xml', 'IE315V4'
+        'enswsv5',
+        'ens_presentation_IE315V5.wsdl', 'ens_presentation_success_IE328V5Sal.xml', 'IE315V5'
     )
 
     serializer = serializers.ENSSerializer(data=aeat_response)
@@ -18,7 +19,8 @@ def test_ens_serializer(zeep_response):
 
 def test_exs_serializer(zeep_response):
     aeat_response = zeep_response(
-        'wsdl_exs_IE615V1.wsdl', 'exs_presentation_success_IE628V1Sal.xml', 'IE615V1'
+        'exswsv2', 'exs_presentation_IE615V2.wsdl', 'exs_presentation_success_IE628V2Sal.xml',
+        'IE615V2'
     )
 
     serializer = serializers.EXSSerializer(data=aeat_response)
@@ -28,29 +30,29 @@ def test_exs_serializer(zeep_response):
             'item_number_involved': 0, 'customs_intervention_code': 'V'} == serializer.data
 
 
-@pytest.mark.parametrize('url,response,operation,expected,is_error,expected_data', [
+@pytest.mark.parametrize('ver,url,response,operation,expected,is_error,expected_data', [
     # ENS
-    ('wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_success_IE328V4Sal.xml', 'IE315V4',
-     serializers.ENSSerializer, False, {'mrn': '17ES004311Z0000010'}),
+    ('enswsv5', 'ens_presentation_IE315V5.wsdl', 'ens_presentation_success_IE328V5Sal.xml',
+     'IE315V5', serializers.ENSSerializer, False, {'mrn': '17ES004311Z0000010'}),
 
-    ('wsdl_ens_modification_IE313V4.wsdl', 'ens_modification_success_IE304V4Sal.xml', 'IE313V4',
-     serializers.ENSSerializer, False, {'mrn': '18ES003611Z0123456'}),
+    ('enswsv5', 'ens_modification_IE313V5.wsdl', 'ens_modification_success_IE304V5Sal.xml',
+     'IE313V5', serializers.ENSSerializer, False, {'mrn': '18ES003611Z0123456'}),
 
-    ('wsdl_ens_presentation_IE315V4.wsdl', 'ens_presentation_error_IE316V4Sal.xml', 'IE315V4',
-     serializers.ENSFunctionalErrorSerializer, True,
+    ('enswsv5', 'ens_presentation_IE315V5.wsdl', 'ens_presentation_error_IE316V5Sal.xml',
+     'IE315V5', serializers.ENSFunctionalErrorSerializer, True,
      {'type': '12', 'pointer': 'MES.MesSenMES3', 'reason': '1234-Message Sender is not valid'}),
 
-    # # EXS
-    ('wsdl_exs_IE615V1.wsdl', 'exs_presentation_success_IE628V1Sal.xml', 'IE615V1',
-     serializers.EXSSerializer, False,
+    # EXS
+    ('exswsv2', 'exs_presentation_IE615V2.wsdl', 'exs_presentation_success_IE628V2Sal.xml',
+     'IE615V2', serializers.EXSSerializer, False,
      {'mrn': '17ES00361160001234', 'customs_intervention_code': 'V', 'item_number_involved': 0}),
 
-    ('wsdl_exs_IE615V1.wsdl', 'exs_presentation_error_IE919V1Sal.xml', 'IE615V1',
-     serializers.UnknownResponseSerializer, True, {'reason': 'Unknown AEAT response'}),
+    ('exswsv2', 'exs_presentation_IE615V2.wsdl', 'exs_presentation_error_IE919V2Sal.xml',
+     'IE615V2', serializers.UnknownResponseSerializer, True, {'reason': 'Unknown AEAT response'}),
 ])
-def test_get_serializer_for_mapped_response(zeep_response, url, response, operation, expected,
+def test_get_serializer_for_mapped_response(ver, zeep_response, url, response, operation, expected,
                                             is_error, expected_data):
-    aeat_response = zeep_response(url, response, operation)
+    aeat_response = zeep_response(ver, url, response, operation)
     serializer_cls = serializers.get_class_for_aeat_response(aeat_response)
     assert expected == serializer_cls
 
@@ -71,20 +73,20 @@ def test_get_serializer_for_unmapped_response():
 
 
 @pytest.mark.parametrize('filename,expected', [
-    ('exs_presentation_success_IE628V1Sal.xml',
-     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE628V1Sal.xsd'),
+    ('exs_presentation_success_IE628V2Sal.xml',
+     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE628V2Sal.xsd'),
 
-    ('exs_presentation_error_IE919V1Sal.xml',
-     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE919V1Sal.xsd'),
+    ('exs_presentation_error_IE919V2Sal.xml',
+     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE919V2Sal.xsd'),
 
-    ('ens_presentation_success_IE328V4Sal.xml',
-     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE328V4Sal.xsd'),  # NOQA
+    ('ens_presentation_success_IE328V5Sal.xml',
+     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE328V5Sal.xsd'),  # NOQA
 
-    ('ens_modification_success_IE304V4Sal.xml',
-     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE304V4Sal.xsd'),  # NOQA
+    ('ens_modification_success_IE304V5Sal.xml',
+     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE304V5Sal.xsd'),  # NOQA
 
-    ('ens_presentation_error_IE917V4Sal.xml',
-     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv4/IE917V4Sal.xsd'),  # NOQA
+    ('ens_presentation_error_IE917V5Sal.xml',
+     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE917V5Sal.xsd'),  # NOQA
 ])
 def test_parse_xsd(response_etree_element, filename, expected):
     xml = response_etree_element(filename)

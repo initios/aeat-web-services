@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='utf-8'?>
+<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <ie:CC316A
+            xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE316V5Sal.xsd">
+            <MesSenMES3>NICA.ES</MesSenMES3>
+            <MesRecMES6>1234</MesRecMES6>
+            <DatOfPreMES9>180105</DatOfPreMES9>
+            <TimOfPreMES10>1227</TimOfPreMES10>
+            <TesIndMES18>0</TesIndMES18>
+            <MesIdeMES19>00000000000029</MesIdeMES19>
+            <MesTypMES20>CC316A</MesTypMES20>
+            <CorIdeMES25>KT000000001</CorIdeMES25>
+            <HEAHEA>
+                <RefNumHEA4>LRN000000001</RefNumHEA4>
+                <DecRejDatTimHEA116>201801051227</DecRejDatTimHEA116>
+            </HEAHEA>
+            <FUNERRER1>
+                <ErrTypER11>12</ErrTypER11>
+                <ErrPoiER12>MES.MesSenMES3</ErrPoiER12>
+                <OriAttValER14>1234-Message Sender is not valid</OriAttValER14>
+            </FUNERRER1>
+        </ie:CC316A>
+    </soapenv:Body>
+</soapenv:Envelope>

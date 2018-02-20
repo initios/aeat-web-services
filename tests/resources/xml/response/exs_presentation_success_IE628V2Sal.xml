@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header/>
+    <soapenv:Body Id="Body">
+        <CC628A xmlns="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE628V2Sal.xsd">
+            <MesSenMES3>NICA.ES</MesSenMES3>
+            <MesRecMES6>B12345678</MesRecMES6>
+            <DatOfPreMES9>171218</DatOfPreMES9>
+            <TimOfPreMES10>1609</TimOfPreMES10>
+            <TesIndMES18>0</TesIndMES18>
+            <MesIdeMES19>20170000784969</MesIdeMES19>
+            <MesTypMES20>CC628A</MesTypMES20>
+            <CorIdeMES25>TEST0000007764</CorIdeMES25>
+            <HEAHEA>
+                <RefNumHEA4>LRN0000000000000009999</RefNumHEA4>
+                <DocNumHEA5>17ES00361160001234</DocNumHEA5>
+                <DecRegDatTimHEA115>201712181609</DecRegDatTimHEA115>
+                <AutCodHEA>2CVXJ69F826SS2AW</AutCodHEA>
+            </HEAHEA>
+            <CUSOFFLON>
+                <RefNumCOL1>ES001234</RefNumCOL1>
+            </CUSOFFLON>
+            <PERLODSUMDEC>
+                <TINPLD1>ESB12345678</TINPLD1>
+            </PERLODSUMDEC>
+            <RISANA>
+                <IteNumInvRKA1>0</IteNumInvRKA1>
+                <CusIntCodRKA1>V</CusIntCodRKA1>
+            </RISANA><!--Declaración presentada con Código Seguro de Verificación XXXXXXXXXXXXXXX16 el día 18-12-2017 a las  16:09:54-->
+        </CC628A>
+    </soapenv:Body>
+</soapenv:Envelope>

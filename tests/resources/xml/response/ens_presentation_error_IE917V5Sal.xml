@@ -1,0 +1,31 @@
+<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <soapenv:Header/>
+    <soapenv:Body>
+        <ie:CD917B
+            xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE917V5Sal.xsd">
+            <MesSenMES3>NICA.ES</MesSenMES3>
+            <MesRecMES6>X12345678</MesRecMES6>
+            <DatOfPreMES9>180105</DatOfPreMES9>
+            <TimOfPreMES10>0907</TimOfPreMES10>
+            <TesIndMES18>0</TesIndMES18>
+            <MesIdeMES19>00000000000015</MesIdeMES19>
+            <MesTypMES20>CD917B</MesTypMES20>
+            <HEAHEA
+                xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE917V5Sal.xsd">
+                <DocNumHEA5/>
+            </HEAHEA>
+            <XMLERR805
+                xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE917V5Sal.xsd">
+                <ErrLocXMLER803>CC315A</ErrLocXMLER803>
+                <ErrLinNumXMLER800>-1</ErrLinNumXMLER800>
+                <ErrColNumXMLER801>-1</ErrColNumXMLER801>
+                <ErrReaXMLER802>Element too long (length constraint)</ErrReaXMLER802>
+                <OriAttValXMLER804>CC315A,DatOfPreMES9</OriAttValXMLER804>
+                <ErrCodXMLER806>39</ErrCodXMLER806>
+            </XMLERR805>
+        </ie:CD917B>
+    </soapenv:Body>
+</soapenv:Envelope>

@@ -1,7 +1,7 @@
 import pytest
 
-import factories_v1
-import factories_v4
+import factories_v2
+import factories_v5
 import setup_django  # NOQA
 
 import aeat
@@ -30,7 +30,7 @@ def make_aeat_test_controller(certificate_real):
 
 @pytest.mark.functional
 def test_ens_presentation(make_aeat_test_controller):
-    payload = factories_v4.ENSPresentationFactory(MesIdeMES19='TEST10002')
+    payload = factories_v5.ENSPresentationFactory(MesIdeMES19='TEST10002')
     serializer = validators.ENSPresentationValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
@@ -43,7 +43,7 @@ def test_ens_presentation(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_ens_modification(make_aeat_test_controller):
-    payload = factories_v4.ENSModificationFactory(MesIdeMES19='TEST20001')
+    payload = factories_v5.ENSModificationFactory(MesIdeMES19='TEST20001')
     serializer = validators.ENSModificationValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
@@ -55,21 +55,8 @@ def test_ens_modification(make_aeat_test_controller):
 
 
 @pytest.mark.functional
-def test_ens_query(make_aeat_test_controller):
-    payload = factories_v4.ENSQueryFactory()
-    serializer = validators.ENSQueryValidator(data=payload)
-    assert serializer.is_valid(raise_exception=False), serializer.errors
-
-    controller = make_aeat_test_controller('ens_query')
-    result = controller.request(serializer.data)
-
-    assert result.valid, f'Error: {result.error} | Raw \n: {result.raw_response}'
-    assert 770 == len(result.data.IMPOPE)
-
-
-@pytest.mark.functional
 def test_exs_presentation(make_aeat_test_controller):
-    payload = factories_v1.EXSPresentationFactory(MesIdeMES19='TEST30005')
+    payload = factories_v2.EXSPresentationFactory(MesIdeMES19='TEST30005')
     serializer = validators.EXSPresentationValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
@@ -82,7 +69,7 @@ def test_exs_presentation(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_exs_modification(make_aeat_test_controller):
-    payload = factories_v1.EXSModificationFactory(MesIdeMES19='TEST30003')
+    payload = factories_v2.EXSModificationFactory(MesIdeMES19='TEST30003')
     serializer = validators.EXSModificationValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 
@@ -95,7 +82,7 @@ def test_exs_modification(make_aeat_test_controller):
 
 @pytest.mark.functional
 def test_exs_cancellation(make_aeat_test_controller):
-    payload = factories_v1.EXSCancellationFactory(MesIdeMES19='TEST30003')
+    payload = factories_v2.EXSCancellationFactory(MesIdeMES19='TEST30003')
     serializer = validators.EXSCancellationValidator(data=payload)
     assert serializer.is_valid(raise_exception=False), serializer.errors
 

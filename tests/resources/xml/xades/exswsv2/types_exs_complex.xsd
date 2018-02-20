@@ -1,0 +1,651 @@
+
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" version="1.00">
+	<!--===== Includes =====-->
+	<xs:include schemaLocation="types_exs_simple.xsd"/>
+	<xs:include schemaLocation="types_exs_codeList.xsd"/>
+	<xs:include schemaLocation="types_exs_documentation.xsd"/>
+
+	<!--===== MESSAGE.(CONSIGNOR) TRADER =====-->
+	<xs:complexType name="TRACONCO1">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="(CONSIGNOR) TRADER"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NamCO17" type="TradNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Name"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StrAndNumCO122" type="StreetNumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Street and number"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PosCodCO123" type="PostalCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Postal code"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitCO124" type="CityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="City"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CouCO125" type="CountryCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Country code"/>
+						<condition name="C501"/>
+						<codeList name="CountryCodesFullList"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TINCO159" type="TINType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="TIN"/>
+						<condition name="C562"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== MESSAGE.(CONSIGNEE) TRADER =====-->
+	<xs:complexType name="TRACONCE1">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="(CONSIGNEE) TRADER"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NamCE17" type="TradNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Name"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StrAndNumCE122" type="StreetNumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Street and number"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PosCodCE123" type="PostalCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Postal code"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitCE124" type="CityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="City"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CouCE125" type="CountryCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Country code"/>
+						<codeList name="CountryCodesFullList"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TINCE159" type="TINType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="TIN"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!--===== GOODS ITEM.PRODUCED DOCUMENTS/CERTIFICATES =====-->
+	<xs:complexType name="PRODOCDC2">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="PRODUCED DOCUMENTS/CERTIFICATES"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocTypDC21" type="Alphanumeric_Max4">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Document type"/>
+						<codeList name="DocumentTypeCommon" type="business"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocRefDC23" type="Alphanumeric_Max35">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Document reference"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== GOODS ITEM.PREVIOUS DOCUMENT =====-->
+	<xs:complexType name="PREDOCGODITM1">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="PREVIOUS DOCUMENT"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="DocTypPD11" type="Alphanumeric_Max4">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Document type"/>
+						<codeList name="PreviousDocumentType" type="business"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DocRefPD12" type="Alphanumeric_Max50" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Document reference"/>
+						<condition name="C994"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== GOODS ITEM.GOODS ITEM.(CONSIGNOR) TRADER =====-->
+	<xs:complexType name="TRACONCO2">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="(CONSIGNOR) TRADER"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NamCO27" type="TradNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Name"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StrAndNumCO222" type="StreetNumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Street and number"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PosCodCO223" type="PostalCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Postal code"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitCO224" type="CityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="City"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CouCO225" type="CountryCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Country code"/>
+						<condition name="C501"/>
+						<codeList name="CountryCodesFullList"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TINCO259" type="TINType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="TIN"/>
+						<condition name="C562"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== GOODS ITEM.COMMODITY =====-->
+	<xs:complexType name="COMCODGODITM">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="(CODE) COMMODITY"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ComNomCMD1" type="Alphanumeric_Max8">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Combined Nomenclature"/>
+						<rule name="R881"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== GOODS ITEM.(CONSIGNEE) TRADER =====-->
+	<xs:complexType name="TRACONCE2">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="(CONSIGNEE) TRADER"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NamCE27" type="TradNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Name"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StrAndNumCE222" type="StreetNumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Street and number"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PosCodCE223" type="PostalCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Postal code"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitCE224" type="CityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="City"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CouCE225" type="CountryCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Country code"/>
+						<codeList name="CountryCodesFullList"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TINCE259" type="TINType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="TIN"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== GOODS ITEM.CONTAINERS =====-->
+	<xs:complexType name="CONNR2">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="CONTAINERS"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ConNumNR21" type="Alphanumeric_Max17">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Container number"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== GOODS ITEM.PACKAGES =====-->
+	<xs:complexType name="PACGS2">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="PACKAGES"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="MarNumOfPacGS21" type="Alphanumeric_Max42" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Marks &amp; numbers of packages"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="KinOfPacGS23" type="Alphanumeric_Max3">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Kind of packages"/>
+						<codeList name="KindOfPackages"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumOfPacGS24" type="Numeric_Max5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Number of packages"/>
+						<rule name="R021"/>
+						<rule name="TR0022"/>
+						<condition name="C061"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="NumOfPieGS25" type="Numeric_Max5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Number of pieces"/>
+						<condition name="C061"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== MESSAGE.ITINERARY =====-->
+	<xs:complexType name="ITI">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="ITINERARY"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="CouOfRouCodITI1" type="CountryCodeType">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Country of routing code"/>
+						<codeList name="CountryCodesFullList"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== MESSAGE.(LODGEMENT) CUSTOMS OFFICE =====-->
+	<xs:complexType name="CUSOFFLON">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="(LODGEMENT) CUSTOMS OFFICE"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="RefNumCOL1" type="CORefNumType">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Reference number"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== MESSAGE.(LODGING SUMMARY DECLARATION) PERSON =====-->
+	<xs:complexType name="PERLODSUMDEC">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="(LODGING SUMMARY DECLARATION) PERSON"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NamPLD1" type="TradNameType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Name"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StrAndNumPLD1" type="StreetNumType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Street and number"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PosCodPLD1" type="PostalCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Postal code"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CitPLD1" type="CityType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="City"/>
+						<condition name="C501"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CouCodPLD1" type="CountryCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Country code"/>
+						<condition name="C501"/>
+						<codeList name="CountryCodesFullList"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TINPLD1" type="TINType">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="TIN"/>
+						<rule name="R837"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== MESSAGE.SEALS ID =====-->
+	<xs:complexType name="SEAID529">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="SEALS ID"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SeaIdSEAID530" type="Alphanumeric_Max20">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Seals identity"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!--===== RISK ANALYSIS =====-->
+	<xs:complexType name="RISANA">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="RISK ANALYSIS"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="IteNumInvRKA1" type="Numeric_Max5" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Item number involved"/>
+						<rule name="R824"/>
+						<rule name="R875"/>
+						<rule name="R992"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CusIntCodRKA1" type="Alphanumeric_1">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Customs intervention code"/>
+						<rule name="R992"/>
+						<codeList name="CustomsInterventionCode"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CusIntTexRKA1" type="Alphanumeric_Max350" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Customs intervention text"/>
+						<rule name="R992"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<!--===== OTROS (Revisar) =====-->
+	<xs:complexType name="UPEUPE">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="UPL ERROR"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ActIdUPE1" type="Alphanumeric_Max20">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Action identification"/>
+						<rule name="TR9009"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AttPatUPE2" type="Alphanumeric_Max140" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Attribute path"/>
+						<rule name="TR9010"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="CodUPE3" type="Alphanumeric_Max8">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Code"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DescUPE4" type="Alphanumeric_Max210" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Description"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UPRUPR">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="UPL RESPONSE"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="OrMesIdUPR1" type="Alphanumeric_Max14">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Original message identification"/>
+						<rule name="TR9006"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="StatUPR2" type="Alpha_Max8">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Status"/>
+						<rule name="TR9007"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DescUPR3" type="Alphanumeric_Max210" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Description"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="XMLERR805">
+		<xs:annotation>
+			<xs:documentation>
+				<description value="XML ERROR"/>
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ErrLocXMLER803" type="Alphanumeric_Max350" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Error Location"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrLinNumXMLER800" type="Numeric_Max9">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Error Line Number"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrColNumXMLER801" type="Numeric_Max9">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Error Column Number"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrReaXMLER802" type="Alphanumeric_Max350">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Error Reason"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="OriAttValXMLER804" type="Alphanumeric_Max350" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Original attribute value"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ErrCodXMLER806" type="XmlErrorCodes">
+				<xs:annotation>
+					<xs:documentation>
+						<description value="Error Code"/>
+						<codeList name="XmlErrorCodes"/>
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

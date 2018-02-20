@@ -1,0 +1,26 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <soapenv:Header/>
+  <soapenv:Body>
+    <CD919B xmlns="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/adrx/ws/IE919V2Sal.xsd">
+      <MesSenMES3>NICA.ES</MesSenMES3>
+      <MesRecMES6>B12345678</MesRecMES6>
+      <DatOfPreMES9>180115</DatOfPreMES9>
+      <TimOfPreMES10>1159</TimOfPreMES10>
+      <TesIndMES18>0</TesIndMES18>
+      <MesIdeMES19>20180000000006</MesIdeMES19>
+      <MesTypMES20>CD919B</MesTypMES20>
+      <CorIdeMES25>TEST30003</CorIdeMES25>
+      <HEAHEA>
+        <DocNumHEA5>LRN000000041</DocNumHEA5>
+      </HEAHEA>
+      <XMLERR805>
+        <ErrLocXMLER803>MES.HEA.ITI.CouOfRouCodITI1</ErrLocXMLER803>
+        <ErrLinNumXMLER800>-1</ErrLinNumXMLER800>
+        <ErrColNumXMLER801>-1</ErrColNumXMLER801>
+        <ErrReaXMLER802>Missing</ErrReaXMLER802>
+        <OriAttValXMLER804>ITI</OriAttValXMLER804>
+        <ErrCodXMLER806>13</ErrCodXMLER806>
+      </XMLERR805>
+    </CD919B>
+  </soapenv:Body>
+</soapenv:Envelope>
