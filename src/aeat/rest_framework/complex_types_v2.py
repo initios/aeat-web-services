@@ -132,6 +132,10 @@ class SealsIdentity(rf.Serializer):
 
 class BaseMixin(rf.Serializer):
     '''Common attributes'''
+    Id = NotRequiredStr(source='MesIdeMES19')
+    NifDeclarante = NotRequiredStr(read_only=True, default=settings.AEAT_VAT_NUMBER)
+    NombreDeclarante = NotRequiredStr(read_only=True, default=settings.AEAT_LEGAL_NAME)
+
     MesTypMES20 = rf.ReadOnlyField(default='CC615A', help_text='Message type')
     MesSenMES3 = NotRequiredStr(max_length=35, read_only=True,
                                 default=settings.AEAT_VAT_NUMBER,
