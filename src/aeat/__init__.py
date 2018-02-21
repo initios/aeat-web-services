@@ -60,9 +60,10 @@ class Controller:
         self.key = key
 
     @classmethod
-    def build_from_config(cls, config, pub_cert, priv_cert):
-        # ?¿
-        return cls(config)
+    def build_for_service(cls, service_name, cert, key, test_mode):
+        mapping = ADUANET_SERVICES[service_name]
+        url = mapping['url_test'] if test_mode else mapping['url_production']
+        return cls(url, cert, key)
 
     def request(self, unsigned_xml: str):
         '''Receives unsigned xml and sends a signed SOAP enveloped payload'''
