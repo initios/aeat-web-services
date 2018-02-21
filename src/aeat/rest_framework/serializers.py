@@ -27,16 +27,15 @@ class DequeToDictMixin:
 
 
 class ENSSerializer(DequeToDictMixin, rf.Serializer):
-    qname = '{https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE315V5Ent.xsd}CC315A'  # noqa
-    nsmap = {'ie': 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE315V5Ent.xsd'}  # noqa
-
-    is_error = False
+    class ServiceMeta:
+        is_error = False
 
     mrn = rf.CharField(source='HEAHEA.DocNumHEA5')
 
 
 class EXSSerializer(DequeToDictMixin, rf.Serializer):
-    is_error = False
+    class ServiceMeta:
+        is_error = False
 
     mrn = rf.CharField(source='HEAHEA.DocNumHEA5')
     item_number_involved = rf.IntegerField(source='RISANA.IteNumInvRKA1')
@@ -44,7 +43,8 @@ class EXSSerializer(DequeToDictMixin, rf.Serializer):
 
 
 class UnknownResponseSerializer(rf.Serializer):
-    is_error = True
+    class ServiceMeta:
+        is_error = True
 
     def __init__(self, *args, **kwargs):
         kwargs.pop('data') if 'data' in kwargs else None
@@ -56,7 +56,8 @@ class UnknownResponseSerializer(rf.Serializer):
 
 
 class ENSFunctionalErrorSerializer(DequeToDictMixin, rf.Serializer):
-    is_error = True
+    class ServiceMeta:
+        is_error = True
 
     type = rf.CharField(source='FUNERRER1.ErrTypER11')
     pointer = rf.CharField(source='FUNERRER1.ErrPoiER12')
@@ -75,16 +76,14 @@ def parse_xsd(data):
     except (IndexError, KeyError):
         pass
     else:
-        print("Estilo V2", xsd)
         return xsd
 
-    # Try V4 Style
+    # Try V5 Style
     try:
         xsd = body[0].nsmap['ie']
     except (IndexError, KeyError):
         pass
     else:
-        print("Estilo V5", xsd)
         return xsd
 
 
