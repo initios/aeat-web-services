@@ -24,8 +24,6 @@ class ENSForkValidator(ValidatorBase):
 
 
 class ENSPresentationValidator(v5.BaseMixin, ValidatorBase):
-    service_name = 'ens_presentation'
-
     MesTypMES20 = fields.NotRequiredStr(default='CC315A', read_only=True,
                                         help_text='Message type. EG CC315A')
     HEAHEA = v5.ENSPresentationHeader(required=True)
