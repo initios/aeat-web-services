@@ -10,25 +10,6 @@ import requests
 logger = logging.getLogger(__name__)
 
 
-class Config:
-    def __init__(self, service_name, test_mode):
-        self.payload = ADUANET_SERVICES[service_name]
-        self.test_mode = test_mode
-
-    def __getattr__(self, name):
-        if name == 'url':
-            test, prod = self.payload['url_test'], self.payload['url_production']
-            return test if self.test_mode else prod
-
-        return self.payload[name]
-
-    def __str__(self):
-        return f'''
-        Config: {self.verbose_name}
-        URL: {self.url}
-        '''
-
-
 class Result:
     default_context = {
         'raw_request': None,
