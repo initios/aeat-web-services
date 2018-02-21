@@ -27,6 +27,9 @@ class DequeToDictMixin:
 
 
 class ENSSerializer(DequeToDictMixin, rf.Serializer):
+    qname = '{https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE315V5Ent.xsd}CC315A'  # noqa
+    nsmap = {'ie': 'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE315V5Ent.xsd'}  # noqa
+
     is_error = False
 
     mrn = rf.CharField(source='HEAHEA.DocNumHEA5')

@@ -18,11 +18,9 @@ class XMLRenderer:
                 parent = etree.SubElement(element, k)
                 parent.text = v
 
-    def render(self, data, root_attributes=None):
-        root_attributes = [] if not root_attributes else root_attributes
-
-        for attr in root_attributes:
-            self.root.attrib[attr] = data.pop(attr)
+    def render(self, data):
+        for key, value in data.pop('__attrs__', []).items():
+            self.root.attrib[key] = value
 
         self.append_to_element(self.root, data)
         stream = etree.tostring(self.root, xml_declaration=True,
