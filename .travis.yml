@@ -15,7 +15,7 @@ matrix:
 before_install:
 - docker build -t initios/aeatws .
 - docker ps -a
-- docker run initios/aeatws /bin/sh -c "cd /root/sinatra; tox -e $TOXENV"
+- docker run initios/aeatws -v ./:/app -c "tox -e $TOXENV"
 script:
   - tox -e $TOXENV
 after_success:
