@@ -1,7 +1,9 @@
 ---
-sudo: false
+sudo: required
 dist: trusty
 language: python
+services:
+  - docker
 matrix:
   include:
     - python: 3.6
@@ -10,19 +12,10 @@ matrix:
       env: TOXENV=flake8
     - python: 3.6
       env: TOXENV=isort
-addons:
-  apt:
-    packages:
-      - libssl-dev
-      - libxml2-dev
-      - libxmlsec1
-      - libxmlsec1-dev
-      - libxmlsec1-openssl
-      - libxslt1-dev
-      - pkg-config
-install:
-  - pip install tox
-  - pip install coveralls
+before_install:
+- docker build -t initios/aeatws .
+- docker ps -a
+- docker run initios/aeatws /bin/sh -c "cd /root/sinatra; tox -e $TOXENV"
 script:
   - tox -e $TOXENV
 after_success:
