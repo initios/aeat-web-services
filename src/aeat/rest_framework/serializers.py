@@ -55,6 +55,7 @@ class UnknownResponseSerializer(rf.Serializer):
 class ENSFunctionalErrorSerializer(DequeToDictMixin, rf.Serializer):
     is_error = True
 
+    code = rf.CharField(source='FUNERRER1.ErrReaER13', default='')
     type = rf.CharField(source='FUNERRER1.ErrTypER11')
     pointer = rf.CharField(source='FUNERRER1.ErrPoiER12')
     reason = rf.CharField(source='FUNERRER1.OriAttValER14', default='No error message supplied')
