@@ -1,0 +1,26 @@
+<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header/>
+    <soapenv:Body Id="Body">
+        <ie:CC316A
+            xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE316V5Sal.xsd">
+            <MesSenMES3>NICA.ES</MesSenMES3>
+            <MesRecMES6>1234</MesRecMES6>
+            <DatOfPreMES9>180523</DatOfPreMES9>
+            <TimOfPreMES10>1128</TimOfPreMES10>
+            <TesIndMES18>0</TesIndMES18>
+            <MesIdeMES19>00000000000999</MesIdeMES19>
+            <MesTypMES20>CC316A</MesTypMES20>
+            <CorIdeMES25>TEST000014</CorIdeMES25>
+            <HEAHEA>
+                <RefNumHEA4>TEST000110</RefNumHEA4>
+                <DecRejDatTimHEA116>201805231128</DecRejDatTimHEA116>
+            </HEAHEA>
+            <FUNERRER1>
+                <ErrTypER11>12</ErrTypER11>
+                <ErrPoiER12>ITI.ITI</ErrPoiER12>
+                <ErrReaER13>R879</ErrReaER13>
+            </FUNERRER1>
+        </ie:CC316A>
+    </soapenv:Body>
+</soapenv:Envelope>
