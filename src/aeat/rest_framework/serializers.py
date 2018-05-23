@@ -57,7 +57,7 @@ class ENSFunctionalErrorSerializer(DequeToDictMixin, rf.Serializer):
 
     type = rf.CharField(source='FUNERRER1.ErrTypER11')
     pointer = rf.CharField(source='FUNERRER1.ErrPoiER12')
-    reason = rf.CharField(source='FUNERRER1.OriAttValER14')
+    reason = rf.CharField(source='FUNERRER1.OriAttValER14', default='No error message supplied')
 
 
 def parse_xsd(data):

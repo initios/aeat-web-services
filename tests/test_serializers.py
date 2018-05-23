@@ -42,6 +42,10 @@ def test_exs_serializer(zeep_response):
      'IE315V5', serializers.ENSFunctionalErrorSerializer, True,
      {'type': '12', 'pointer': 'MES.MesSenMES3', 'reason': '1234-Message Sender is not valid'}),
 
+    ('enswsv5', 'ens_presentation_IE315V5.wsdl', 'ens_presentation_error_IE316V5Sal_v2.xml',
+     'IE315V5', serializers.ENSFunctionalErrorSerializer, True,
+     {'type': '12', 'pointer': 'ITI.ITI', 'reason': 'No error message supplied'}),
+
     # EXS
     ('exswsv2', 'exs_presentation_IE615V2.wsdl', 'exs_presentation_success_IE628V2Sal.xml',
      'IE615V2', serializers.EXSSerializer, False,
