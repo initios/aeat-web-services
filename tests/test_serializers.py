@@ -48,6 +48,12 @@ def test_exs_serializer(zeep_response):
      {'type': '12', 'pointer': 'ITI.ITI', 'code': 'R879',
       'reason': 'No error message supplied'}),
 
+    # ENS Modification
+    ('enswsv5', 'ens_modification_IE313V5.wsdl', 'ens_modification_error_IE305V5Sal.xml',
+     'IE313V5', serializers.ENSModificationFunctionalErrorSerializer, True,
+     {'type': '15', 'pointer': 'NTF.NOTPAR670', 'code': 'C583',
+      'value': 'Example Trader Name', 'reason': 'Trader not allowed to amend'}),
+
     # EXS
     ('exswsv2', 'exs_presentation_IE615V2.wsdl', 'exs_presentation_success_IE628V2Sal.xml',
      'IE615V2', serializers.EXSSerializer, False,
@@ -93,6 +99,9 @@ def test_get_serializer_for_unmapped_response():
 
     ('ens_presentation_error_IE917V5Sal.xml',
      'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE917V5Sal.xsd'),  # NOQA
+
+    ('ens_modification_error_IE305V5Sal.xml',
+     'https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE305V5Sal.xsd'),  # NOQA
 ])
 def test_parse_xsd(response_etree_element, filename, expected):
     xml = response_etree_element(filename)
