@@ -1,0 +1,36 @@
+<soapenv:Envelope
+    xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/">
+    <soapenv:Header/>
+    <soapenv:Body Id="Body">
+        <ie:CC305A
+            xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE305V5Sal.xsd">
+            <MesSenMES3>NICA.ES</MesSenMES3>
+            <MesRecMES6>B123456789</MesRecMES6>
+            <DatOfPreMES9>180524</DatOfPreMES9>
+            <TimOfPreMES10>1604</TimOfPreMES10>
+            <TesIndMES18>0</TesIndMES18>
+            <MesIdeMES19>00000001234567</MesIdeMES19>
+            <MesTypMES20>CC305A</MesTypMES20>
+            <CorIdeMES25>TEST000001</CorIdeMES25>
+            <HEAHEA>
+                <DocNumHEA5>18ES009999990000652</DocNumHEA5>
+                <AmeRejMotCodHEA604>1</AmeRejMotCodHEA604>
+                <AmeRejMotTexHEA605>Trader not allowed to amend</AmeRejMotTexHEA605>
+                <DatTimAmeHEA113>201805241404</DatTimAmeHEA113>
+                <AmeRejDatTimHEA112>201805241604</AmeRejDatTimHEA112>
+            </HEAHEA>
+            <FUNERRER1>
+                <ErrTypER11>15</ErrTypER11>
+                <ErrPoiER12>NTF.NOTPAR670</ErrPoiER12>
+                <ErrReaER13>C583</ErrReaER13>
+                <OriAttValER14>Example Trader Name</OriAttValER14>
+            </FUNERRER1>
+            <PERLODSUMDEC>
+                <TINPLD1>ESB12345678</TINPLD1>
+            </PERLODSUMDEC>
+            <CUSOFFFENT730>
+                <RefNumCUSOFFFENT731>ES009999</RefNumCUSOFFFENT731>
+            </CUSOFFFENT730>
+        </ie:CC305A>
+    </soapenv:Body>
+</soapenv:Envelope>

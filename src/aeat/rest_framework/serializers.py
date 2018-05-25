@@ -61,6 +61,16 @@ class ENSFunctionalErrorSerializer(DequeToDictMixin, rf.Serializer):
     reason = rf.CharField(source='FUNERRER1.OriAttValER14', default='No error message supplied')
 
 
+class ENSModificationFunctionalErrorSerializer(DequeToDictMixin, rf.Serializer):
+    is_error = True
+
+    code = rf.CharField(source='FUNERRER1.ErrReaER13', default='')
+    type = rf.CharField(source='FUNERRER1.ErrTypER11')
+    pointer = rf.CharField(source='FUNERRER1.ErrPoiER12')
+    value = rf.CharField(source='FUNERRER1.OriAttValER14', default='')
+    reason = rf.CharField(source='HEAHEA.AmeRejMotTexHEA605', default='No error message supplied')
+
+
 def parse_xsd(data):
     try:
         body = data.find('.//soapenv:Body', namespaces=data.nsmap)
@@ -96,5 +106,6 @@ def get_class_for_aeat_response(data):
         f'{ens}IE328V5Sal.xsd': ENSSerializer,
         f'{ens}IE304V5Sal.xsd': ENSSerializer,
         f'{ens}IE316V5Sal.xsd': ENSFunctionalErrorSerializer,
+        f'{ens}IE305V5Sal.xsd': ENSModificationFunctionalErrorSerializer,
         f'{exs}IE628V2Sal.xsd': EXSSerializer,
     }.get(xsd, UnknownResponseSerializer)

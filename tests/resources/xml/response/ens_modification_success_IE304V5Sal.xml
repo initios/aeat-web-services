@@ -27,10 +27,10 @@
         </PRODOCDC2>
       </GOOITEGDS>
       <PERLODSUMDEC xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE304V5Sal.xsd">
-        <TINPLD1>ESB27716000</TINPLD1>
+        <TINPLD1>ESB12345678</TINPLD1>
       </PERLODSUMDEC>
       <CUSOFFFENT730 xmlns:ie="https://www2.agenciatributaria.gob.es/ADUA/internet/es/aeat/dit/adu/aden/enswsv5/IE304V5Sal.xsd">
-        <RefNumCUSOFFFENT731>ES001111</RefNumCUSOFFFENT731>
+        <RefNumCUSOFFFENT731>ES001112</RefNumCUSOFFFENT731>
         <ExpDatOfArrFIRENT733>201801262300</ExpDatOfArrFIRENT733>
       </CUSOFFFENT730>
     </ie:CC304A>
