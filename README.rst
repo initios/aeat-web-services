@@ -150,3 +150,4 @@ Usefull Links
 - `AEAT Web Services <https://www2.agenciatributaria.gob.es/ADUA/internet/ws.html>`_
 - `Available preconfigured services <src/aeat/wsdl.py>`_
 - `Structure, rules and conditions <http://www.agenciatributaria.es/static_files/AEAT/Aduanas/Contenidos_Privados/Procedimientos_aduaneros/Proyecto_ICS/Descripcion_tecnica_del_proyecto/Estructurav950.pdf>`_
+- `Error Codes and descriptions <http://www.agenciatributaria.es/static_files/AEAT/Aduanas/Contenidos_Privados/Procedimientos_aduaneros/Proyecto_ICS/Descripcion_tecnica_del_proyecto/ICSCo_1.8.pdf>`_
